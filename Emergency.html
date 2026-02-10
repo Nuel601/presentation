@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Services - Barangay 118</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <meta name="description" content="Emergency contacts, procedures, and services for Barangay 118 residents">
+    <meta name="keywords" content="emergency, barangay emergency, fire, police, ambulance, emergency contacts">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Emergency.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+
+<body>
+    <header id="dynamic-header">
+        <!-- Header will be populated by JavaScript -->
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 id="emergency-hero-title">Emergency Assistance</h1>
+            <p id="emergency-hero-description">Quick access to emergency services for Barangay 118 residents</p>
+        </div>
+    </section>
+
+    <main class="main-container">
+        <div class="container">
+            <div class="emergency-tabs">
+                <button class="tab-btn active" data-tab="quick-call">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Quick Call</span>
+                </button>
+                <button class="tab-btn" data-tab="contacts">
+                    <i class="fas fa-address-book"></i>
+                    <span>Contacts</span>
+                </button>
+                <button class="tab-btn" data-tab="procedures">
+                    <i class="fas fa-list-check"></i>
+                    <span>Procedures</span>
+                </button>
+                <button class="tab-btn" data-tab="facilities">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Facilities</span>
+                </button>
+                <button class="tab-btn" data-tab="preparation">
+                    <i class="fas fa-kit-medical"></i>
+                    <span>Preparation</span>
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="tab-content-container">
+                <!-- Quick Call Tab -->
+                <div id="quick-call" class="tab-content active">
+                    <h2 class="tab-title" id="quickcall-section-title">
+                        <i class="fas fa-phone-alt"></i> Emergency Contact Numbers
+                    </h2>
+                    <p class="tab-description" id="quickcall-section-description">
+                        Reference only. Please dial these numbers manually when needed.
+                    </p>
+                    
+                    <div class="quick-call-grid" id="quickcall-container">
+                        <!-- Quick call cards will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Contacts Tab -->
+                <div id="contacts" class="tab-content">
+                    <h2 class="tab-title" id="contacts-section-title">
+                        <i class="fas fa-address-book"></i> Emergency Contacts Directory
+                    </h2>
+                    <p class="tab-description" id="contacts-section-description">
+                        Click on each category to view emergency contacts
+                    </p>
+                    
+                    <div class="contacts-accordion" id="contacts-container">
+                        <!-- Contacts accordions will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Procedures Tab -->
+                <div id="procedures" class="tab-content">
+                    <h2 class="tab-title" id="procedures-section-title">
+                        <i class="fas fa-list-check"></i> Emergency Procedures
+                    </h2>
+                    <p class="tab-description" id="procedures-section-description">
+                        Step-by-step guide for different emergencies
+                    </p>
+                    
+                    <div class="procedure-grid" id="procedures-container">
+                        <!-- Procedure cards will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Facilities Tab -->
+                <div id="facilities" class="tab-content">
+                    <h2 class="tab-title" id="facilities-section-title">
+                        <i class="fas fa-map-marker-alt"></i> Nearest Emergency Facilities
+                    </h2>
+                    
+                    <div class="facilities-grid" id="facilities-container">
+                        <!-- Facility cards will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Preparation Tab -->
+                <div id="preparation" class="tab-content">
+                    <h2 class="tab-title" id="preparation-section-title">
+                        <i class="fas fa-kit-medical"></i> Emergency Preparedness Kit
+                    </h2>
+                    <p class="tab-description" id="preparation-section-description">
+                        Essential items to prepare for emergencies
+                    </p>
+                    
+                    <div class="kit-checklist" id="preparation-container">
+                        <!-- Preparation categories will be loaded dynamically -->
+                    </div>
+                    
+                    <div class="kit-tips" id="tips-container">
+                        <!-- Tips will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer id="dynamic-footer">
+        <!-- Footer will be populated by JavaScript -->
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast-notification"></div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        // Initialize Firebase
+        let db = null;
+        let unsubscribe = null;
+        
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.database();
+            console.log("Firebase Realtime Database initialized successfully for Emergency page");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        // Data structure (will be loaded from Firebase)
+        let emergencyData = {
+            "01_hero": {
+                title: "Emergency Assistance",
+                description: "Quick access to emergency services for Barangay 118 residents"
+            },
+            "02_quickCall": {
+                title: "Emergency Contact Numbers",
+                description: "Reference only. Please dial these numbers manually when needed.",
+                cards: []
+            },
+            "03_contacts": {
+                title: "Emergency Contacts Directory",
+                description: "Click on each category to view emergency contacts",
+                accordions: []
+            },
+            "04_procedures": {
+                title: "Emergency Procedures",
+                description: "Step-by-step guide for different emergencies",
+                cards: []
+            },
+            "05_facilities": {
+                title: "Nearest Emergency Facilities",
+                description: "",
+                cards: []
+            },
+            "06_preparation": {
+                title: "Emergency Preparedness Kit",
+                description: "Essential items to prepare for emergencies",
+                checklist: [],
+                tips: {
+                    title: "Important Tips:",
+                    items: []
+                }
+            }
+        };
+
+        // Load data from Firebase Realtime Database (04_Emergency)
+        async function loadData() {
+            try {
+                if (db) {
+                    // Load from '04_Emergency' path in Realtime Database
+                    const emergencyRef = db.ref('04_Emergency');
+                    const snapshot = await emergencyRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        
+                        // Deep merge Firebase data with local data
+                        deepMergeData(emergencyData, firebaseData);
+                        
+                        console.log("Emergency data loaded from Firebase Realtime Database (04_Emergency)");
+                        localStorage.setItem("emergencyData", JSON.stringify(emergencyData));
+                    } else {
+                        console.log("No Firebase data found in Realtime Database at 04_Emergency, using localStorage");
+                        loadFromLocalStorage();
+                    }
+                } else {
+                    console.log("Firebase not available, using localStorage");
+                    loadFromLocalStorage();
+                }
+            } catch (error) {
+                console.error("Error loading from Firebase:", error);
+                loadFromLocalStorage();
+            }
+            updateUI();
+            renderHeader();
+            renderFooter();
+        }
+
+        // Deep merge function for nested objects
+        function deepMergeData(target, source) {
+            for (const key in source) {
+                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                    if (!target[key]) target[key] = {};
+                    deepMergeData(target[key], source[key]);
+                } else if (Array.isArray(source[key])) {
+                    target[key] = source[key];
+                } else {
+                    target[key] = source[key];
+                }
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem("emergencyData");
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    deepMergeData(emergencyData, parsedData);
+                    console.log("Emergency data loaded from localStorage");
+                } else {
+                    console.log("Using default Emergency data");
+                    // Set some default data if none exists
+                    setDefaultData();
+                }
+            } catch (error) {
+                console.error("Error loading from localStorage:", error);
+                setDefaultData();
+            }
+        }
+
+        function setDefaultData() {
+            emergencyData = {
+                "01_hero": {
+                    title: "Emergency Assistance",
+                    description: "Quick access to emergency services for Barangay 118 residents"
+                },
+                "02_quickCall": {
+                    title: "Emergency Contact Numbers",
+                    description: "Reference only. Please dial these numbers manually when needed.",
+                    cards: [
+                        { 
+                            id: 1, 
+                            type: "critical", 
+                            title: "Medical Emergency", 
+                            subtitle: "Ambulance & Medical Assistance", 
+                            number: "911" 
+                        },
+                        { 
+                            id: 2, 
+                            type: "urgent", 
+                            title: "Fire Emergency", 
+                            subtitle: "Fire Department & Rescue", 
+                            number: "(02) 8426-0219" 
+                        },
+                        { 
+                            id: 3, 
+                            type: "important", 
+                            title: "Police Emergency", 
+                            subtitle: "Crime & Police Assistance", 
+                            number: "117" 
+                        },
+                        { 
+                            id: 4, 
+                            type: "normal", 
+                            title: "Barangay Hotline", 
+                            subtitle: "Local Emergency Assistance", 
+                            number: "(02) 8123-4567" 
+                        }
+                    ]
+                },
+                "03_contacts": {
+                    title: "Emergency Contacts Directory",
+                    description: "Click on each category to view emergency contacts",
+                    accordions: [
+                        {
+                            id: 1,
+                            title: "Medical Services",
+                            items: [
+                                { 
+                                    id: 1, 
+                                    title: "Emergency Medical Services", 
+                                    number: "911", 
+                                    description: "24/7 ambulance and emergency medical response", 
+                                    hours: "Available: 24/7" 
+                                },
+                                { 
+                                    id: 2, 
+                                    title: "Caloocan City Medical Center", 
+                                    number: "(02) 8292-1111", 
+                                    description: "Nearest public hospital for emergencies", 
+                                    hours: "Emergency Room: 24/7" 
+                                }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            title: "Fire Department",
+                            items: [
+                                { 
+                                    id: 3, 
+                                    title: "Caloocan Fire Department", 
+                                    number: "(02) 8426-0219", 
+                                    description: "Fire emergencies and rescue operations", 
+                                    hours: "Available: 24/7" 
+                                }
+                            ]
+                        },
+                        {
+                            id: 3,
+                            title: "Police Services",
+                            items: [
+                                { 
+                                    id: 4, 
+                                    title: "Caloocan Police Department", 
+                                    number: "117 / (02) 83612629", 
+                                    description: "Police assistance and crime reporting", 
+                                    hours: "Emergency Hotline: 117 (24/7)" 
+                                }
+                            ]
+                        },
+                        {
+                            id: 4,
+                            title: "Barangay Services",
+                            items: [
+                                { 
+                                    id: 5, 
+                                    title: "Barangay 118 Emergency", 
+                                    number: "(02) 8123-4567", 
+                                    description: "Local emergencies and community assistance", 
+                                    hours: "Office: 8AM–5PM (Mon–Fri)<br>Emergency: 24/7" 
+                                },
+                                { 
+                                    id: 6, 
+                                    title: "Barangay 118 Disaster Council", 
+                                    number: "0999-123-4567", 
+                                    description: "Disaster response team", 
+                                    hours: "Mobile: 24/7 during disasters" 
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "04_procedures": {
+                    title: "Emergency Procedures",
+                    description: "Step-by-step guide for different emergencies",
+                    cards: [
+                        { 
+                            id: 1, 
+                            icon: "fas fa-fire", 
+                            title: "Fire Emergency", 
+                            steps: [
+                                "Shout \"Fire!\" to alert everyone",
+                                "Call 911 or fire department",
+                                "Use stairs, not elevators",
+                                "Crawl low under smoke"
+                            ]
+                        },
+                        { 
+                            id: 2, 
+                            icon: "fas fa-heartbeat", 
+                            title: "Medical Emergency", 
+                            steps: [
+                                "Ensure area is safe",
+                                "Call 911 immediately",
+                                "Provide basic care if trained",
+                                "Clear path for responders"
+                            ]
+                        },
+                        { 
+                            id: 3, 
+                            icon: "fas fa-house-tsunami", 
+                            title: "Earthquake", 
+                            steps: [
+                                "DROP to the ground",
+                                "COVER under sturdy furniture",
+                                "HOLD ON until shaking stops",
+                                "Evacuate if necessary"
+                            ]
+                        },
+                        { 
+                            id: 4, 
+                            icon: "fas fa-cloud-showers-heavy", 
+                            title: "Typhoon/Flood", 
+                            steps: [
+                                "Stay updated on warnings",
+                                "Move to higher ground if flooding",
+                                "Avoid flood waters",
+                                "Have emergency kit ready"
+                            ]
+                        }
+                    ]
+                },
+                "05_facilities": {
+                    title: "Nearest Emergency Facilities",
+                    cards: [
+                        { 
+                            id: 1, 
+                            type: "fire", 
+                            title: "Caloocan Fire Station Main", 
+                            address: "226 Maria Clara St, Grace Park East, Caloocan, 1403 Metro Manila", 
+                            distance: "1.4 km from Barangay 118", 
+                            hours: "24/7 Service", 
+                            mapLink: "https://maps.app.goo.gl/BNyMdWZcx3sgE5TV8" 
+                        },
+                        { 
+                            id: 2, 
+                            type: "medical", 
+                            title: "Caloocan City Medical Center", 
+                            address: "3rd Street, 9th Ave, Grace Park East, Caloocan, Metro Manila", 
+                            distance: "950 m from Barangay 118", 
+                            hours: "24/7 Emergency Room", 
+                            mapLink: "https://maps.app.goo.gl/jqq6xJQ7yRbdTT779" 
+                        },
+                        { 
+                            id: 3, 
+                            type: "police", 
+                            title: "Caloocan Police Station 1", 
+                            address: "C3 Road, 8th Street, de Jesus, Grace Park, Caloocan, 1404 Metro Manila", 
+                            distance: "1 km from Barangay 118", 
+                            hours: "24/7 Emergency", 
+                            mapLink: "https://maps.app.goo.gl/gabonpQy56tayH469" 
+                        },
+                        { 
+                            id: 4, 
+                            type: "barangay", 
+                            title: "Barangay 118 Hall", 
+                            address: "402 2nd St, Grace Park East, Caloocan, Metro Manila", 
+                            distance: "Within Barangay 118", 
+                            hours: "8AM-5PM (Mon-Fri)", 
+                            mapLink: "https://maps.app.goo.gl/rnBHFzifAcRywgjx5" 
+                        }
+                    ]
+                },
+                "06_preparation": {
+                    title: "Emergency Preparedness Kit",
+                    description: "Essential items to prepare for emergencies",
+                    checklist: [
+                        {
+                            id: 1,
+                            category: "Medical & First Aid",
+                            items: [
+                                "Bandages and antiseptic",
+                                "Prescription medications",
+                                "Pain relievers",
+                                "Medical gloves"
+                            ]
+                        },
+                        {
+                            id: 2,
+                            category: "Food & Water",
+                            items: [
+                                "3-day water supply (1 gallon/person/day)",
+                                "Non-perishable food",
+                                "Manual can opener",
+                                "Energy bars"
+                            ]
+                        },
+                        {
+                            id: 3,
+                            category: "Light & Communication",
+                            items: [
+                                "Flashlight with extra batteries",
+                                "Portable phone charger",
+                                "Battery-powered radio",
+                                "Whistle"
+                            ]
+                        },
+                        {
+                            id: 4,
+                            category: "Important Documents",
+                            items: [
+                                "Copies of IDs in waterproof container",
+                                "Insurance papers",
+                                "Medical records",
+                                "Emergency contact list"
+                            ]
+                        }
+                    ],
+                    tips: {
+                        title: "Important Tips:",
+                        items: [
+                            "Store kit in accessible location",
+                            "Check and update every 6 months",
+                            "Have one kit at home and one in car",
+                            "Include special needs items (baby, elderly, pets)"
+                        ]
+                    }
+                }
+            };
+        }
+
+        // Setup Firebase real-time listener for Realtime Database (04_Emergency)
+        function setupFirebaseListener() {
+            if (!db) return;
+            
+            try {
+                const emergencyRef = db.ref('04_Emergency');
+                let isFirstLoad = true;
+                
+                unsubscribe = emergencyRef.on('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        
+                        // Deep merge Firebase data
+                        deepMergeData(emergencyData, firebaseData);
+                        
+                        updateUI();
+                        renderHeader();
+                        renderFooter();
+                        localStorage.setItem("emergencyData", JSON.stringify(emergencyData));
+                        console.log("Emergency data updated from Firebase in real-time (04_Emergency)");
+                        
+                        if (!isFirstLoad) {
+                            showToast('Emergency content updated from admin!', 'success');
+                        } else {
+                            isFirstLoad = false;
+                        }
+                    }
+                }, (error) => {
+                    console.error("Firebase listener error:", error);
+                });
+            } catch (error) {
+                console.error("Failed to setup Firebase listener:", error);
+            }
+        }
+
+        // Render dynamic header - Load header data from main admin panel (01_main)
+        async function renderHeader() {
+            const headerContainer = document.getElementById('dynamic-header');
+            if (!headerContainer) return;
+            
+            let headerData = {
+                systemName: "BARANGAY 118 ONLINE SYSTEM",
+                hero: {
+                    headerLogo: "Logo-Favicon-removebg-preview.png"
+                }
+            };
+            
+            try {
+                if (db) {
+                    const mainDataRef = db.ref('01_main');
+                    const snapshot = await mainDataRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        
+                        if (firebaseData["01_systemName"]) {
+                            headerData.systemName = firebaseData["01_systemName"];
+                        }
+                        
+                        if (firebaseData["02_hero"]?.headerLogo) {
+                            headerData.hero.headerLogo = firebaseData["02_hero"].headerLogo;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading header data:", error);
+            }
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            
+            headerContainer.innerHTML = `
+                <div class="container">
+                    <div class="navbar">
+                        <a href="index.html" id="home-logo" class="logo" aria-label="Barangay 118 Online System Home">
+                            <img src="${headerData.hero.headerLogo}" 
+                                 alt="Barangay 118 Official Logo" 
+                                 class="logo-image" 
+                                 id="header-logo" 
+                                 width="70" height="70">
+                            <h1 id="system-name">${headerData.systemName}</h1>
+                        </a>
+
+                        <nav class="nav-links" aria-label="Main navigation">
+                            <a href="index.html" ${currentPage === 'index.html' || currentPage === '' ? 'class="active"' : ''} aria-label="Home page">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>Home</span>
+                            </a>
+                            <a href="AboutUs.html" ${currentPage === 'AboutUs.html' ? 'class="active"' : ''} aria-label="About Barangay 118 page">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>About Us</span>
+                            </a>
+                            <a href="News.html" ${currentPage === 'News.html' ? 'class="active"' : ''} aria-label="Barangay News page">
+                                <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                <span>News</span>
+                            </a>
+                            <a href="Emergency.html" ${currentPage === 'Emergency.html' ? 'class="active"' : ''} aria-current="page" aria-label="Barangay Emergency page">
+                                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                <span>Emergency</span>
+                            </a>
+                            <a href="CreateAnAccount.html" ${currentPage === 'CreateAnAccount.html' ? 'class="active"' : ''} aria-label="Create an account page">
+                                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                                <span>Create Account</span>
+                            </a>
+                            <a href="LogIn.html" ${currentPage === 'LogIn.html' ? 'class="active"' : ''} aria-label="Login page">
+                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                <span>Login</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render dynamic footer - Load footer data from main admin panel (01_main)
+        async function renderFooter() {
+            const footerContainer = document.getElementById('dynamic-footer');
+            if (!footerContainer) return;
+            
+            let footerData = {
+                title: "Barangay 118 Online System",
+                description: "Secure and efficient online services for Barangay 118. Connecting our community through technology.",
+                contactInfo: {
+                    addressLine1: "402 2nd St, Grace Park East, Caloocan",
+                    addressLine2: "Metro Manila, Philippines",
+                    phone: "(02) 8123-4567",
+                    email: "info@barangay118.gov.ph",
+                    officeHours: "Mon–Fri: 8:00 AM – 5:00 PM"
+                },
+                socialMedia: {
+                    facebook: "https://facebook.com/barangay118",
+                    messenger: "https://m.me/barangay118"
+                },
+                copyright: "&copy; 2025 Barangay 118 Online System. All Rights Reserved."
+            };
+            
+            try {
+                if (db) {
+                    const mainDataRef = db.ref('01_main');
+                    const snapshot = await mainDataRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        const footerSource = firebaseData["04_footer"] || {};
+                        
+                        if (footerSource.title) footerData.title = footerSource.title;
+                        if (footerSource.description) footerData.description = footerSource.description;
+                        
+                        if (footerSource.contactInfo) {
+                            if (footerSource.contactInfo.addressLine1) footerData.contactInfo.addressLine1 = footerSource.contactInfo.addressLine1;
+                            if (footerSource.contactInfo.addressLine2) footerData.contactInfo.addressLine2 = footerSource.contactInfo.addressLine2;
+                            if (footerSource.contactInfo.phone) footerData.contactInfo.phone = footerSource.contactInfo.phone;
+                            if (footerSource.contactInfo.email) footerData.contactInfo.email = footerSource.contactInfo.email;
+                            if (footerSource.contactInfo.officeHours) footerData.contactInfo.officeHours = footerSource.contactInfo.officeHours;
+                        }
+                        
+                        if (footerSource.socialMedia) {
+                            if (footerSource.socialMedia.facebook) footerData.socialMedia.facebook = footerSource.socialMedia.facebook;
+                            if (footerSource.socialMedia.messenger) footerData.socialMedia.messenger = footerSource.socialMedia.messenger;
+                        }
+                        
+                        if (footerSource.copyright) footerData.copyright = footerSource.copyright;
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading footer data:", error);
+            }
+            
+            footerContainer.innerHTML = `
+                <div class="container" id="footer-container">
+                    <div class="footer-content" id="footer-content">
+                        <!-- Left Column: System Info -->
+                        <div class="footer-column" id="footer-system-column">
+                            <h3 id="footer-title" class="footer-title">
+                                ${footerData.title}
+                            </h3>
+                            <p id="footer-description" class="footer-description">
+                                ${footerData.description}
+                            </p>
+                        </div>
+
+                        <!-- Center Footer -->
+                        <div class="footer-center" id="footer-center">
+                            <div class="footer-row" id="footer-row">
+                                <!-- Contact Info -->
+                                <div class="footer-column" id="footer-contact-column">
+                                    <h3 id="footer-contact-title">Contact Info</h3>
+                                    <ul id="footer-contact-info" class="footer-contact-info">
+                                        <li>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span id="footer-address-line1">
+                                                ${footerData.contactInfo.addressLine1}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-map-pin"></i>
+                                            <span id="footer-address-line2">
+                                                ${footerData.contactInfo.addressLine2}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-phone"></i>
+                                            <span id="footer-phone">
+                                                ${footerData.contactInfo.phone}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-envelope"></i>
+                                            <span id="footer-email">
+                                                ${footerData.contactInfo.email}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-clock"></i>
+                                            <span id="footer-office-hours">
+                                                ${footerData.contactInfo.officeHours}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Social / Links -->
+                                <div class="footer-column" id="footer-links-column">
+                                    <h3 id="footer-social-title">Follow Us</h3>
+                                    <ul class="footer-links" id="footer-social-links">
+                                        <li id="footer-facebook-item">
+                                            <i class="fab fa-facebook"></i>
+                                            <a id="footer-facebook-link" href="${footerData.socialMedia.facebook}" target="_blank">
+                                                <span id="footer-facebook-text"> Facebook</span>
+                                            </a>
+                                        </li>
+                                        <li id="footer-messenger-item">
+                                            <i class="fab fa-facebook-messenger"></i>
+                                            <a id="footer-messenger-link" href="${footerData.socialMedia.messenger}" target="_blank">
+                                                <span id="footer-messenger-text"> Messenger Chat</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Copyright -->
+                    <div class="copyright" id="footer-copyright">
+                        <p id="copyright-text">
+                            ${footerData.copyright}
+                        </p>
+                    </div>
+                </div>`;
+        }
+
+        function updateUI() {
+            try {
+                // Update Hero Section
+                const heroTitle = document.getElementById("emergency-hero-title");
+                if (heroTitle && emergencyData["01_hero"]?.title) heroTitle.textContent = emergencyData["01_hero"].title;
+                
+                const heroDesc = document.getElementById("emergency-hero-description");
+                if (heroDesc && emergencyData["01_hero"]?.description) heroDesc.textContent = emergencyData["01_hero"].description;
+                
+                // Update Section Titles
+                const quickCallTitle = document.getElementById("quickcall-section-title");
+                if (quickCallTitle && emergencyData["02_quickCall"]?.title) {
+                    quickCallTitle.innerHTML = `<i class="fas fa-phone-alt"></i> ${emergencyData["02_quickCall"].title}`;
+                }
+                
+                const quickCallDesc = document.getElementById("quickcall-section-description");
+                if (quickCallDesc && emergencyData["02_quickCall"]?.description) {
+                    quickCallDesc.textContent = emergencyData["02_quickCall"].description;
+                }
+                
+                const contactsTitle = document.getElementById("contacts-section-title");
+                if (contactsTitle && emergencyData["03_contacts"]?.title) {
+                    contactsTitle.innerHTML = `<i class="fas fa-address-book"></i> ${emergencyData["03_contacts"].title}`;
+                }
+                
+                const contactsDesc = document.getElementById("contacts-section-description");
+                if (contactsDesc && emergencyData["03_contacts"]?.description) {
+                    contactsDesc.textContent = emergencyData["03_contacts"].description;
+                }
+                
+                const proceduresTitle = document.getElementById("procedures-section-title");
+                if (proceduresTitle && emergencyData["04_procedures"]?.title) {
+                    proceduresTitle.innerHTML = `<i class="fas fa-list-check"></i> ${emergencyData["04_procedures"].title}`;
+                }
+                
+                const proceduresDesc = document.getElementById("procedures-section-description");
+                if (proceduresDesc && emergencyData["04_procedures"]?.description) {
+                    proceduresDesc.textContent = emergencyData["04_procedures"].description;
+                }
+                
+                const facilitiesTitle = document.getElementById("facilities-section-title");
+                if (facilitiesTitle && emergencyData["05_facilities"]?.title) {
+                    facilitiesTitle.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${emergencyData["05_facilities"].title}`;
+                }
+                
+                const preparationTitle = document.getElementById("preparation-section-title");
+                if (preparationTitle && emergencyData["06_preparation"]?.title) {
+                    preparationTitle.innerHTML = `<i class="fas fa-kit-medical"></i> ${emergencyData["06_preparation"].title}`;
+                }
+                
+                const preparationDesc = document.getElementById("preparation-section-description");
+                if (preparationDesc && emergencyData["06_preparation"]?.description) {
+                    preparationDesc.textContent = emergencyData["06_preparation"].description;
+                }
+                
+                // Render all sections
+                renderQuickCall();
+                renderContacts();
+                renderProcedures();
+                renderFacilities();
+                renderPreparation();
+                
+                console.log("Emergency UI updated successfully");
+            } catch (error) {
+                console.error("Error updating UI:", error);
+            }
+        }
+
+        // Render Quick Call Section
+        function renderQuickCall() {
+            const container = document.getElementById('quickcall-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (!emergencyData["02_quickCall"]?.cards || emergencyData["02_quickCall"].cards.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; color: var(--gray); grid-column: 1 / -1; padding: 40px;">
+                        <i class="fas fa-phone fa-2x" style="margin-bottom: 15px; display: block; color: var(--primary);"></i>
+                        <h3>No emergency contacts available</h3>
+                        <p>Emergency contacts will appear here once configured by the admin.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            emergencyData["02_quickCall"].cards.forEach(card => {
+                const typeClass = getTypeClass(card.type);
+                const cardElement = document.createElement('div');
+                cardElement.className = `call-card ${typeClass}`;
+                cardElement.innerHTML = `
+                    <div class="call-card-header">
+                        <div class="call-info">
+                            <h3>${card.title}</h3>
+                            <p>${card.subtitle || ''}</p>
+                        </div>
+                    </div>
+                    <div class="call-number">${formatPhoneNumber(card.number)}</div>
+                `;
+                container.appendChild(cardElement);
+            });
+        }
+
+        // Render Contacts Section
+        function renderContacts() {
+            const container = document.getElementById('contacts-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (!emergencyData["03_contacts"]?.accordions || emergencyData["03_contacts"].accordions.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; color: var(--gray); padding: 40px;">
+                        <i class="fas fa-address-book fa-2x" style="margin-bottom: 15px; display: block; color: var(--primary);"></i>
+                        <h3>No contact categories available</h3>
+                        <p>Contact categories will appear here once configured by the admin.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Create two column layout
+            const grid = document.createElement('div');
+            grid.className = 'contacts-grid';
+            
+            // Split accordions into two columns
+            const accordions = emergencyData["03_contacts"].accordions;
+            const half = Math.ceil(accordions.length / 2);
+            const leftColumn = accordions.slice(0, half);
+            const rightColumn = accordions.slice(half);
+            
+            // Left column
+            const leftCol = document.createElement('div');
+            leftCol.className = 'accordion-column';
+            leftColumn.forEach(accordion => {
+                leftCol.appendChild(createAccordionElement(accordion));
+            });
+            
+            // Right column
+            const rightCol = document.createElement('div');
+            rightCol.className = 'accordion-column';
+            rightColumn.forEach(accordion => {
+                rightCol.appendChild(createAccordionElement(accordion));
+            });
+            
+            grid.appendChild(leftCol);
+            grid.appendChild(rightCol);
+            container.appendChild(grid);
+            
+            // Set first accordion as active
+            const firstAccordion = container.querySelector('.accordion-item');
+            if (firstAccordion) {
+                firstAccordion.classList.add('active');
+            }
+        }
+
+        // Create accordion element
+        function createAccordionElement(accordion) {
+            const accordionItem = document.createElement('div');
+            accordionItem.className = 'accordion-item';
+            accordionItem.setAttribute('data-id', accordion.id);
+            
+            let itemsHTML = '';
+            if (accordion.items && accordion.items.length > 0) {
+                accordion.items.forEach(item => {
+                    itemsHTML += `
+                        <div class="contact-detail">
+                            <h4>${item.title}</h4>
+                            <div class="contact-number">${formatPhoneNumber(item.number)}</div>
+                            <p>${item.description}</p>
+                            <div class="contact-hours">${item.hours}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                itemsHTML = `
+                    <div class="no-data" style="text-align: center; color: var(--gray); padding: 20px;">
+                        <i class="fas fa-exclamation-circle"></i> No contact items
+                    </div>
+                `;
+            }
+            
+            accordionItem.innerHTML = `
+                <div class="accordion-header">
+                    <span class="accordion-title">${accordion.title}</span>
+                    <i class="accordion-icon fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="contact-details">
+                        ${itemsHTML}
+                    </div>
+                </div>
+            `;
+            
+            return accordionItem;
+        }
+
+        // Render Procedures Section
+        function renderProcedures() {
+            const container = document.getElementById('procedures-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (!emergencyData["04_procedures"]?.cards || emergencyData["04_procedures"].cards.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; color: var(--gray); grid-column: 1 / -1; padding: 40px;">
+                        <i class="fas fa-list-check fa-2x" style="margin-bottom: 15px; display: block; color: var(--primary);"></i>
+                        <h3>No emergency procedures available</h3>
+                        <p>Emergency procedures will appear here once configured by the admin.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            emergencyData["04_procedures"].cards.forEach(procedure => {
+                const card = document.createElement('div');
+                card.className = 'procedure-card';
+                
+                let stepsHTML = '';
+                if (procedure.steps && procedure.steps.length > 0) {
+                    procedure.steps.forEach((step, index) => {
+                        stepsHTML += `<li>${step}</li>`;
+                    });
+                }
+                
+                card.innerHTML = `
+                    <div class="procedure-icon">
+                        <i class="${procedure.icon}"></i>
+                    </div>
+                    <h3>${procedure.title}</h3>
+                    <ol class="procedure-steps">
+                        ${stepsHTML}
+                    </ol>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Render Facilities Section
+        function renderFacilities() {
+            const container = document.getElementById('facilities-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (!emergencyData["05_facilities"]?.cards || emergencyData["05_facilities"].cards.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; color: var(--gray); grid-column: 1 / -1; padding: 40px;">
+                        <i class="fas fa-map-marker-alt fa-2x" style="margin-bottom: 15px; display: block; color: var(--primary);"></i>
+                        <h3>No emergency facilities available</h3>
+                        <p>Emergency facilities will appear here once configured by the admin.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            emergencyData["05_facilities"].cards.forEach(facility => {
+                const card = document.createElement('a');
+                card.className = 'facility-card';
+                card.href = facility.mapLink || '#';
+                card.target = '_blank';
+                
+                const typeClass = getFacilityTypeClass(facility.type);
+                
+                card.innerHTML = `
+                    <div class="facility-icon ${typeClass}">
+                        <i class="${getFacilityIcon(facility.type)}"></i>
+                    </div>
+                    <div class="facility-details">
+                        <h3>${facility.title}</h3>
+                        <p class="facility-address">${facility.address}</p>
+                        <p class="facility-distance">${facility.distance}</p>
+                        <div class="facility-hours">${facility.hours}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Render Preparation Section
+        function renderPreparation() {
+            const container = document.getElementById('preparation-container');
+            const tipsContainer = document.getElementById('tips-container');
+            if (!container || !tipsContainer) return;
+            
+            container.innerHTML = '';
+            tipsContainer.innerHTML = '';
+            
+            // Render checklist
+            if (!emergencyData["06_preparation"]?.checklist || emergencyData["06_preparation"].checklist.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; color: var(--gray); grid-column: 1 / -1; padding: 40px;">
+                        <i class="fas fa-kit-medical fa-2x" style="margin-bottom: 15px; display: block; color: var(--success);"></i>
+                        <h3>No preparation categories available</h3>
+                        <p>Preparation checklist will appear here once configured by the admin.</p>
+                    </div>
+                `;
+            } else {
+                emergencyData["06_preparation"].checklist.forEach(category => {
+                    const categoryElement = document.createElement('div');
+                    categoryElement.className = 'kit-category';
+                    
+                    let itemsHTML = '';
+                    if (category.items && category.items.length > 0) {
+                        category.items.forEach(item => {
+                            itemsHTML += `<li>${item}</li>`;
+                        });
+                    }
+                    
+                    categoryElement.innerHTML = `
+                        <h3>${category.category}</h3>
+                        <ul>
+                            ${itemsHTML}
+                        </ul>
+                    `;
+                    container.appendChild(categoryElement);
+                });
+            }
+            
+            // Render tips
+            if (emergencyData["06_preparation"]?.tips) {
+                const tipsElement = document.createElement('div');
+                tipsElement.className = 'kit-tips';
+                
+                let tipsHTML = '';
+                if (emergencyData["06_preparation"].tips.items && emergencyData["06_preparation"].tips.items.length > 0) {
+                    emergencyData["06_preparation"].tips.items.forEach(tip => {
+                        tipsHTML += `<li>${tip}</li>`;
+                    });
+                }
+                
+                tipsElement.innerHTML = `
+                    <h3>${emergencyData["06_preparation"].tips.title || 'Important Tips:'}</h3>
+                    <ul>
+                        ${tipsHTML}
+                    </ul>
+                `;
+                tipsContainer.appendChild(tipsElement);
+            }
+        }
+
+        // Helper functions
+        function getTypeClass(type) {
+            switch(type) {
+                case 'critical': return 'critical';
+                case 'urgent': return 'urgent';
+                case 'important': return 'important';
+                default: return 'normal';
+            }
+        }
+
+        function getFacilityTypeClass(type) {
+            switch(type) {
+                case 'medical': return 'medical';
+                case 'fire': return 'fire';
+                case 'police': return 'police';
+                case 'barangay': return 'barangay';
+                case 'evacuation': return 'evacuation';
+                default: return '';
+            }
+        }
+
+        function getFacilityIcon(type) {
+            switch(type) {
+                case 'medical': return 'fas fa-hospital';
+                case 'fire': return 'fas fa-fire';
+                case 'police': return 'fas fa-shield-alt';
+                case 'barangay': return 'fas fa-home';
+                case 'evacuation': return 'fas fa-map-marker-alt';
+                default: return 'fas fa-map-marker-alt';
+            }
+        }
+
+        function formatPhoneNumber(number) {
+            if (!number) return '';
+            // Add zero-width space to prevent auto-linking on some browsers
+            return number.replace(/(\d{3})/g, '$1\u200B');
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast-notification');
+            if (!toast) return;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+            
+            if (type === 'success') {
+                toast.style.background = 'var(--success)';
+            } else if (type === 'error') {
+                toast.style.background = 'var(--error)';
+            } else {
+                toast.style.background = 'var(--primary)';
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab switching
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    button.classList.add('active');
+                    const activeTab = document.getElementById(tabId);
+                    if (activeTab) {
+                        activeTab.classList.add('active');
+                    }
+                });
+            });
+
+            // Accordion functionality
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.accordion-header')) {
+                    const header = e.target.closest('.accordion-header');
+                    const item = header.closest('.accordion-item');
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setupFirebaseListener();
+            setupEventListeners();
+            
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'emergencyData') {
+                    loadFromLocalStorage();
+                    updateUI();
+                    renderHeader();
+                    renderFooter();
+                    showToast('Emergency content updated from admin panel!', 'success');
+                }
+            });
+            
+            console.log("Emergency page loaded successfully");
+        });
+
+        window.addEventListener('beforeunload', function() {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        });
+    </script>
+</body>
+</html>

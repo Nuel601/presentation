@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Barangay 118</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="PanelAdmin.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo" onclick="myFunction()">
+                    <div class="logo-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>BARANGAY 118 ADMIN PANEL</h1>
+                        <p>Online System Control Center</p>
+                    </div>
+                </div>
+
+                <div class="nav-links">
+                    <a href="PanelAdmin.html" class="active">Dashboard</a>
+                    <a href="AboutUsAdmin.html">AboutUs</a>
+                    <a href="NewsAdmin.html">News</a>
+                    <a href="EmergencyAdmin.html">Emergency</a>
+                    <a href="CreateAccountAdmin.html">Create</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-panel">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title"><i class="fas fa-cogs"></i> Control Center</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-tab="dashboard"><span class="sidebar-icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard</a></li>
+                <li><a href="#" data-tab="hero"><span class="sidebar-icon"><i class="fas fa-star"></i></span> Header & Hero</a></li>
+                <li><a href="#" data-tab="welcome"><span class="sidebar-icon"><i class="fas fa-home"></i></span> Welcome Section</a></li>
+                <li><a href="#" data-tab="footer"><span class="sidebar-icon"><i class="fas fa-sitemap"></i></span> Footer & Social</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="LogIn.html" class="sidebar-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div id="dashboard" class="tab-content active">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="system-status">Ready</div>
+                            <div class="stat-label">System Status</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="user-count">0</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="last-updated">Today</div>
+                            <div class="stat-label">Last Updated</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="data-size">0 KB</div>
+                            <div class="stat-label">Data Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-check-circle"></i> System Ready!</strong> Welcome to the Barangay 118 Admin Control Panel.
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" id="preview-site-btn">
+                            <i class="fas fa-external-link-alt"></i> Preview Site
+                        </button>
+                        <button class="btn btn-secondary" id="export-data-btn">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn-success" id="backup-btn">
+                            <i class="fas fa-database"></i> Backup Data
+                        </button>
+                        <button class="btn btn-warning" id="refresh-btn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                        <button class="btn btn-danger" id="clear-all-data-btn">
+                            <i class="fas fa-trash"></i> Clear Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div id="recent-activity">
+                        <p style="color: var(--gray); text-align: center; padding: 20px;">
+                            <i class="fas fa-clock"></i> Activity log will appear here...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="dashboard-guide" class="guide-section">
+                        <h4>Dashboard Overview</h4>
+                        <p>The dashboard provides a quick overview of your system's key metrics and recent activity.</p>
+                        <ul>
+                            <li>Monitor system status and data size</li>
+                            <li>Track active user count</li>
+                            <li>View recent system activity</li>
+                            <li>Use quick actions for common tasks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hero" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-star"></i> Header & Hero Section</h2>
+                        <div class="action-buttons">
+                            <a href="index.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    <p style="color: var(--gray); margin-bottom: 25px;">Update the main banner, header, and hero section at the top of your website.</p>
+                    <form id="hero-form">
+                        <div class="form-group">
+                            <label class="form-label" for="system-name">Header System Name</label>
+                            <input type="text" class="form-control" id="system-name" placeholder="Enter system name" value="BARANGAY 118 ONLINE SYSTEM">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">This is the name of the system displayed in the header</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="header-logo">Header Logo URL</label>
+                            <input type="text" class="form-control" id="header-logo" placeholder="Logo-Favicon-removebg-preview.png" value="Logo-Favicon-removebg-preview.png">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Enter direct image URL (Google Images, ImgBB, etc.) - Example: https://example.com/logo.png</small>
+                            <div class="image-preview-container">
+                                <img id="header-logo-preview" class="image-preview" alt="Header logo preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="hero-title">Page Hero Title</label>
+                            <input type="text" class="form-control" id="hero-title" placeholder="Enter compelling hero title" value="Barangay 118 Online System">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">This is the main headline that grabs attention</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="hero-description">Page Hero Description</label>
+                            <textarea class="form-control" id="hero-description" placeholder="Enter engaging description that explains your system">Digital service for a faster, smoother, and more connected community.</textarea>
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Brief description that appears below the title</small>
+                        </div>
+                        
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Hero Section
+                            </button>
+                            <button type="button" class="btn btn-warning" id="hero-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="hero-guide" class="guide-section">
+                        <h4>Hero Section Management</h4>
+                        <p>Customize the main banner section of your website.</p>
+                        <ul>
+                            <li>Update the main headline text</li>
+                            <li>Modify the description below the title</li>
+                            <li>Set the system name displayed in header</li>
+                            <li>Update the header logo image (supports Google Images, ImgBB, and other image hosting sites)</li>
+                            <li>Changes appear immediately on the main site after saving</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="welcome" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-home"></i> Welcome Section Management</h2>
+                        <div class="action-buttons">
+                            <a href="index.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Customize the welcome section with background image and welcoming content.</p>
+                    
+                    <form id="welcome-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="welcome-title">Welcome Title</label>
+                                <input type="text" class="form-control" id="welcome-title" placeholder="Enter welcoming title" value="Welcome to Barangay 118">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Main title for welcome section</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="welcome-subtitle">Welcome Subtitle</label>
+                                <input type="text" class="form-control" id="welcome-subtitle" placeholder="Enter engaging subtitle" value="A Community of Unity and Progress">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Secondary text below the title</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="welcome-background">Background Image URL</label>
+                                <input type="text" class="form-control" id="welcome-background" placeholder="8055825756095.png" value="8055825756095.png">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Enter direct URL to image (ImgBB, Google Images, etc.) - Example: https://ibb.co/abc123.jpg</small>
+                                <div class="image-preview-container">
+                                    <img id="welcome-bg-preview" class="image-preview" alt="Background preview">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="welcome-logo">Barangay Logo URL</label>
+                                <input type="text" class="form-control" id="welcome-logo" placeholder="Logo-Favicon-removebg-preview.png" value="Logo-Favicon-removebg-preview.png">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Enter direct URL to your barangay logo (ImgBB, Google Images, etc.) - Example: https://ibb.co/def456.png</small>
+                                <div class="image-preview-container">
+                                    <img id="welcome-logo-preview" class="image-preview" alt="Logo preview">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Welcome Section
+                            </button>
+                            <button type="button" class="btn btn-warning" id="welcome-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="welcome-guide" class="guide-section">
+                        <h4>Welcome Section Management</h4>
+                        <p>Customize the welcome section with background image and content.</p>
+                        <ul>
+                            <li>Update the welcome title and subtitle</li>
+                            <li>Add background image URL (supports ImgBB, Google Images, etc.)</li>
+                            <li>Upload your barangay logo (supports ImgBB, Google Images, etc.)</li>
+                            <li>Preview images before saving</li>
+                            <li>Changes appear immediately on the main site</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="footer" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-icons"></i> Footer & Social Media</h2>
+                        <div class="action-buttons">
+                            <a href="index.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage footer content and social media links.</p>
+                    
+                    <form id="footer-form">
+                        <div class="form-group">
+                            <label class="form-label" for="footer-title">Footer Title</label>
+                            <input type="text" class="form-control" id="footer-title" placeholder="Enter footer title" value="Barangay 118 Online System">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="footer-description">Footer Description</label>
+                            <textarea class="form-control" id="footer-description" placeholder="Enter footer description">Secure and efficient online services for Barangay 118. Connecting our community through technology.</textarea>
+                        </div>
+                        
+                        <h4 style="margin: 20px 0 10px 0; color: var(--dark);">Contact Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="address-line1">Address Line 1</label>
+                                <input type="text" class="form-control" id="address-line1" placeholder="402 2nd St, Grace Park East, Caloocan" value="402 2nd St, Grace Park East, Caloocan">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="address-line2">Address Line 2</label>
+                                <input type="text" class="form-control" id="address-line2" placeholder="Metro Manila, Philippines" value="Metro Manila, Philippines">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone Number</label>
+                                <input type="text" class="form-control" id="phone" placeholder="(02) 8123-4567" value="(02) 8123-4567">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="info@barangay118.gov.ph" value="info@barangay118.gov.ph">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="office-hours">Office Hours</label>
+                            <input type="text" class="form-control" id="office-hours" placeholder="Mon–Fri: 8:00 AM – 5:00 PM" value="Mon–Fri: 8:00 AM – 5:00 PM">
+                        </div>
+                        
+                        <h4 style="margin: 20px 0 10px 0; color: var(--dark);">Social Media Links</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="facebook-url">Facebook URL</label>
+                                <input type="text" class="form-control" id="facebook-url" placeholder="https://facebook.com/barangay118" value="https://facebook.com/barangay118">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="messenger-url">Messenger URL</label>
+                                <input type="text" class="form-control" id="messenger-url" placeholder="https://m.me/barangay118" value="https://m.me/barangay118">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="copyright-text">Copyright Text</label>
+                            <input type="text" class="form-control" id="copyright-text" placeholder="&copy; 2025 Barangay 118 Online System. All Rights Reserved." value="&copy; 2025 Barangay 118 Online System. All Rights Reserved.">
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Footer
+                            </button>
+                            <button type="button" class="btn btn-warning" id="footer-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="footer-guide" class="guide-section">
+                        <h4>Footer & Social Media</h4>
+                        <p>Customize the footer section and social media links.</p>
+                        <ul>
+                            <li>Update footer title and description</li>
+                            <li>Add contact information (address, phone, email)</li>
+                            <li>Set office hours</li>
+                            <li>Update Facebook and Messenger links</li>
+                            <li>Modify copyright information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="save-status" class="save-status">• Ready to Save</div>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script src="PanelAdmin.js">
+    </script>
+</body>
+</html>
+

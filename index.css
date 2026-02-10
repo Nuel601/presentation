@@ -1,0 +1,367 @@
+:root{
+    --primary:#2563eb;--primary-dark:#1d4ed8;--primary-light:#3b82f6;--primary-soft:#dbeafe;--primary-hover:rgba(37,99,235,0.08);
+    --light:#fff;--dark:#1e293b;--gray:#64748b;--gray-light:#f8fafc;--gray-border:#151516;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.07);--shadow-md:0 8px 24px rgba(0,0,0,.1);--shadow-nav:0 2px 8px rgba(0,0,0,.04);
+    --radius:10px;--radius-sm:6px;--radius-lg:16px;--radius-full:9999px;
+    --transition:all .25s ease;--transition-smooth:all .35s cubic-bezier(0.4,0,0.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--light);color:var(--dark);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  .container{width:90%;max-width:1550px;margin:0 auto;padding:0 20px;}
+  header{background:rgba(255,255,255,.98);box-shadow:var(--shadow-nav);position:sticky;top:0;z-index:1000;border-bottom:1px solid rgba(226,232,240,.6);height:74px;backdrop-filter:blur(8px);}
+  .navbar{display:flex;align-items:center;justify-content:space-between;height:74px;padding:0;}
+  .logo{display:flex;align-items:center;gap:16px;text-decoration:none;padding:8px 16px 8px 8px;border-radius:var(--radius);transition:var(--transition-smooth);position:relative;overflow:hidden;}
+  .logo:hover{background:var(--primary-hover);transform:translateY(-1px);}
+  .logo::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:36px;width:3px;background:linear-gradient(to bottom,var(--primary-light),var(--primary),var(--primary-dark));border-radius:2px;opacity:.8;}
+  .logo-image{width:52px;height:52px;object-fit:cover;border-radius:50%;transition:var(--transition-smooth);position:relative;z-index:1;background:linear-gradient(135deg,var(--primary-soft),var(--light));border:3px solid transparent;box-shadow:0 2px 8px rgba(37,99,235,.15),inset 0 0 0 1px rgba(255,255,255,.8);padding:2px;}
+  .logo-image::before{content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;background:linear-gradient(135deg,var(--primary-light),var(--primary),var(--primary-dark));border-radius:50%;z-index:-1;opacity:0;transition:var(--transition-smooth);}
+  .logo:hover .logo-image::before{opacity:1;}
+  .logo:hover .logo-image{transform:scale(1.08) rotate(5deg);box-shadow:0 4px 14px rgba(37,99,235,.25),inset 0 0 0 1px rgba(255,255,255,.9);}
+  #system-name{font-size:22px;font-weight:800;color:var(--dark);letter-spacing:-.3px;position:relative;background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 50%,var(--primary-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:var(--transition-smooth);text-shadow:0 1px 2px rgba(0,0,0,.05);line-height:1.2;}
+  .logo:hover #system-name{background:linear-gradient(135deg,#1e40af 0%,var(--primary-dark) 50%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .nav-links{display:flex;align-items:center;gap:24px;padding:0;background:none;border:none;}
+  .nav-links a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--dark);font-size:17px;font-weight:500;padding:6px 0;background:none;border:none;border-radius:0;box-shadow:none;transition:color .2s ease;}
+  .nav-links a i{font-size:16px;color:inherit;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary);font-weight:600;}
+  .nav-links a.active::before{content:none;}
+  .hero{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:#fff;padding:45px 0;text-align:center;}
+  .hero h2{font-size:2.5rem;margin-bottom:10px;font-weight:700;}
+  .hero p{font-size:1.2rem;max-width:700px;margin:0 auto;opacity:.9;font-weight:500;}
+  .barangay-welcome{height:74vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .welcome-background,.welcome-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;}
+  .welcome-background{background-size:100% 100%;background-position:center;background-repeat:no-repeat;}
+  .welcome-overlay{background:rgba(0,0,0,.4);}
+  .welcome-content{text-align:center;color:#fff;z-index:1;padding:10px;}
+  .welcome-title{font-size:4rem;font-weight:700;margin-bottom:20px;text-shadow:2px 2px 8px rgba(0,0,0,.7);}
+  .welcome-subtitle{font-size:1.5rem;margin-bottom:30px;text-shadow:1px 1px 4px rgba(0,0,0,.7);}
+  .barangay-logo{width:120px;height:120px;margin:30px auto 0;border-radius:50%;background:#fff;display:flex;justify-content:center;align-items:center;box-shadow:var(--shadow-lg);border:4px solid var(--primary);overflow:hidden;}
+  .barangay-logo img{width:100%;height:100%;object-fit:cover;}
+  footer{background-color:var(--dark);color:#fff;padding:30px 0 5px;margin-top:auto;}
+  .footer-content{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:50px;}
+  .footer-column h3{font-size:1.2rem;margin-bottom:18px;color:#fff;position:relative;padding-bottom:8px;}
+  .footer-column h3::after{content:'';position:absolute;bottom:0;left:0;width:40px;height:3px;background:linear-gradient(90deg,var(--primary-light),var(--primary));border-radius:2px;}
+  .footer-description{font-size:.95rem;line-height:1.6;color:#fff;margin:0;word-wrap:break-word;max-width:500px;}
+  .footer-right{display:flex;gap:40px;}
+  .footer-center .footer-row{display:flex;justify-content:flex-start;gap:60px;flex-wrap:wrap;margin:0 auto;max-width:900px;}
+  .footer-contact-info{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .footer-contact-info li{display:flex;align-items:center;gap:10px;}
+  .footer-contact-info li i{color:#3b82f6;font-size:16px;width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .footer-contact-info li span{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;font-weight:400;font-size:.95rem;line-height:1.6;color:#fff;}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .footer-links li{display:flex;align-items:center;gap:10px;}
+  .footer-links li i{color:#3b82f6;font-size:16px;width:20px;}
+  .footer-links li a{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;font-size:.95rem;color:#fff;text-decoration:none;line-height:1.6;}
+  .footer-links li a:hover{color:#a0aec0;}
+  .footer-center{text-align:left;margin:0 auto;}
+  .footer-right .footer-column{max-width:250px;}
+  .copyright{display:flex;justify-content:center;align-items:center;text-align:center;padding:15px 0 10px;border-top:1px solid rgba(255,255,255,.1);color:#aab6c5;font-size:.75rem;margin-top:20px;}
+  @media (max-width: 1200px) {
+    .container {
+      width: 95%;
+    }
+    
+    header {
+      height: 64px;
+    }
+    
+    .navbar {
+      height: 64px;
+      gap: 12px;
+    }
+    
+    .logo-image {
+      width: 46px;
+      height: 46px;
+    }
+    
+    #system-name {
+      font-size: 20px;
+    }
+    
+    .hero {
+      padding: 36px 0;
+    }
+    
+    .hero h2 {
+      font-size: 2.2rem;
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .container {
+      width: 95%;
+      padding: 0 18px;
+    }
+    
+    header {
+      height: 64px;
+    }
+    
+    .logo-image {
+      width: 44px;
+      height: 44px;
+    }
+    
+    #system-name {
+      font-size: 18px;
+    }
+    
+    .hero {
+      padding: 30px 0;
+    }
+    
+    .welcome-title {
+      font-size: 3rem;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.25rem;
+    }
+    
+    .barangay-logo {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      width: 100%;
+      padding: 0 16px;
+    }
+    
+    header {
+      height: 64px;
+      padding: 8px 0;
+    }
+    
+    .navbar {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-image {
+      width: 40px;
+      height: 40px;
+    }
+    
+    #system-name {
+      font-size: 16px;
+      display: none;
+    }
+    
+    .nav-links a span {
+      display: none;
+    }
+    
+    .nav-links {
+      gap: 10px;
+      justify-content: center;
+    }
+    
+    .hero {
+      padding: 28px 0;
+    }
+    
+    .hero h2 {
+      font-size: 1.8rem;
+    }
+    
+    .hero p {
+      font-size: 1rem;
+      max-width: 100%;
+      padding: 0 8px;
+    }
+    
+    .barangay-welcome {
+      height: 50vh;
+      padding: 10px 0;
+    }
+    
+    .welcome-title {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    
+    .barangay-logo {
+      width: 88px;
+      height: 88px;
+      margin-top: 18px;
+    }
+    
+    .footer-content {
+      flex-direction: column;
+      gap: 26px;
+    }
+    
+    .footer-center .footer-row {
+      gap: 24px;
+      justify-content: center;
+    }
+    
+    .nav-links a {
+      padding: 10px;
+      border-radius: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 12px;
+    }
+    
+    header {
+      height: 60px;
+    }
+    
+    .logo-image {
+      width: 36px;
+      height: 36px;
+    }
+    
+    #system-name {
+      display: none;
+    }
+    
+    .nav-links {
+      gap: 8px;
+      justify-content: center;
+    }
+    
+    .nav-links a i {
+      font-size: 18px;
+    }
+    
+    .nav-links a {
+      padding: 12px;
+    }
+    
+    .hero {
+      padding: 22px 0;
+    }
+    
+    .hero h2 {
+      font-size: 1.6rem;
+    }
+    
+    .hero p {
+      font-size: .95rem;
+    }
+    
+    .barangay-welcome {
+      height: 44vh;
+    }
+    
+    .welcome-title {
+      font-size: 1.8rem;
+    }
+    
+    .welcome-subtitle {
+      font-size: .95rem;
+    }
+    
+    .barangay-logo {
+      width: 72px;
+      height: 72px;
+    }
+    
+    .footer-center .footer-row {
+      flex-direction: column;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    
+    .footer-contact-info li {
+      gap: 8px;
+    }
+    
+    .committee-grid,
+    .documents-grid {
+      grid-template-columns: 1fr !important;
+      gap: 16px;
+    }
+    
+    .committee-card,
+    .document-card {
+      padding: 14px;
+      min-height: auto;
+    }
+    
+    .committee-name {
+      font-size: 1rem;
+    }
+    
+    .committee-chairperson {
+      font-size: .85rem;
+      padding: 4px 8px;
+    }
+    
+    .btn {
+      padding: 12px 18px;
+      font-size: .95rem;
+    }
+    
+    .toast {
+      right: 16px;
+      left: 16px;
+      bottom: 20px;
+      width: auto;
+    }
+  }
+  
+  @media (max-width: 360px) {
+    .hero h2 {
+      font-size: 1.4rem;
+    }
+    
+    .welcome-title {
+      font-size: 1.6rem;
+    }
+    
+    .barangay-logo {
+      width: 64px;
+      height: 64px;
+    }
+    
+    .nav-links a i {
+      font-size: 16px;
+    }
+    
+    .nav-links a {
+      padding: 10px;
+    }
+    
+    .footer-contact-info li span {
+      font-size: .9rem;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    .nav-links a,
+    .map-link-button,
+    .btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }

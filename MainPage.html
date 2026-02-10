@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Barangay 118</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --primary-soft: #dbeafe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #ffffff;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --gray-light: #f8fafc;
+            --gray-border: #e2e8f0;
+            --shadow: 0 4px 12px rgba(0,0,0,0.07);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.1);
+            --radius: 10px;
+            --radius-sm: 6px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--gray-light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255,255,255,0.98);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(226,232,240,0.6);
+            height: 70px;
+            backdrop-filter: blur(8px);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Dashboard Hero */
+        .dashboard-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-hero p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 30px 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary));
+            border-radius: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--gray-border);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-soft);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .service-icon i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .service-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .apply-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .apply-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Recent Applications */
+        .applications-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .applications-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .applications-table th {
+            background: var(--gray-light);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 2px solid var(--gray-border);
+        }
+
+        .applications-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-border);
+        }
+
+        .status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status.rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            color: white;
+        }
+
+        .footer-contact-info {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact-info li i {
+            color: var(--primary-light);
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 20px 0 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aab6c5;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        /* Modal for Registration Form */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-border);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            display: none;
+            z-index: 1002;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .applications-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <a href="Main.html" class="logo">
+                    <img src="Logo-Favicon-removebg-preview.png" alt="Barangay 118 Logo">
+                    <h1>BARANGAY 118 USER DASHBOARD</h1>
+                </a>
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">DK</div>
+                    <span id="user-name">Danny King</span>
+                    <button class="logout-btn" onclick="window.location.href='LogIn.html'">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Hero -->
+    <section class="dashboard-hero">
+        <div class="container">
+            <h2>Welcome  <span id="welcome-user">User</span>!</h2>
+            <p>Access barangay services and submit requests online</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">Available Services</h2>
+            <div class="services-grid">
+                <!-- Barangay Clearance -->
+                <div class="service-card" onclick="openRegistrationForm('clearance')">
+                    <div class="service-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3 class="service-title">Barangay Clearance</h3>
+                    <p class="service-description">
+                        Official certification that you are a resident of Barangay 118 and have no pending barangay cases.
+                        Required for employment, business permits, and other government transactions.
+                    </p>
+                    <button class="apply-btn" onclick="event.stopPropagation(); openRegistrationForm('clearance')">
+                        <i class="fas fa-pencil-alt"></i> Apply Now
+                    </button>
+                </div>
+
+                <!-- Certificate of Residency -->
+                <div class="service-card" onclick="openRegistrationForm('residency')">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="service-title">Certificate of Residency</h3>
+                    <p class="service-description">
+                        Proof of residence in Barangay 118. Required for school enrollment, scholarship applications,
+                        voter registration, and other documents requiring proof of address.
+                    </p>
+                    <button class="apply-btn" onclick="event.stopPropagation(); openRegistrationForm('residency')">
+                        <i class="fas fa-pencil-alt"></i> Apply Now
+                    </button>
+                </div>
+
+                <!-- Certificate of Indigency -->
+                <div class="service-card" onclick="openRegistrationForm('indigency')">
+                    <div class="service-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="service-title">Certificate of Indigency</h3>
+                    <p class="service-description">
+                        Certification that you belong to the low-income sector. Required for social welfare assistance,
+                        medical discounts, educational subsidies, and other government assistance programs.
+                    </p>
+                    <button class="apply-btn" onclick="event.stopPropagation(); openRegistrationForm('indigency')">
+                        <i class="fas fa-pencil-alt"></i> Apply Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Applications -->
+            <div class="applications-section">
+                <h3 class="section-title">Recent Applications</h3>
+                <table class="applications-table">
+                    <thead>
+                        <tr>
+                            <th>Document Type</th>
+                            <th>Date Applied</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applications-list">
+                        <tr>
+                            <td>Barangay Clearance</td>
+                            <td>2024-01-15</td>
+                            <td>Employment Requirements</td>
+                            <td><span class="status approved">Approved</span></td>
+                        </tr>
+                        <tr>
+                            <td>Certificate of Residency</td>
+                            <td>2024-01-18</td>
+                            <td>School Enrollment</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>Certificate of Indigency</td>
+                            <td>2024-01-20</td>
+                            <td>Medical Assistance</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Barangay 118 Online System</h3>
+                    <p>Secure and efficient online services for Barangay 118. Connecting our community through technology.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 402 2nd St, Grace Park East, Caloocan</li>
+                        <li><i class="fas fa-map-pin"></i> Metro Manila, Philippines</li>
+                        <li><i class="fas fa-phone"></i> (02) 8123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@barangay118.gov.ph</li>
+                        <li><i class="fas fa-clock"></i> Mon–Fri: 8:00 AM – 5:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Barangay 118 Online System. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Registration Form Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="form-title">Barangay Clearance Application</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="documentForm" onsubmit="submitApplication(event)">
+                <input type="hidden" id="documentType" name="documentType">
+                
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth *</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Place of Birth *</label>
+                        <input type="text" class="form-control" id="birthPlace" name="birthPlace" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Complete Address *</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="House No., Street, Zone" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Contact Number *</label>
+                        <input type="tel" class="form-control" id="contactNumber" name="contactNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Purpose of Request *</label>
+                    <textarea class="form-control" id="purpose" name="purpose" rows="3" required></textarea>
+                </div>
+
+                <!-- Specific fields for each document type -->
+                <div id="specificFields">
+                    <!-- Fields will be dynamically inserted here -->
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Valid ID (Front) *</label>
+                    <input type="file" class="form-control" id="validId" name="validId" accept="image/*,.pdf" required>
+                    <small style="color: var(--gray); margin-top: 5px;">Accepted: Any valid government ID (Passport, Driver's License, UMID, etc.)</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Additional Notes</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="2" placeholder="Any additional information or special requests..."></textarea>
+                </div>
+
+                <div class="form-group" style="margin-top: 25px;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" required style="margin-top: 3px;">
+                        <span style="font-size: 0.9rem; color: var(--dark);">
+                            I hereby certify that the information provided is true and correct. I understand that any false information may result in the denial of my application.
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Submit Application
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="successToast">
+        <i class="fas fa-check-circle"></i> Application submitted successfully!
+    </div>
+
+    <script>
+        // Document type configurations
+        const documentTypes = {
+            clearance: {
+                title: "Barangay Clearance Application",
+                specificFields: `
+                    <div class="form-group">
+                        <label class="form-label">Occupation *</label>
+                        <input type="text" class="form-control" name="occupation" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Monthly Income (PHP) *</label>
+                        <input type="number" class="form-control" name="income" min="0" required>
+                    </div>
+                `
+            },
+            residency: {
+                title: "Certificate of Residency Application",
+                specificFields: `
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Length of Residency (Years) *</label>
+                            <input type="number" class="form-control" name="residencyYears" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Relationship to Household Head *</label>
+                            <select class="form-control" name="relationship" required>
+                                <option value="">Select Relationship</option>
+                                <option value="self">Self</option>
+                                <option value="spouse">Spouse</option>
+                                <option value="child">Child</option>
+                                <option value="parent">Parent</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="relative">Relative</option>
+                                <option value="non-relative">Non-relative</option>
+                            </select>
+                        </div>
+                    </div>
+                `
+            },
+            indigency: {
+                title: "Certificate of Indigency Application",
+                specificFields: `
+                    <div class="form-group">
+                        <label class="form-label">Total Family Monthly Income (PHP) *</label>
+                        <input type="number" class="form-control" name="familyIncome" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Number of Family Members *</label>
+                        <input type="number" class="form-control" name="familyMembers" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Source of Income *</label>
+                        <input type="text" class="form-control" name="incomeSource" required>
+                    </div>
+                `
+            }
+        };
+
+        // Open registration form
+        function openRegistrationForm(type) {
+            const modal = document.getElementById('registrationModal');
+            const formTitle = document.getElementById('form-title');
+            const documentType = document.getElementById('documentType');
+            const specificFields = document.getElementById('specificFields');
+            
+            // Set form title and type
+            formTitle.textContent = documentTypes[type].title;
+            documentType.value = type;
+            
+            // Insert specific fields
+            specificFields.innerHTML = documentTypes[type].specificFields;
+            
+            // Show modal
+            modal.style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('registrationModal').style.display = 'none';
+        }
+
+        // Submit application
+        function submitApplication(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const documentType = formData.get('documentType');
+            
+            // In a real application, you would send this to a server
+            // For demo purposes, we'll simulate submission
+            
+            console.log('Application Submitted:', Object.fromEntries(formData));
+            
+            // Close modal
+            closeModal();
+            
+            // Show success message
+            showToast();
+            
+            // Add to applications list
+            addToApplicationsList(documentType, formData.get('purpose'));
+            
+            // Reset form
+            form.reset();
+        }
+
+        // Show success toast
+        function showToast() {
+            const toast = document.getElementById('successToast');
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Add to applications list
+        function addToApplicationsList(type, purpose) {
+            const applicationsList = document.getElementById('applications-list');
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Format document type name
+            let typeName = '';
+            switch(type) {
+                case 'clearance':
+                    typeName = 'Barangay Clearance';
+                    break;
+                case 'residency':
+                    typeName = 'Certificate of Residency';
+                    break;
+                case 'indigency':
+                    typeName = 'Certificate of Indigency';
+                    break;
+            }
+            
+            // Add new row at the beginning
+            const newRow = `
+                <tr>
+                    <td>${typeName}</td>
+                    <td>${today}</td>
+                    <td>${purpose}</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+            `;
+            
+            applicationsList.insertAdjacentHTML('afterbegin', newRow);
+        }
+
+        // Load user data from localStorage or session
+        function loadUserData() {
+            const userName = localStorage.getItem('currentUser') || 'Danny King';
+            const userAvatar = document.getElementById('user-avatar');
+            const welcomeUser = document.getElementById('welcome-user');
+            
+            // Get initials for avatar
+            const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            // Update UI
+            document.getElementById('user-name').textContent = userName;
+            userAvatar.textContent = initials;
+            welcomeUser.textContent = userName.split(' ')[0];
+            
+            // Set random color for avatar
+            const colors = ['#2563eb', '#10b981', '#8b5cf6', '#f59e0b', '#ef4444'];
+            userAvatar.style.background = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('registrationModal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

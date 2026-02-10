@@ -1,0 +1,2763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control - Barangay 118 Online System</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CreateAccountAdmin.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo" onclick="myFunction()">
+                    <div class="logo-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>BARANGAY 118 ADMIN PANEL</h1>
+                        <p>User Registration Control Center</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="PanelAdmin.html">Dashboard</a>
+                    <a href="AboutUsAdmin.html">AboutUs</a>
+                    <a href="NewsAdmin.html">News</a>
+                    <a href="EmergencyAdmin.html">Emergency</a>
+                    <a href="CreateAccountAdmin.html" class="active">Create</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-panel">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title"><i class="fas fa-cogs"></i> Control Center</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-tab="dashboard"><span class="sidebar-icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard</a></li>
+                <li><a href="#" data-tab="user-management"><span class="sidebar-icon"><i class="fas fa-users-cog"></i></span> User Management</a></li>
+                <li><a href="#" data-tab="pending-registrations"><span class="sidebar-icon"><i class="fas fa-hourglass-half"></i></span> Pending Registrations</a></li>
+                <li><a href="#" data-tab="approved-accounts"><span class="sidebar-icon"><i class="fas fa-check-circle"></i></span> Approved Accounts</a></li>
+                <li><a href="#" data-tab="rejected-applications"><span class="sidebar-icon"><i class="fas fa-times-circle"></i></span> Rejected Applications</a></li>
+                <li><a href="#" data-tab="all-registrations"><span class="sidebar-icon"><i class="fas fa-list-alt"></i></span> All Registrations</a></li>
+                <li><a href="#" data-tab="create-manual"><span class="sidebar-icon"><i class="fas fa-user-plus"></i></span> Create Account Manually</a></li>
+                <li><a href="#" data-tab="admin-management"><span class="sidebar-icon"><i class="fas fa-user-shield"></i></span> Admin Management</a></li>
+                <li><a href="#" data-tab="hero-editor"><span class="sidebar-icon"><i class="fas fa-edit"></i></span> Hero Editor</a></li>
+                <li><a href="#" data-tab="system-logs"><span class="sidebar-icon"><i class="fas fa-history"></i></span> System Logs</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="LogIn.html" class="sidebar-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <!-- DASHBOARD TAB -->
+            <div id="dashboard" class="tab-content active">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Registration Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="system-status">Ready</div>
+                            <div class="stat-label">System Status</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-users">0</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="active-admins">0</div>
+                            <div class="stat-label">Admin Accounts</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="online-users">0</div>
+                            <div class="stat-label">Online Users</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-pending">0</div>
+                            <div class="stat-label">Pending Registrations</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-approved">0</div>
+                            <div class="stat-label">Approved Accounts</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-rejected">0</div>
+                            <div class="stat-label">Rejected Applications</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-manual">0</div>
+                            <div class="stat-label">Manual Accounts</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="last-updated">Never</div>
+                            <div class="stat-label">Last Updated</div>
+                        </div>
+                    
+                        <div class="stat-card">
+                            <div class="stat-value" id="data-size">0 KB</div>
+                            <div class="stat-label">Data Size</div>
+                        </div>                 
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-check-circle"></i> System Ready!</strong> Welcome to the Barangay 118 Registration Admin Control Panel.
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" id="preview-site-btn">
+                            <i class="fas fa-external-link-alt"></i> Preview Site
+                        </button>
+                        <button class="btn btn-secondary" id="export-data-btn">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn-success" id="backup-btn">
+                            <i class="fas fa-database"></i> Backup Data
+                        </button>
+                        <button class="btn btn-warning" id="refresh-btn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                        <button class="btn btn-danger" id="clear-all-data-btn">
+                            <i class="fas fa-trash"></i> Clear All Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div id="recent-activity">
+                        <p style="color: var(--gray); text-align: center; padding: 20px;">
+                            <i class="fas fa-clock"></i> Loading activity...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="dashboard-guide" class="guide-section">
+                        <h4>Registration Admin Panel Guide</h4>
+                        <p>This admin panel manages all user registrations from the Barangay 118 Online System.</p>
+                        <ul>
+                            <li><strong>Pending Registrations:</strong> Review and process new applications from users</li>
+                            <li><strong>Approved Accounts:</strong> View successfully approved user accounts</li>
+                            <li><strong>Rejected Applications:</strong> Review declined registrations</li>
+                            <li><strong>All Registrations:</strong> View complete registration history</li>
+                            <li><strong>Create Manual:</strong> Manually create user accounts for special cases</li>
+                            <li><strong>Hero Editor:</strong> Edit the title and description of the login page</li>
+                            <li><strong>Firebase Integration:</strong> All data stored in Firebase Realtime Database</li>
+                            <li><strong>Real-time Updates:</strong> Changes appear instantly across all tabs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HERO EDITOR TAB -->
+            <div id="hero-editor" class="tab-content">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-edit"></i> Hero Editor</h2>
+                    <p style="color: var(--gray); margin-bottom: 25px;">Edit the title and description of the login page hero section.</p>
+                    
+                    <form id="hero-edit-form">
+                        <div class="form-group">
+                            <label class="form-label" for="hero-title">Hero Title *</label>
+                            <input type="text" class="form-control" id="hero-title-input" placeholder="Enter hero title" required>
+                            <small class="form-text">This will be displayed as the main title on the login page</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="hero-description">Hero Description *</label>
+                            <textarea class="form-control" id="hero-description-input" placeholder="Enter hero description" rows="3" required></textarea>
+                            <small class="form-text">This will be displayed below the title on the login page</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="welcome-title">Welcome Title *</label>
+                            <input type="text" class="form-control" id="welcome-title-input" placeholder="Enter welcome title" required>
+                            <small class="form-text">This will be displayed in the welcome section on the login page</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="welcome-description">Welcome Description *</label>
+                            <textarea class="form-control" id="welcome-description-input" placeholder="Enter welcome description" rows="3" required></textarea>
+                            <small class="form-text">This will be displayed below the welcome title</small>
+                        </div>
+                        
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-success" id="save-hero-btn">
+                                <i class="fas fa-save"></i> Save Hero Content
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="reset-hero-btn">
+                                <i class="fas fa-redo"></i> Reset to Default
+                            </button>
+                            <button type="button" class="btn btn-primary" id="preview-hero-btn">
+                                <i class="fas fa-eye"></i> Preview Login Page
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="preview-section" style="margin-top: 30px; padding: 20px; background: var(--gray-light); border-radius: var(--radius);">
+                        <h3><i class="fas fa-desktop"></i> Preview</h3>
+                        <div style="background: white; padding: 20px; border-radius: var(--radius); margin-top: 15px;">
+                            <h2 id="hero-preview-title" style="color: var(--primary); margin-bottom: 10px;">Login to Your Account</h2>
+                            <p id="hero-preview-description" style="color: var(--gray); margin-bottom: 20px;">Sign in to access your dashboard and Barangay 118 services.</p>
+                            <hr style="margin: 20px 0;">
+                            <h3 id="welcome-preview-title" style="color: var(--dark); margin-bottom: 10px;">Welcome</h3>
+                            <p id="welcome-preview-description" style="color: var(--gray);">Access your barangay services and stay connected securely through our portal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USER MANAGEMENT TAB -->
+            <div id="user-management" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-users-cog"></i> User Management</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-users-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage all user accounts in the system.</p>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="user-search" placeholder="Search users...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading user data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PENDING REGISTRATIONS TAB -->
+            <div id="pending-registrations" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-hourglass-half"></i> Pending Registrations</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-pending-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong><i class="fas fa-info-circle"></i> Instructions:</strong> Click on any registration to review details and approve/reject. All data is loaded from Firebase Realtime Database.
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="pending-search" placeholder="Search pending registrations...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Control No.</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Date Submitted</th>
+                                <th>Documents</th>
+                                <th>Face Scan</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pending-table-body">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading pending registrations from Firebase...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Registration Details Modal -->
+                <div id="registration-details-modal" class="modal" style="display: none;">
+                    <div class="modal-content large">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Registration Details</h2>
+                            <button class="close-modal" id="close-details-modal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="registration-details-body">
+                            <!-- Details will be loaded here -->
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" id="reject-registration-btn">
+                                <i class="fas fa-times"></i> Reject Application
+                            </button>
+                            <button class="btn btn-success" id="approve-registration-btn">
+                                <i class="fas fa-check"></i> Approve Application
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CREATE MANUAL ACCOUNT TAB -->
+            <div id="create-manual" class="tab-content">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-user-plus"></i> Create Account Manually</h2>
+                    <p style="color: var(--gray); margin-bottom: 25px;">Use this form to create user accounts manually. This bypasses the regular registration process.</p>
+                    
+                    <form id="manual-account-form">
+                        <input type="hidden" id="manual-edit-id" value="">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="manual-last-name">Last Name *</label>
+                                <input type="text" class="form-control" id="manual-last-name" placeholder="Enter last name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="manual-first-name">First Name *</label>
+                                <input type="text" class="form-control" id="manual-first-name" placeholder="Enter first name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="manual-middle-name">Middle Name</label>
+                            <input type="text" class="form-control" id="manual-middle-name" placeholder="Enter middle name (optional)">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="manual-email">Email Address *</label>
+                                <input type="email" class="form-control" id="manual-email" placeholder="Enter email address" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="manual-phone">Phone Number</label>
+                                <input type="tel" class="form-control" id="manual-phone" placeholder="Enter phone number">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="manual-password">Password *</label>
+                                <input type="password" class="form-control" id="manual-password" placeholder="Create password" required minlength="6">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="manual-confirm-password">Confirm Password *</label>
+                                <input type="password" class="form-control" id="manual-confirm-password" placeholder="Confirm password" required minlength="6">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="manual-address">Complete Address *</label>
+                            <textarea class="form-control" id="manual-address" placeholder="Enter complete address" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="manual-date-of-birth">Date of Birth *</label>
+                                <input type="date" class="form-control" id="manual-date-of-birth" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="manual-gender">Gender *</label>
+                                <select class="form-control" id="manual-gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="manual-role">Account Role *</label>
+                            <select class="form-control" id="manual-role" required>
+                                <option value="user">Regular User</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="manual-reason">Reason for Manual Creation</label>
+                            <textarea class="form-control" id="manual-reason" placeholder="Explain why this account is being created manually" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-success" id="manual-submit-btn">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="manual-cancel-edit" style="display: none;">
+                                <i class="fas fa-times"></i> Cancel Edit
+                            </button>
+                            <button type="reset" class="btn btn-warning" id="manual-reset-btn">
+                                <i class="fas fa-redo"></i> Reset Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- APPROVED ACCOUNTS TAB -->
+            <div id="approved-accounts" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-check-circle"></i> Approved Accounts</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-approved-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="approved-search" placeholder="Search approved accounts...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Control No.</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Date Approved</th>
+                                <th>Approved By</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approved-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading approved accounts from Firebase...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- REJECTED APPLICATIONS TAB -->
+            <div id="rejected-applications" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-times-circle"></i> Rejected Applications</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-rejected-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="rejected-search" placeholder="Search rejected applications...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Control No.</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Date Rejected</th>
+                                <th>Rejected By</th>
+                                <th>Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rejected-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading rejected applications from Firebase...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ALL REGISTRATIONS TAB -->
+            <div id="all-registrations" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-list-alt"></i> All Registrations</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-all-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="export-all-btn">
+                                <i class="fas fa-download"></i> Export All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-container">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label>Status Filter:</label>
+                                <select id="status-filter" class="filter-select">
+                                    <option value="all">All Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Date Range:</label>
+                                <input type="date" id="date-from" class="filter-date"> to
+                                <input type="date" id="date-to" class="filter-date">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="all-search" placeholder="Search all registrations...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Control No.</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Date Submitted</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading all registrations from Firebase...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ADMIN MANAGEMENT TAB -->
+            <div id="admin-management" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-user-shield"></i> Admin Management</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-admins-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage administrator accounts and permissions.</p>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="admin-search" placeholder="Search admins...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Permissions</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading admin data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SYSTEM LOGS TAB -->
+            <div id="system-logs" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-history"></i> System Logs</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="refresh-logs-btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="export-logs-btn">
+                                <i class="fas fa-download"></i> Export Logs
+                            </button>
+                            <button class="btn btn-danger btn-sm" id="clear-logs-btn">
+                                <i class="fas fa-trash"></i> Clear Logs
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-container">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label>Log Type:</label>
+                                <select id="log-type-filter" class="filter-select">
+                                    <option value="all">All Types</option>
+                                    <option value="UserLogs">User Logs</option>
+                                    <option value="AdminLogs">Admin Logs</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Date Range:</label>
+                                <input type="date" id="log-date-from" class="filter-date"> to
+                                <input type="date" id="log-date-to" class="filter-date">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-bar" id="log-search" placeholder="Search logs...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                                <th>Local IP</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading system logs...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="save-status" class="save-status">• Ready to Save</div>
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+        function myFunction() {
+            location.reload(); 
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        let db = null;
+        let registrationsRef = null;
+        let systemLogsRef = null;
+        let heroContentRef = null;
+        let unsubscribe = null;
+        let currentRegistrationKey = null;
+        
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.database();
+            registrationsRef = db.ref('06_CreateAccount');
+            systemLogsRef = db.ref('07_SystemLogs');
+            heroContentRef = db.ref('01_hero');
+            console.log("Firebase initialized successfully in Registration Admin Panel!");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        const defaultRegistrationData = {
+            "01_pending": {
+                title: "Pending Registrations",
+                description: "Applications awaiting review",
+                registrations: []
+            },
+            "02_approved": {
+                title: "Approved Accounts",
+                description: "Successfully approved user accounts",
+                registrations: []
+            },
+            "03_rejected": {
+                title: "Rejected Applications",
+                description: "Declined registration applications",
+                registrations: []
+            },
+            "04_manual": {
+                title: "Manual Accounts",
+                description: "Accounts created by administrators",
+                registrations: []
+            },
+            "05_users": {
+                title: "User Management",
+                description: "All active user accounts",
+                users: []
+            },
+            "06_admins": {
+                title: "Admin Accounts",
+                description: "Administrator accounts",
+                admins: []
+            }
+        };
+
+        const defaultSystemLogs = {
+            "01_logs": {
+                title: "System Activity Logs",
+                description: "All system activities and changes",
+                logs: []
+            }
+        };
+
+        const defaultHeroContent = {
+            title: "Login to Your Account",
+            subtitle: "Sign in to access your dashboard and Barangay 118 services.",
+            welcomeTitle: "Welcome",
+            welcomeDescription: "Access your barangay services and stay connected securely through our portal.",
+            lastUpdated: new Date().toISOString()
+        };
+
+        class RegistrationAdminPanel {
+            constructor() {
+                this.currentData = null;
+                this.systemLogs = null;
+                this.heroContent = null;
+                this.activityLog = [];
+                this.currentView = 'dashboard';
+                this.isDataLoaded = false;
+                this.init();
+            }
+
+            init() {
+                if (db) {
+                    this.updateSaveStatus('• Connected to Firebase', 'success');
+                    this.setupFirebaseListeners();
+                    this.loadHeroContent();
+                } else {
+                    this.updateSaveStatus('• Firebase Not Connected', 'error');
+                    this.showToast('Firebase not connected. Please check configuration.', 'error');
+                }
+                
+                this.setupEventListeners();
+                this.switchTab('dashboard');
+                this.logToSystem('System initialized', 'system', 'Admin Panel loaded successfully');
+            }
+
+            setupFirebaseListeners() {
+                // Listen to registrations data
+                if (registrationsRef) {
+                    this.unsubscribe = registrationsRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            this.currentData = this.mergeWithDefaults(firebaseData);
+                            this.isDataLoaded = true;
+                            
+                            console.log('Registration data loaded from Firebase (06_CreateAccount)');
+                            this.loadDashboardStats();
+                            
+                            // Refresh current view if it's a registration list
+                            if (this.currentView === 'pending-registrations') {
+                                this.loadPendingRegistrations();
+                            } else if (this.currentView === 'approved-accounts') {
+                                this.loadApprovedAccounts();
+                            } else if (this.currentView === 'rejected-applications') {
+                                this.loadRejectedApplications();
+                            } else if (this.currentView === 'all-registrations') {
+                                this.loadAllRegistrations();
+                            } else if (this.currentView === 'user-management') {
+                                this.loadUserManagement();
+                            } else if (this.currentView === 'admin-management') {
+                                this.loadAdminManagement();
+                            }
+                        } else {
+                            this.currentData = this.getDefaultData();
+                            this.saveData(true);
+                        }
+                    }, (error) => {
+                        console.error("Error reading from Firebase:", error);
+                        this.updateSaveStatus('• Error Reading Data', 'error');
+                    });
+                }
+
+                // Listen to system logs
+                if (systemLogsRef) {
+                    systemLogsRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            this.systemLogs = snapshot.val();
+                            
+                            if (this.currentView === 'system-logs') {
+                                this.loadSystemLogs();
+                            }
+                        } else {
+                            this.systemLogs = defaultSystemLogs;
+                            this.saveSystemLogs(true);
+                        }
+                    });
+                }
+
+                // Listen to hero content
+                if (heroContentRef) {
+                    heroContentRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            this.heroContent = snapshot.val();
+                            this.updateHeroPreview();
+                        }
+                    });
+                }
+            }
+
+            async loadHeroContent() {
+                try {
+                    const snapshot = await heroContentRef.once('value');
+                    if (snapshot.exists()) {
+                        this.heroContent = snapshot.val();
+                        this.populateHeroForm();
+                        this.updateHeroPreview();
+                    } else {
+                        this.heroContent = defaultHeroContent;
+                        await heroContentRef.set(defaultHeroContent);
+                        this.populateHeroForm();
+                        this.updateHeroPreview();
+                    }
+                } catch (error) {
+                    console.error('Error loading hero content:', error);
+                }
+            }
+
+            populateHeroForm() {
+                if (!this.heroContent) return;
+                
+                document.getElementById('hero-title-input').value = this.heroContent.title || '';
+                document.getElementById('hero-description-input').value = this.heroContent.subtitle || '';
+                document.getElementById('welcome-title-input').value = this.heroContent.welcomeTitle || '';
+                document.getElementById('welcome-description-input').value = this.heroContent.welcomeDescription || '';
+            }
+
+            updateHeroPreview() {
+                if (!this.heroContent) return;
+                
+                document.getElementById('hero-preview-title').textContent = this.heroContent.title || '';
+                document.getElementById('hero-preview-description').textContent = this.heroContent.subtitle || '';
+                document.getElementById('welcome-preview-title').textContent = this.heroContent.welcomeTitle || '';
+                document.getElementById('welcome-preview-description').textContent = this.heroContent.welcomeDescription || '';
+            }
+
+            async saveHeroContent() {
+                const heroTitle = document.getElementById('hero-title-input').value.trim();
+                const heroDescription = document.getElementById('hero-description-input').value.trim();
+                const welcomeTitle = document.getElementById('welcome-title-input').value.trim();
+                const welcomeDescription = document.getElementById('welcome-description-input').value.trim();
+                
+                if (!heroTitle || !heroDescription || !welcomeTitle || !welcomeDescription) {
+                    this.showToast('Please fill in all hero fields!', 'error');
+                    return;
+                }
+                
+                const heroData = {
+                    title: heroTitle,
+                    subtitle: heroDescription,
+                    welcomeTitle: welcomeTitle,
+                    welcomeDescription: welcomeDescription,
+                    lastUpdated: new Date().toISOString(),
+                    updatedBy: this.getCurrentAdminName()
+                };
+                
+                try {
+                    await heroContentRef.set(heroData);
+                    this.heroContent = heroData;
+                    this.updateHeroPreview();
+                    this.showToast('Hero content saved successfully!', 'success');
+                    this.logToSystem('Hero Content Updated', 'edit', `Updated login page hero content: "${heroTitle}"`, this.getCurrentAdminName(), 'Login Page');
+                } catch (error) {
+                    console.error('Error saving hero content:', error);
+                    this.showToast('Error saving hero content. Please try again.', 'error');
+                }
+            }
+
+            getCurrentAdminName() {
+                const adminName = sessionStorage.getItem('userName') || 'Administrator';
+                return adminName;
+            }
+
+            async resetHeroToDefault() {
+                try {
+                    await heroContentRef.set(defaultHeroContent);
+                    this.heroContent = defaultHeroContent;
+                    this.populateHeroForm();
+                    this.updateHeroPreview();
+                    this.showToast('Hero content reset to default!', 'success');
+                    this.logToSystem('Hero Content Reset', 'system', 'Reset login page hero content to default', this.getCurrentAdminName(), 'Login Page');
+                } catch (error) {
+                    console.error('Error resetting hero content:', error);
+                    this.showToast('Error resetting hero content.', 'error');
+                }
+            }
+
+            mergeWithDefaults(firebaseData) {
+                const defaultData = this.getDefaultData();
+                const merged = { ...defaultData };
+                
+                for (const key in firebaseData) {
+                    if (merged[key]) {
+                        if (typeof firebaseData[key] === 'object' && !Array.isArray(firebaseData[key])) {
+                            merged[key] = { ...merged[key], ...firebaseData[key] };
+                        } else {
+                            merged[key] = firebaseData[key];
+                        }
+                    } else {
+                        merged[key] = firebaseData[key];
+                    }
+                }
+                
+                return merged;
+            }
+
+            getDefaultData() {
+                return JSON.parse(JSON.stringify(defaultRegistrationData));
+            }
+
+            setupEventListeners() {
+                // Tab navigation - UPDATED FOR BETTER TAB SWITCHING
+                document.querySelector('.sidebar-menu').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const link = e.target.closest('a');
+                    if (link && link.hasAttribute('data-tab')) {
+                        const tabId = link.getAttribute('data-tab');
+                        this.switchTab(tabId);
+                    }
+                });
+
+                // Quick action buttons
+                document.getElementById('preview-site-btn').addEventListener('click', () => {
+                    window.open('LogIn.html', '_blank');
+                });
+
+                document.getElementById('export-data-btn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                document.getElementById('backup-btn').addEventListener('click', () => {
+                    this.backupData();
+                });
+
+                document.getElementById('refresh-btn').addEventListener('click', () => {
+                    this.loadDashboardStats();
+                    this.showToast('Dashboard refreshed!', 'success');
+                });
+
+                // Clear all data button
+                document.getElementById('clear-all-data-btn').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to clear ALL registration data from Firebase? This will remove everything from 06_CreateAccount node and cannot be undone!')) {
+                        this.clearAllData();
+                    }
+                });
+
+                // Hero editor buttons
+                document.getElementById('hero-edit-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveHeroContent();
+                });
+
+                document.getElementById('reset-hero-btn').addEventListener('click', () => {
+                    if (confirm('Reset hero content to default values?')) {
+                        this.resetHeroToDefault();
+                    }
+                });
+
+                document.getElementById('preview-hero-btn').addEventListener('click', () => {
+                    window.open('LogIn.html', '_blank');
+                });
+
+                // Refresh buttons for each tab
+                document.getElementById('refresh-pending-btn').addEventListener('click', () => {
+                    this.loadPendingRegistrations();
+                });
+
+                document.getElementById('refresh-approved-btn').addEventListener('click', () => {
+                    this.loadApprovedAccounts();
+                });
+
+                document.getElementById('refresh-rejected-btn').addEventListener('click', () => {
+                    this.loadRejectedApplications();
+                });
+
+                document.getElementById('refresh-all-btn').addEventListener('click', () => {
+                    this.loadAllRegistrations();
+                });
+
+                document.getElementById('refresh-users-btn').addEventListener('click', () => {
+                    this.loadUserManagement();
+                });
+
+                document.getElementById('refresh-admins-btn').addEventListener('click', () => {
+                    this.loadAdminManagement();
+                });
+
+                document.getElementById('refresh-logs-btn').addEventListener('click', () => {
+                    this.loadSystemLogs();
+                });
+
+                // Export buttons
+                document.getElementById('export-all-btn').addEventListener('click', () => {
+                    this.exportAllRegistrations();
+                });
+
+                document.getElementById('export-logs-btn').addEventListener('click', () => {
+                    this.exportSystemLogs();
+                });
+
+                // Clear logs button
+                document.getElementById('clear-logs-btn').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to clear ALL system logs? This action cannot be undone!')) {
+                        this.clearSystemLogs();
+                    }
+                });
+
+                // Manual account form
+                document.getElementById('manual-account-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.createManualAccount();
+                });
+
+                document.getElementById('manual-reset-btn').addEventListener('click', () => {
+                    document.getElementById('manual-account-form').reset();
+                    document.getElementById('manual-edit-id').value = '';
+                    document.getElementById('manual-cancel-edit').style.display = 'none';
+                    document.getElementById('manual-submit-btn').innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                });
+
+                document.getElementById('manual-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('manual-account-form').reset();
+                    document.getElementById('manual-edit-id').value = '';
+                    document.getElementById('manual-cancel-edit').style.display = 'none';
+                    document.getElementById('manual-submit-btn').innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                });
+
+                // Search functionality
+                document.getElementById('pending-search').addEventListener('input', (e) => {
+                    this.searchTable('pending', e.target.value);
+                });
+
+                document.getElementById('approved-search').addEventListener('input', (e) => {
+                    this.searchTable('approved', e.target.value);
+                });
+
+                document.getElementById('rejected-search').addEventListener('input', (e) => {
+                    this.searchTable('rejected', e.target.value);
+                });
+
+                document.getElementById('all-search').addEventListener('input', (e) => {
+                    this.searchTable('all', e.target.value);
+                });
+
+                document.getElementById('user-search').addEventListener('input', (e) => {
+                    this.searchTable('user', e.target.value);
+                });
+
+                document.getElementById('admin-search').addEventListener('input', (e) => {
+                    this.searchTable('admin', e.target.value);
+                });
+
+                document.getElementById('log-search').addEventListener('input', (e) => {
+                    this.searchLogs(e.target.value);
+                });
+
+                // Status filter
+                document.getElementById('status-filter').addEventListener('change', (e) => {
+                    this.filterAllRegistrations();
+                });
+
+                // Date filters
+                document.getElementById('date-from').addEventListener('change', () => {
+                    this.filterAllRegistrations();
+                });
+
+                document.getElementById('date-to').addEventListener('change', () => {
+                    this.filterAllRegistrations();
+                });
+
+                // Log filters
+                document.getElementById('log-type-filter').addEventListener('change', () => {
+                    this.filterSystemLogs();
+                });
+
+                document.getElementById('log-date-from').addEventListener('change', () => {
+                    this.filterSystemLogs();
+                });
+
+                document.getElementById('log-date-to').addEventListener('change', () => {
+                    this.filterSystemLogs();
+                });
+
+                // Modal close button
+                document.getElementById('close-details-modal').addEventListener('click', () => {
+                    this.closeRegistrationDetails();
+                });
+
+                // Approve/Reject buttons
+                document.getElementById('approve-registration-btn').addEventListener('click', () => {
+                    this.approveRegistration();
+                });
+
+                document.getElementById('reject-registration-btn').addEventListener('click', () => {
+                    this.rejectRegistration();
+                });
+            }
+
+            switchTab(tabId) {
+                this.currentView = tabId;
+                
+                // Update active class in sidebar
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const targetLink = document.querySelector(`[data-tab="${tabId}"]`);
+                if (targetLink) targetLink.classList.add('active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                const selectedTab = document.getElementById(tabId);
+                if (selectedTab) {
+                    selectedTab.classList.add('active');
+                    
+                    // Load data based on selected tab
+                    switch(tabId) {
+                        case 'pending-registrations':
+                            this.loadPendingRegistrations();
+                            break;
+                        case 'approved-accounts':
+                            this.loadApprovedAccounts();
+                            break;
+                        case 'rejected-applications':
+                            this.loadRejectedApplications();
+                            break;
+                        case 'all-registrations':
+                            this.loadAllRegistrations();
+                            break;
+                        case 'user-management':
+                            this.loadUserManagement();
+                            break;
+                        case 'admin-management':
+                            this.loadAdminManagement();
+                            break;
+                        case 'hero-editor':
+                            this.loadHeroContent();
+                            break;
+                        case 'system-logs':
+                            this.loadSystemLogs();
+                            break;
+                        case 'dashboard':
+                            this.loadDashboardStats();
+                            this.loadRecentActivity();
+                            break;
+                    }
+                }
+            }
+
+            loadDashboardStats() {
+                if (!this.currentData) return;
+                
+                const pending = this.currentData["01_pending"]?.registrations?.length || 0;
+                const approved = this.currentData["02_approved"]?.registrations?.length || 0;
+                const rejected = this.currentData["03_rejected"]?.registrations?.length || 0;
+                const manual = this.currentData["04_manual"]?.registrations?.length || 0;
+                const users = this.currentData["05_users"]?.users?.length || 0;
+                const admins = this.currentData["06_admins"]?.admins?.length || 0;
+                
+                document.getElementById('total-pending').textContent = pending;
+                document.getElementById('total-approved').textContent = approved;
+                document.getElementById('total-rejected').textContent = rejected;
+                document.getElementById('total-manual').textContent = manual;
+                document.getElementById('total-users').textContent = users;
+                document.getElementById('active-admins').textContent = admins;
+                document.getElementById('online-users').textContent = '0';
+                
+                // UPDATED: Display only date without time (month/day/year format)
+                const now = new Date();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+                const year = now.getFullYear();
+                document.getElementById('last-updated').textContent = `${month}/${day}/${year}`;
+                
+                const dataSize = JSON.stringify(this.currentData).length;
+                document.getElementById('data-size').textContent = `${Math.round(dataSize / 1024)} KB`;
+                
+                const statusEl = document.getElementById('system-status');
+                if (db) {
+                    statusEl.innerHTML = 'Online';
+                    statusEl.style.color = '#28a745';
+                } else {
+                    statusEl.innerHTML = 'Offline';
+                    statusEl.style.color = '#dc3545';
+                }
+            }
+
+            loadRecentActivity() {
+                const container = document.getElementById('recent-activity');
+                if (!container) return;
+                
+                if (this.activityLog.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 20px; color: var(--gray);">
+                            <i class="fas fa-clock"></i> No recent activity...
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = this.activityLog.slice(0, 5).map(log => `
+                    <div style="padding: 10px 15px; border-left: 3px solid ${
+                        log.type === 'success' ? '#28a745' : 
+                        log.type === 'warning' ? '#ffc107' : 
+                        log.type === 'error' ? '#dc3545' : '#17a2b8'
+                    }; margin-bottom: 10px; background: #f8f9fa; border-radius: 0 5px 5px 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                            <span style="font-weight: 600;">${log.message}</span>
+                            <small style="color: #6c757d;">${log.timestamp}</small>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            loadPendingRegistrations() {
+                const tbody = document.getElementById('pending-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                const pendingRegistrations = this.currentData["01_pending"]?.registrations || [];
+                
+                if (pendingRegistrations.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-check" style="font-size: 48px; margin-bottom: 15px; color: #28a745; opacity: 0.5;"></i>
+                                <p>No pending registrations. All caught up!</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const sortedRegistrations = [...pendingRegistrations].sort((a, b) => {
+                    return (b.submittedTimestamp || 0) - (a.submittedTimestamp || 0);
+                });
+                
+                sortedRegistrations.forEach((reg, index) => {
+                    const fullName = `${reg.personalInfo?.lastName || ''}, ${reg.personalInfo?.firstName || ''} ${reg.personalInfo?.middleName || ''}`.trim();
+                    const email = reg.accountInfo?.email || 'N/A';
+                    const dateSubmitted = reg.submittedAt || 'N/A';
+                    const controlNumber = reg.controlNumber || `PENDING-${index + 1}`;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${controlNumber}</td>
+                        <td>${fullName}</td>
+                        <td>${email}</td>
+                        <td>${dateSubmitted}</td>
+                        <td>
+                            <span class="doc-status ${reg.documents?.idFrontPreviewSrc ? 'doc-verified' : 'doc-missing'}">
+                                <i class="fas fa-${reg.documents?.idFrontPreviewSrc ? 'check' : 'times'}"></i>
+                                ${reg.documents?.idFrontPreviewSrc ? 'Uploaded' : 'Missing'}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="doc-status ${reg.faceCaptures?.flags?.front ? 'doc-verified' : 'doc-missing'}">
+                                <i class="fas fa-${reg.faceCaptures?.flags?.front ? 'check' : 'times'}"></i>
+                                ${reg.faceCaptures?.flags?.front ? 'Complete' : 'Incomplete'}
+                            </span>
+                        </td>
+                        <td><span class="badge pending">Pending</span></td>
+                        <td>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm view-registration-btn" data-id="${reg.id}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Add event listeners to view buttons
+                setTimeout(() => {
+                    document.querySelectorAll('.view-registration-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.view-registration-btn').getAttribute('data-id');
+                            this.showRegistrationDetails(id, 'pending');
+                        });
+                    });
+                }, 100);
+            }
+
+            loadApprovedAccounts() {
+                const tbody = document.getElementById('approved-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                const approvedRegistrations = this.currentData["02_approved"]?.registrations || [];
+                
+                if (approvedRegistrations.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 15px; color: #28a745; opacity: 0.5;"></i>
+                                <p>No approved accounts found.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const sortedRegistrations = [...approvedRegistrations].sort((a, b) => {
+                    return (b.approvedTimestamp || 0) - (a.approvedTimestamp || 0);
+                });
+                
+                sortedRegistrations.forEach((reg, index) => {
+                    const fullName = `${reg.personalInfo?.lastName || ''}, ${reg.personalInfo?.firstName || ''} ${reg.personalInfo?.middleName || ''}`.trim();
+                    const email = reg.accountInfo?.email || 'N/A';
+                    const dateApproved = reg.approvedAt || 'N/A';
+                    const approvedBy = reg.approvedBy || 'System';
+                    const controlNumber = reg.controlNumber || `APPROVED-${index + 1}`;
+                    const role = reg.role || 'user';
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${controlNumber}</td>
+                        <td>${fullName}</td>
+                        <td>${email}</td>
+                        <td>${dateApproved}</td>
+                        <td>${approvedBy}</td>
+                        <td><span class="badge ${role === 'admin' ? 'admin' : 'user'}">${role === 'admin' ? 'Admin' : 'User'}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm view-registration-btn" data-id="${reg.id}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-account-btn" data-id="${reg.id}" data-type="approved">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Add event listeners
+                setTimeout(() => {
+                    document.querySelectorAll('.view-registration-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.view-registration-btn').getAttribute('data-id');
+                            this.showRegistrationDetails(id, 'approved');
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-account-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.delete-account-btn').getAttribute('data-id');
+                            const type = e.target.closest('.delete-account-btn').getAttribute('data-type');
+                            this.deleteAccount(id, type);
+                        });
+                    });
+                }, 100);
+            }
+
+            loadRejectedApplications() {
+                const tbody = document.getElementById('rejected-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                const rejectedRegistrations = this.currentData["03_rejected"]?.registrations || [];
+                
+                if (rejectedRegistrations.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-times-circle" style="font-size: 48px; margin-bottom: 15px; color: #dc3545; opacity: 0.5;"></i>
+                                <p>No rejected applications found.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const sortedRegistrations = [...rejectedRegistrations].sort((a, b) => {
+                    return (b.rejectedTimestamp || 0) - (a.rejectedTimestamp || 0);
+                });
+                
+                sortedRegistrations.forEach((reg, index) => {
+                    const fullName = `${reg.personalInfo?.lastName || ''}, ${reg.personalInfo?.firstName || ''} ${reg.personalInfo?.middleName || ''}`.trim();
+                    const email = reg.accountInfo?.email || 'N/A';
+                    const dateRejected = reg.rejectedAt || 'N/A';
+                    const rejectedBy = reg.rejectedBy || 'System';
+                    const rejectionReason = reg.rejectionReason || 'No reason provided';
+                    const controlNumber = reg.controlNumber || `REJECTED-${index + 1}`;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${controlNumber}</td>
+                        <td>${fullName}</td>
+                        <td>${email}</td>
+                        <td>${dateRejected}</td>
+                        <td>${rejectedBy}</td>
+                        <td title="${rejectionReason}">${rejectionReason.length > 30 ? rejectionReason.substring(0, 30) + '...' : rejectionReason}</td>
+                        <td>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm view-registration-btn" data-id="${reg.id}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-account-btn" data-id="${reg.id}" data-type="rejected">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Add event listeners
+                setTimeout(() => {
+                    document.querySelectorAll('.view-registration-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.view-registration-btn').getAttribute('data-id');
+                            this.showRegistrationDetails(id, 'rejected');
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-account-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.delete-account-btn').getAttribute('data-id');
+                            const type = e.target.closest('.delete-account-btn').getAttribute('data-type');
+                            this.deleteAccount(id, type);
+                        });
+                    });
+                }, 100);
+            }
+
+            loadAllRegistrations() {
+                const tbody = document.getElementById('all-table-body');
+                if (!tbody) return;
+                
+                const allRegistrations = [
+                    ...(this.currentData["01_pending"]?.registrations || []).map(r => ({...r, status: 'pending'})),
+                    ...(this.currentData["02_approved"]?.registrations || []).map(r => ({...r, status: 'approved'})),
+                    ...(this.currentData["03_rejected"]?.registrations || []).map(r => ({...r, status: 'rejected'})),
+                    ...(this.currentData["04_manual"]?.registrations || []).map(r => ({...r, status: 'manual', type: 'Manual'}))
+                ];
+                
+                this.filteredRegistrations = allRegistrations;
+                this.filterAllRegistrations();
+            }
+
+            filterAllRegistrations() {
+                const tbody = document.getElementById('all-table-body');
+                if (!tbody) return;
+                
+                let filtered = [...this.filteredRegistrations];
+                const statusFilter = document.getElementById('status-filter').value;
+                if (statusFilter !== 'all') {
+                    filtered = filtered.filter(r => r.status === statusFilter);
+                }
+                
+                const dateFrom = document.getElementById('date-from').value;
+                const dateTo = document.getElementById('date-to').value;
+                
+                if (dateFrom) {
+                    const fromDate = new Date(dateFrom);
+                    filtered = filtered.filter(r => {
+                        const regDate = new Date(r.submittedAt || r.approvedAt || r.rejectedAt);
+                        return regDate >= fromDate;
+                    });
+                }
+                
+                if (dateTo) {
+                    const toDate = new Date(dateTo);
+                    toDate.setHours(23, 59, 59, 999);
+                    filtered = filtered.filter(r => {
+                        const regDate = new Date(r.submittedAt || r.approvedAt || r.rejectedAt);
+                        return regDate <= toDate;
+                    });
+                }
+                
+                this.renderAllRegistrations(filtered);
+            }
+
+            renderAllRegistrations(registrations) {
+                const tbody = document.getElementById('all-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (registrations.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                                <p>No registrations match your filters.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const sortedRegistrations = [...registrations].sort((a, b) => {
+                    const dateA = new Date(a.submittedAt || a.approvedAt || a.rejectedAt || 0);
+                    const dateB = new Date(b.submittedAt || b.approvedAt || b.rejectedAt || 0);
+                    return dateB - dateA;
+                });
+                
+                sortedRegistrations.forEach(reg => {
+                    const fullName = `${reg.personalInfo?.lastName || ''}, ${reg.personalInfo?.firstName || ''} ${reg.personalInfo?.middleName || ''}`.trim();
+                    const email = reg.accountInfo?.email || 'N/A';
+                    const date = reg.submittedAt || reg.approvedAt || reg.rejectedAt || 'N/A';
+                    const controlNumber = reg.controlNumber || 'N/A';
+                    const type = reg.manualCreation ? 'Manual' : 'Online';
+                    
+                    let statusBadge = '';
+                    switch(reg.status) {
+                        case 'pending':
+                            statusBadge = '<span class="badge pending">Pending</span>';
+                            break;
+                        case 'approved':
+                            statusBadge = '<span class="badge approved">Approved</span>';
+                            break;
+                        case 'rejected':
+                            statusBadge = '<span class="badge rejected">Rejected</span>';
+                            break;
+                        default:
+                            statusBadge = `<span class="badge">${reg.status}</span>`;
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${controlNumber}</td>
+                        <td>${fullName}</td>
+                        <td>${email}</td>
+                        <td>${date}</td>
+                        <td>${statusBadge}</td>
+                        <td>${type}</td>
+                        <td>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm view-registration-btn" data-id="${reg.id}" data-status="${reg.status}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Add event listeners
+                setTimeout(() => {
+                    document.querySelectorAll('.view-registration-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.view-registration-btn').getAttribute('data-id');
+                            const status = e.target.closest('.view-registration-btn').getAttribute('data-status');
+                            this.showRegistrationDetails(id, status);
+                        });
+                    });
+                }, 100);
+            }
+
+            loadUserManagement() {
+                const tbody = document.getElementById('user-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                const users = this.currentData["05_users"]?.users || [];
+                
+                if (users.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-users" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                                <p>No user accounts found.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                users.forEach((user, index) => {
+                    const fullName = `${user.personalInfo?.lastName || ''}, ${user.personalInfo?.firstName || ''} ${user.personalInfo?.middleName || ''}`.trim();
+                    const email = user.email || user.accountInfo?.email || 'N/A';
+                    const role = user.role || 'user';
+                    const status = user.status || 'active';
+                    const lastLogin = user.lastLogin || 'Never';
+                    const userId = user.id || `USER-${index + 1}`;
+                    
+                    let statusBadge = '';
+                    if (status === 'active') {
+                        statusBadge = '<span class="badge approved">Active</span>';
+                    } else if (status === 'inactive') {
+                        statusBadge = '<span class="badge pending">Inactive</span>';
+                    } else if (status === 'suspended') {
+                        statusBadge = '<span class="badge rejected">Suspended</span>';
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${userId}</td>
+                        <td>${fullName}</td>
+                        <td>${email}</td>
+                        <td><span class="badge ${role === 'admin' ? 'admin' : 'user'}">${role === 'admin' ? 'Admin' : 'User'}</span></td>
+                        <td>${statusBadge}</td>
+                        <td>${lastLogin}</td>
+                        <td>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm edit-user-btn" data-id="${user.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-user-btn" data-id="${user.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Add event listeners
+                setTimeout(() => {
+                    document.querySelectorAll('.edit-user-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.edit-user-btn').getAttribute('data-id');
+                            this.editUser(id);
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.delete-user-btn').getAttribute('data-id');
+                            if (confirm('Are you sure you want to delete this user account?')) {
+                                this.deleteUser(id);
+                            }
+                        });
+                    });
+                }, 100);
+            }
+
+            loadAdminManagement() {
+                const tbody = document.getElementById('admin-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                const admins = this.currentData["06_admins"]?.admins || [];
+                
+                if (admins.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-user-shield" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                                <p>No admin accounts found.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                admins.forEach((admin, index) => {
+                    const fullName = admin.fullName || 'N/A';
+                    const email = admin.email || 'N/A';
+                    const role = admin.role || 'admin';
+                    const permissions = admin.permissions ? admin.permissions.join(', ') : 'Full Access';
+                    const lastActive = admin.lastActive || 'Never';
+                    const adminId = admin.id || `ADMIN-${index + 1}`;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${adminId}</td>
+                        <td>${fullName}</td>
+                        <td>${email}</td>
+                        <td><span class="badge admin">${role}</span></td>
+                        <td>${permissions}</td>
+                        <td>${lastActive}</td>
+                        <td>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm edit-admin-btn" data-id="${admin.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-admin-btn" data-id="${admin.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Add event listeners
+                setTimeout(() => {
+                    document.querySelectorAll('.edit-admin-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.edit-admin-btn').getAttribute('data-id');
+                            this.editAdmin(id);
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-admin-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.closest('.delete-admin-btn').getAttribute('data-id');
+                            if (confirm('Are you sure you want to delete this admin account?')) {
+                                this.deleteAdmin(id);
+                            }
+                        });
+                    });
+                }, 100);
+            }
+
+            loadSystemLogs() {
+                const tbody = document.getElementById('logs-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.systemLogs) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-history" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                                <p>No system logs found.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                let allLogs = [];
+                
+                if (this.systemLogs.UserLogs) {
+                    Object.keys(this.systemLogs.UserLogs).forEach(key => {
+                        allLogs.push({
+                            ...this.systemLogs.UserLogs[key],
+                            id: key,
+                            logType: 'UserLogs'
+                        });
+                    });
+                }
+                
+                if (this.systemLogs.AdminLogs) {
+                    Object.keys(this.systemLogs.AdminLogs).forEach(key => {
+                        allLogs.push({
+                            ...this.systemLogs.AdminLogs[key],
+                            id: key,
+                            logType: 'AdminLogs'
+                        });
+                    });
+                }
+                
+                allLogs.sort((a, b) => {
+                    const dateA = new Date(a.date + ' ' + a.time);
+                    const dateB = new Date(b.date + ' ' + b.time);
+                    return dateB - dateA;
+                });
+                
+                this.filteredLogs = allLogs;
+                this.filterSystemLogs();
+            }
+
+            filterSystemLogs() {
+                const tbody = document.getElementById('logs-table-body');
+                if (!tbody) return;
+                
+                let filtered = [...this.filteredLogs];
+                const typeFilter = document.getElementById('log-type-filter').value;
+                if (typeFilter !== 'all') {
+                    filtered = filtered.filter(log => log.logType === typeFilter);
+                }
+                
+                const dateFrom = document.getElementById('log-date-from').value;
+                const dateTo = document.getElementById('log-date-to').value;
+                
+                if (dateFrom) {
+                    const fromDate = new Date(dateFrom);
+                    filtered = filtered.filter(log => {
+                        const logDate = new Date(log.date);
+                        return logDate >= fromDate;
+                    });
+                }
+                
+                if (dateTo) {
+                    const toDate = new Date(dateTo);
+                    toDate.setHours(23, 59, 59, 999);
+                    filtered = filtered.filter(log => {
+                        const logDate = new Date(log.date);
+                        return logDate <= toDate;
+                    });
+                }
+                
+                this.renderSystemLogs(filtered);
+            }
+
+            renderSystemLogs(logs) {
+                const tbody = document.getElementById('logs-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (logs.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                                <p>No logs match your filters.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                logs.forEach(log => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${log.date || 'N/A'}</td>
+                        <td>${log.time || 'N/A'}</td>
+                        <td>${log.name || 'N/A'}</td>
+                        <td>${log.userEmail || 'N/A'}</td>
+                        <td>${log.action || 'N/A'}</td>
+                        <td>${log.localIp || 'N/A'}</td>
+                        <td><span class="badge ${log.logType === 'AdminLogs' ? 'admin' : 'user'}">${log.logType === 'AdminLogs' ? 'Admin' : 'User'}</span></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            showRegistrationDetails(id, status) {
+                let registration = null;
+                let source = null;
+                
+                switch(status) {
+                    case 'pending':
+                        source = this.currentData["01_pending"]?.registrations;
+                        break;
+                    case 'approved':
+                        source = this.currentData["02_approved"]?.registrations;
+                        break;
+                    case 'rejected':
+                        source = this.currentData["03_rejected"]?.registrations;
+                        break;
+                    case 'manual':
+                        source = this.currentData["04_manual"]?.registrations;
+                        break;
+                }
+                
+                if (source) {
+                    registration = source.find(r => r.id === id);
+                }
+                
+                if (!registration) {
+                    this.showToast('Registration not found!', 'error');
+                    return;
+                }
+                
+                currentRegistrationKey = { id, status };
+                
+                const modal = document.getElementById('registration-details-modal');
+                const body = document.getElementById('registration-details-body');
+                const personalInfo = registration.personalInfo || {};
+                const accountInfo = registration.accountInfo || {};
+                const householdInfo = registration.householdInfo || {};
+                const documents = registration.documents || {};
+                const faceCaptures = registration.faceCaptures || {};
+                
+                let detailsHTML = `
+                    <div class="registration-details">
+                        <div class="details-section">
+                            <h3><i class="fas fa-id-card"></i> Registration Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Control Number:</strong> ${registration.controlNumber || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Status:</strong> <span class="badge ${registration.status}">${registration.status}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Submitted:</strong> ${registration.submittedAt || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Type:</strong> ${registration.manualCreation ? 'Manual Creation' : 'Online Registration'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-section">
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Full Name:</strong> ${personalInfo.lastName || ''}, ${personalInfo.firstName || ''} ${personalInfo.middleName || ''}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Extension:</strong> ${personalInfo.extName || 'N/A'} ${personalInfo.otherExt ? `(${personalInfo.otherExt})` : ''}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Gender:</strong> ${personalInfo.gender || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Date of Birth:</strong> ${personalInfo.dateOfBirth || 'N/A'} (Age: ${personalInfo.age || 'N/A'})
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Place of Birth:</strong> ${personalInfo.placeOfBirth || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Civil Status:</strong> ${personalInfo.civilStatus || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Citizenship:</strong> ${personalInfo.citizenship || 'N/A'} ${personalInfo.otherCitizenship ? `(${personalInfo.otherCitizenship})` : ''}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Occupation:</strong> ${personalInfo.occupation || 'N/A'} ${personalInfo.otherOccupation ? `(${personalInfo.otherOccupation})` : ''}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Phone:</strong> ${personalInfo.phone || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Address:</strong> ${personalInfo.address || 'N/A'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-section">
+                            <h3><i class="fas fa-home"></i> Household Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Household Members:</strong> ${householdInfo.householdMembers || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Property Owner:</strong> ${householdInfo.ownerName || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Precinct Number:</strong> ${householdInfo.precinctNo || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Years in Barangay:</strong> ${householdInfo.yearsInBarangay || 'N/A'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-section">
+                            <h3><i class="fas fa-envelope"></i> Account Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Email:</strong> ${accountInfo.email || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Email Verified:</strong> ${accountInfo.emailVerified ? 'Yes' : 'No'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-section">
+                            <h3><i class="fas fa-file-upload"></i> Document Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>ID Type:</strong> ${documents.idType || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Reason for Registration:</strong> ${documents.userReason || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>ID Front Uploaded:</strong> ${documents.idFrontPreviewSrc ? 'Yes' : 'No'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>ID Back Uploaded:</strong> ${documents.idBackPreviewSrc ? 'Yes' : 'No'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-section">
+                            <h3><i class="fas fa-camera"></i> Face Verification Status</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Front Face:</strong> ${faceCaptures.flags?.front ? 'Captured' : 'Not Captured'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Left Side:</strong> ${faceCaptures.flags?.left ? 'Captured' : 'Not Captured'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Right Side:</strong> ${faceCaptures.flags?.right ? 'Captured' : 'Not Captured'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Closed Eyes:</strong> ${faceCaptures.flags?.closed ? 'Captured' : 'Not Captured'}
+                                </div>
+                            </div>
+                        </div>
+                `;
+                
+                if (personalInfo.specialCategories && personalInfo.specialCategories.length > 0) {
+                    detailsHTML += `
+                        <div class="details-section">
+                            <h3><i class="fas fa-tags"></i> Special Categories</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Categories:</strong> ${personalInfo.specialCategories.join(', ')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (status === 'approved') {
+                    detailsHTML += `
+                        <div class="details-section">
+                            <h3><i class="fas fa-check-circle"></i> Approval Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Approved By:</strong> ${registration.approvedBy || 'System'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Approved At:</strong> ${registration.approvedAt || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Account Role:</strong> ${registration.role || 'user'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (status === 'rejected') {
+                    detailsHTML += `
+                        <div class="details-section">
+                            <h3><i class="fas fa-times-circle"></i> Rejection Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Rejected By:</strong> ${registration.rejectedBy || 'System'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Rejected At:</strong> ${registration.rejectedAt || 'N/A'}
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Rejection Reason:</strong> ${registration.rejectionReason || 'No reason provided'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                detailsHTML += '</div>';
+                body.innerHTML = detailsHTML;
+                modal.style.display = 'block';
+                
+                const approveBtn = document.getElementById('approve-registration-btn');
+                const rejectBtn = document.getElementById('reject-registration-btn');
+                
+                if (status === 'pending') {
+                    approveBtn.style.display = 'inline-block';
+                    rejectBtn.style.display = 'inline-block';
+                } else {
+                    approveBtn.style.display = 'none';
+                    rejectBtn.style.display = 'none';
+                }
+            }
+
+            closeRegistrationDetails() {
+                const modal = document.getElementById('registration-details-modal');
+                modal.style.display = 'none';
+                currentRegistrationKey = null;
+            }
+
+            async approveRegistration() {
+                if (!currentRegistrationKey) {
+                    this.showToast('No registration selected!', 'error');
+                    return;
+                }
+                
+                const { id, status } = currentRegistrationKey;
+                
+                if (status !== 'pending') {
+                    this.showToast('Only pending registrations can be approved!', 'error');
+                    return;
+                }
+                
+                const pendingRegistrations = this.currentData["01_pending"]?.registrations || [];
+                const registrationIndex = pendingRegistrations.findIndex(r => r.id === id);
+                
+                if (registrationIndex === -1) {
+                    this.showToast('Registration not found!', 'error');
+                    return;
+                }
+                
+                const registration = pendingRegistrations[registrationIndex];
+                
+                const role = prompt("Select account role:\n1. user (Regular User)\n2. admin (Administrator)\n\nEnter 'user' or 'admin':", "user");
+                if (!role || !['user', 'admin'].includes(role.toLowerCase())) {
+                    this.showToast('Invalid role selected. Approval cancelled.', 'error');
+                    return;
+                }
+                
+                const adminName = prompt("Enter your name (for audit trail):", "Administrator");
+                if (!adminName) {
+                    this.showToast('Approval cancelled. Admin name is required.', 'error');
+                    return;
+                }
+                
+                try {
+                    const approvedRegistration = {
+                        ...registration,
+                        status: 'approved',
+                        approvedBy: adminName,
+                        approvedAt: new Date().toLocaleString(),
+                        approvedTimestamp: Date.now(),
+                        role: role.toLowerCase()
+                    };
+                    
+                    this.currentData["01_pending"].registrations.splice(registrationIndex, 1);
+                    
+                    if (!this.currentData["02_approved"].registrations) {
+                        this.currentData["02_approved"].registrations = [];
+                    }
+                    this.currentData["02_approved"].registrations.push(approvedRegistration);
+                    
+                    if (!this.currentData["05_users"].users) {
+                        this.currentData["05_users"].users = [];
+                    }
+                    this.currentData["05_users"].users.push({
+                        id: approvedRegistration.id,
+                        controlNumber: approvedRegistration.controlNumber,
+                        email: approvedRegistration.accountInfo?.email,
+                        personalInfo: approvedRegistration.personalInfo,
+                        role: role.toLowerCase(),
+                        status: 'active',
+                        approvedBy: adminName,
+                        approvedAt: new Date().toLocaleString(),
+                        createdAt: new Date().toISOString()
+                    });
+                    
+                    await this.saveData();
+                    
+                    this.logToSystem(
+                        'Registration Approved',
+                        'approval',
+                        `Approved registration: ${approvedRegistration.controlNumber} as ${role}`,
+                        adminName,
+                        approvedRegistration.controlNumber
+                    );
+                    
+                    this.showToast(`Registration approved successfully! Account created as ${role}.`, 'success');
+                    this.logActivity(`Approved registration: ${approvedRegistration.controlNumber} as ${role}`, 'success');
+                    this.closeRegistrationDetails();
+                    
+                } catch (error) {
+                    console.error('Error approving registration:', error);
+                    this.showToast('Error approving registration. Please try again.', 'error');
+                }
+            }
+
+            async rejectRegistration() {
+                if (!currentRegistrationKey) {
+                    this.showToast('No registration selected!', 'error');
+                    return;
+                }
+                
+                const { id, status } = currentRegistrationKey;
+                
+                if (status !== 'pending') {
+                    this.showToast('Only pending registrations can be rejected!', 'error');
+                    return;
+                }
+                
+                const pendingRegistrations = this.currentData["01_pending"]?.registrations || [];
+                const registrationIndex = pendingRegistrations.findIndex(r => r.id === id);
+                
+                if (registrationIndex === -1) {
+                    this.showToast('Registration not found!', 'error');
+                    return;
+                }
+                
+                const registration = pendingRegistrations[registrationIndex];
+                
+                const reason = prompt("Enter rejection reason:", "Incomplete information");
+                if (!reason) {
+                    this.showToast('Rejection cancelled. Reason is required.', 'error');
+                    return;
+                }
+                
+                const adminName = prompt("Enter your name (for audit trail):", "Administrator");
+                if (!adminName) {
+                    this.showToast('Rejection cancelled. Admin name is required.', 'error');
+                    return;
+                }
+                
+                try {
+                    const rejectedRegistration = {
+                        ...registration,
+                        status: 'rejected',
+                        rejectedBy: adminName,
+                        rejectedAt: new Date().toLocaleString(),
+                        rejectedTimestamp: Date.now(),
+                        rejectionReason: reason
+                    };
+                    
+                    this.currentData["01_pending"].registrations.splice(registrationIndex, 1);
+                    
+                    if (!this.currentData["03_rejected"].registrations) {
+                        this.currentData["03_rejected"].registrations = [];
+                    }
+                    this.currentData["03_rejected"].registrations.push(rejectedRegistration);
+                    
+                    await this.saveData();
+                    
+                    this.logToSystem(
+                        'Registration Rejected',
+                        'rejection',
+                        `Rejected registration: ${rejectedRegistration.controlNumber} - Reason: ${reason}`,
+                        adminName,
+                        rejectedRegistration.controlNumber
+                    );
+                    
+                    this.showToast('Registration rejected successfully!', 'success');
+                    this.logActivity(`Rejected registration: ${rejectedRegistration.controlNumber} - Reason: ${reason}`, 'warning');
+                    this.closeRegistrationDetails();
+                    
+                } catch (error) {
+                    console.error('Error rejecting registration:', error);
+                    this.showToast('Error rejecting registration. Please try again.', 'error');
+                }
+            }
+
+            async createManualAccount() {
+                const lastName = document.getElementById('manual-last-name').value.trim();
+                const firstName = document.getElementById('manual-first-name').value.trim();
+                const middleName = document.getElementById('manual-middle-name').value.trim();
+                const email = document.getElementById('manual-email').value.trim();
+                const phone = document.getElementById('manual-phone').value.trim();
+                const password = document.getElementById('manual-password').value;
+                const confirmPassword = document.getElementById('manual-confirm-password').value;
+                const address = document.getElementById('manual-address').value.trim();
+                const dateOfBirth = document.getElementById('manual-date-of-birth').value;
+                const gender = document.getElementById('manual-gender').value;
+                const role = document.getElementById('manual-role').value;
+                const reason = document.getElementById('manual-reason').value.trim();
+                
+                if (!lastName || !firstName || !email || !password || !confirmPassword || !address || !dateOfBirth || !gender || !role) {
+                    this.showToast('Please fill in all required fields!', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    this.showToast('Passwords do not match!', 'error');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    this.showToast('Password must be at least 6 characters!', 'error');
+                    return;
+                }
+                
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                const controlNumber = `BRGY118-MANUAL-${year}${month}${day}-${randomNum}`;
+                const id = `MANUAL-${Date.now()}`;
+                
+                const manualRegistration = {
+                    id: id,
+                    controlNumber: controlNumber,
+                    personalInfo: {
+                        lastName: lastName,
+                        firstName: firstName,
+                        middleName: middleName || '',
+                        gender: gender,
+                        dateOfBirth: dateOfBirth,
+                        address: address,
+                        phone: phone || '',
+                        citizenship: 'Filipino',
+                        occupation: 'Other',
+                        civilStatus: 'single'
+                    },
+                    accountInfo: {
+                        email: email,
+                        password: password,
+                        emailVerified: true
+                    },
+                    householdInfo: {
+                        householdMembers: '1',
+                        ownerName: 'N/A',
+                        precinctNo: 'N/A',
+                        yearsInBarangay: '0'
+                    },
+                    documents: {
+                        idType: 'none',
+                        userReason: reason || 'Manual account creation by admin'
+                    },
+                    faceCaptures: {
+                        flags: {
+                            front: false,
+                            left: false,
+                            right: false,
+                            closed: false
+                        }
+                    },
+                    status: 'approved',
+                    manualCreation: true,
+                    submittedAt: new Date().toLocaleString(),
+                    submittedTimestamp: Date.now(),
+                    approvedBy: 'Administrator (Manual)',
+                    approvedAt: new Date().toLocaleString(),
+                    approvedTimestamp: Date.now(),
+                    role: role
+                };
+                
+                try {
+                    if (!this.currentData["04_manual"].registrations) {
+                        this.currentData["04_manual"].registrations = [];
+                    }
+                    this.currentData["04_manual"].registrations.push(manualRegistration);
+                    
+                    if (!this.currentData["02_approved"].registrations) {
+                        this.currentData["02_approved"].registrations = [];
+                    }
+                    this.currentData["02_approved"].registrations.push(manualRegistration);
+                    
+                    if (!this.currentData["05_users"].users) {
+                        this.currentData["05_users"].users = [];
+                    }
+                    this.currentData["05_users"].users.push({
+                        id: id,
+                        controlNumber: controlNumber,
+                        email: email,
+                        personalInfo: manualRegistration.personalInfo,
+                        role: role,
+                        status: 'active',
+                        approvedBy: 'Administrator (Manual)',
+                        approvedAt: new Date().toLocaleString(),
+                        createdAt: new Date().toISOString(),
+                        manualCreation: true
+                    });
+                    
+                    if (role === 'admin') {
+                        if (!this.currentData["06_admins"].admins) {
+                            this.currentData["06_admins"].admins = [];
+                        }
+                        this.currentData["06_admins"].admins.push({
+                            id: id,
+                            fullName: `${firstName} ${lastName}`,
+                            email: email,
+                            role: 'admin',
+                            permissions: ['full_access'],
+                            createdBy: 'System',
+                            createdAt: new Date().toISOString()
+                        });
+                    }
+                    
+                    await this.saveData();
+                    
+                    document.getElementById('manual-account-form').reset();
+                    document.getElementById('manual-edit-id').value = '';
+                    document.getElementById('manual-cancel-edit').style.display = 'none';
+                    document.getElementById('manual-submit-btn').innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                    
+                    this.logToSystem(
+                        'Manual Account Created',
+                        'manual',
+                        `Created manual account: ${controlNumber} (${firstName} ${lastName}) as ${role}`,
+                        'Administrator',
+                        controlNumber
+                    );
+                    
+                    this.showToast(`Manual account created successfully! Control Number: ${controlNumber}`, 'success');
+                    this.logActivity(`Created manual account: ${controlNumber} (${firstName} ${lastName}) as ${role}`, 'success');
+                    
+                } catch (error) {
+                    console.error('Error creating manual account:', error);
+                    this.showToast('Error creating manual account. Please try again.', 'error');
+                }
+            }
+
+            editUser(id) {
+                this.showToast('User edit functionality coming soon!', 'info');
+            }
+
+            deleteUser(id) {
+                this.showToast('User delete functionality coming soon!', 'info');
+            }
+
+            editAdmin(id) {
+                this.showToast('Admin edit functionality coming soon!', 'info');
+            }
+
+            deleteAdmin(id) {
+                this.showToast('Admin delete functionality coming soon!', 'info');
+            }
+
+            async deleteAccount(id, type) {
+                if (!confirm(`Are you sure you want to delete this ${type} account? This action cannot be undone!`)) {
+                    return;
+                }
+                
+                try {
+                    let source = null;
+                    switch(type) {
+                        case 'approved':
+                            source = this.currentData["02_approved"]?.registrations;
+                            break;
+                        case 'rejected':
+                            source = this.currentData["03_rejected"]?.registrations;
+                            break;
+                        case 'pending':
+                            source = this.currentData["01_pending"]?.registrations;
+                            break;
+                    }
+                    
+                    if (source) {
+                        const index = source.findIndex(r => r.id === id);
+                        if (index !== -1) {
+                            const deletedAccount = source[index];
+                            source.splice(index, 1);
+                            
+                            await this.saveData();
+                            
+                            this.logToSystem(
+                                'Account Deleted',
+                                'delete',
+                                `Deleted ${type} account: ${deletedAccount.controlNumber}`,
+                                'Administrator',
+                                deletedAccount.controlNumber
+                            );
+                            
+                            this.showToast(`${type} account deleted successfully!`, 'success');
+                            this.logActivity(`Deleted ${type} account: ${deletedAccount.controlNumber}`, 'warning');
+                            
+                            this.switchTab(this.currentView);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error deleting account:', error);
+                    this.showToast('Error deleting account. Please try again.', 'error');
+                }
+            }
+
+            searchTable(tableType, query) {
+                const searchText = query.toLowerCase().trim();
+                
+                let tbody = null;
+                let rows = null;
+                
+                switch(tableType) {
+                    case 'pending':
+                        tbody = document.getElementById('pending-table-body');
+                        break;
+                    case 'approved':
+                        tbody = document.getElementById('approved-table-body');
+                        break;
+                    case 'rejected':
+                        tbody = document.getElementById('rejected-table-body');
+                        break;
+                    case 'all':
+                        tbody = document.getElementById('all-table-body');
+                        break;
+                    case 'user':
+                        tbody = document.getElementById('user-table-body');
+                        break;
+                    case 'admin':
+                        tbody = document.getElementById('admin-table-body');
+                        break;
+                }
+                
+                if (!tbody) return;
+                
+                rows = tbody.querySelectorAll('tr');
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+                    
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(searchText)) {
+                            found = true;
+                        }
+                    });
+                    
+                    row.style.display = found ? '' : 'none';
+                });
+            }
+
+            searchLogs(query) {
+                const searchText = query.toLowerCase().trim();
+                const tbody = document.getElementById('logs-table-body');
+                
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+                    
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(searchText)) {
+                            found = true;
+                        }
+                    });
+                    
+                    row.style.display = found ? '' : 'none';
+                });
+            }
+
+            async saveData(forceSave = false) {
+                try {
+                    await registrationsRef.set(this.currentData);
+                    this.updateSaveStatus('Data Saved Successfully to Firebase', 'success');
+                    this.logActivity('Registration data saved to Firebase', 'success');
+                    return true;
+                } catch (error) {
+                    console.error('Error saving data:', error);
+                    this.updateSaveStatus('Save Failed', 'error');
+                    return false;
+                }
+            }
+
+            async saveSystemLogs(forceSave = false) {
+                try {
+                    await systemLogsRef.set(this.systemLogs);
+                    return true;
+                } catch (error) {
+                    console.error('Error saving system logs:', error);
+                    return false;
+                }
+            }
+
+            async logToSystem(action, type, details, admin = 'System', target = 'N/A') {
+                const currentDate = new Date();
+                const logEntry = {
+                    name: admin,
+                    time: currentDate.toLocaleTimeString(),
+                    date: currentDate.toLocaleDateString(),
+                    localIp: "127.0.0.1",
+                    action: action,
+                    details: details,
+                    type: type,
+                    target: target
+                };
+
+                try {
+                    await systemLogsRef.child('AdminLogs').push(logEntry);
+                } catch (error) {
+                    console.error('Error saving system log:', error);
+                }
+
+                this.logActivity(details, type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'success');
+            }
+
+            exportData() {
+                const data = {
+                    exportDate: new Date().toISOString(),
+                    data: this.currentData,
+                    logs: this.systemLogs
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `barangay-registrations-export-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                this.showToast('Data exported successfully!', 'success');
+                this.logToSystem('Data Exported', 'system', 'All registration data exported', 'System', 'All Data');
+            }
+
+            exportAllRegistrations() {
+                this.exportData();
+            }
+
+            exportSystemLogs() {
+                const dataStr = JSON.stringify(this.systemLogs, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `system-logs-export-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                this.showToast('System logs exported successfully!', 'success');
+                this.logToSystem('Logs Exported', 'system', 'System logs exported', 'System', 'Logs');
+            }
+
+            backupData() {
+                this.exportData();
+                this.showToast('Backup created successfully!', 'success');
+            }
+
+            async clearAllData() {
+                try {
+                    await registrationsRef.remove();
+                    this.currentData = this.getDefaultData();
+                    await this.saveData(true);
+                    this.showToast('All registration data has been cleared from Firebase!', 'success');
+                    this.logToSystem('All Data Cleared', 'system', 'All registration data cleared from Firebase', 'Administrator', '06_CreateAccount');
+                } catch (error) {
+                    console.error('Error clearing data:', error);
+                    this.showToast('Error clearing data from Firebase', 'error');
+                }
+            }
+
+            async clearSystemLogs() {
+                try {
+                    await systemLogsRef.remove();
+                    this.systemLogs = defaultSystemLogs;
+                    await this.saveSystemLogs(true);
+                    this.showToast('All system logs have been cleared!', 'success');
+                    this.loadSystemLogs();
+                } catch (error) {
+                    console.error('Error clearing system logs:', error);
+                    this.showToast('Error clearing system logs', 'error');
+                }
+            }
+
+            updateSaveStatus(message, type = 'default') {
+                const statusElement = document.getElementById('save-status');
+                if (!statusElement) return;
+                
+                statusElement.textContent = message;
+                statusElement.className = 'save-status';
+                
+                if (type === 'success') {
+                    statusElement.classList.add('success');
+                } else if (type === 'warning') {
+                    statusElement.classList.add('warning');
+                } else if (type === 'error') {
+                    statusElement.classList.add('error');
+                } else if (type === 'info') {
+                    statusElement.classList.add('info');
+                }
+                
+                if (type === 'success' || type === 'info' || type === 'warning') {
+                    setTimeout(() => {
+                        statusElement.textContent = '• Connected to Firebase';
+                        statusElement.className = 'save-status success';
+                    }, 3000);
+                }
+            }
+
+            showToast(message, type = 'info') {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+                
+                toast.textContent = message;
+                toast.className = `toast ${type}`;
+                
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            logActivity(message, type) {
+                const activity = {
+                    timestamp: new Date().toLocaleTimeString(),
+                    message: message,
+                    type: type
+                };
+                this.activityLog.unshift(activity);
+                
+                if (this.activityLog.length > 10) {
+                    this.activityLog.pop();
+                }
+                
+                this.loadRecentActivity();
+            }
+
+            cleanup() {
+                if (this.unsubscribe) {
+                    this.unsubscribe();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.registrationAdminPanel = new RegistrationAdminPanel();
+            
+            window.addEventListener('beforeunload', () => {
+                if (window.registrationAdminPanel) {
+                    window.registrationAdminPanel.cleanup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

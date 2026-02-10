@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Barangay 118 Online System</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <meta name="description" content="Learn about Barangay 118 - our mission, officials, committees, and services for the community">
+    <meta name="keywords" content="barangay, about us, community, officials, services">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="AboutUs.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <header id="dynamic-header">
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h2 id="about-hero-title">Barangay Information</h2>
+            <p id="about-hero-description">Learn about our barangay's mission, leadership, services, and commitment to the community.</p>
+        </div>
+    </section>
+
+    <section class="section section-white">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 id="about-story-title">Our Community Story</h2>
+                    <p id="about-story-content-1">For over 62 years, Barangay 118 has stood as a pillar of public service — committed to delivering efficient, transparent, and accessible government services to our residents. Located in the heart of the city, our barangay is home to a vibrant community of families, businesses, and institutions working together for progress and unity.</p>
+                    <p id="about-story-content-2">Through the launch of our Online System, we are taking our commitment to the next level — providing 24/7 access to essential services from the comfort of your home. This digital transformation bridges the gap between the barangay administration and the people we serve, ensuring convenience and connectivity for all.</p>
+                    <p id="about-story-content-3">Behind every program and project is a dedicated team of officials and staff who serve with integrity, transparency, and compassion — ensuring that every resident feels heard, supported, and cared for.</p>
+                    <a href="#barangay-info" class="btn btn-primary">Explore Our Services</a>
+                </div>
+                <div class="about-image">
+                    <img id="about-barangay-image" src="Screen Shot 2025-11-23 at 10.35.19 AM.png" alt="Barangay Hall Building">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="barangay-info" class="section section-light">
+        <div class="container">
+            <div class="combined-content-wrapper">
+                <div class="carousel-container">
+                    <button class="nav-arrow prev" aria-label="Previous section">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
+                    <div class="carousel-slides">
+                        <div class="slide active" data-slide="0">
+                            <div class="slide-content">
+                                <h3 class="section-title" style="margin-bottom: 20px; font-size: 2rem;">Our Mission & Vision</h3>
+                                <div class="mission-vision-grid">
+                                    <div class="mission-card">
+                                        <div class="mission-icon"><i class="fas fa-bullseye"></i></div>
+                                        <h3 id="mission-title">Our Mission</h3>
+                                        <p id="mission-description">To provide efficient, transparent, and accessible government services to all residents through innovative digital solutions, fostering a connected and empowered community.</p>
+                                    </div>
+                                    <div class="vision-card">
+                                        <div class="vision-icon"><i class="fas fa-eye"></i></div>
+                                        <h3 id="vision-title">Our Vision</h3>
+                                        <p id="vision-description">To be a model barangay known for excellent public service, community engagement, and technological innovation that improves the quality of life for all residents.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide" data-slide="1">
+                            <div class="slide-content">
+                                <h3 class="section-title" style="margin-bottom: 20px; font-size: 2rem;">Barangay Officials</h3>
+                                <p class="section-subtitle" id="officials-subtitle" style="margin-bottom: 20px;">Meet the dedicated team serving our community</p>
+                                
+                                <div class="officials-grid" id="officials-container">
+                                    <!-- Officials will be loaded dynamically here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide" data-slide="2">
+                            <div class="slide-content">
+                                <h3 class="section-title" style="margin-bottom: 20px; font-size: 2rem;">Barangay Committees</h3>
+                                <p class="section-subtitle" id="committees-subtitle" style="margin-bottom: 20px;">Our specialized committees addressing various community needs</p>
+                                
+                                <div class="committee-grid" id="committees-container">
+                                    <!-- Committees will be loaded dynamically here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide" data-slide="3">
+                            <div class="slide-content">
+                                <h3 class="section-title" style="margin-bottom: 20px; font-size: 2rem;">Document Requirements</h3>
+                                <p class="section-subtitle" id="documents-subtitle" style="margin-bottom: 20px;">Information about the documents you can request and their requirements</p>
+                                
+                                <div class="documents-grid" id="documents-container">
+                                    <!-- Documents will be loaded dynamically here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="nav-arrow next" aria-label="Next section">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <div class="carousel-indicators">
+                        <div class="indicator active" data-slide="0"></div>
+                        <div class="indicator" data-slide="1"></div>
+                        <div class="indicator" data-slide="2"></div>
+                        <div class="indicator" data-slide="3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 3: Barangay Location -->
+    <section class="section section-white">
+        <div class="container">
+            <h2 class="section-title" id="location-title">Barangay Location</h2>
+            <p class="section-subtitle" id="location-subtitle">Find our barangay hall and important facilities</p>
+            
+            <div class="map-container">
+                <iframe 
+                    id="barangay-map-iframe"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.756058428442!2d120.98186107483958!3d14.617918276090184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5f6a5b2c8b1%3A0x3a5c6c3c3c3c3c3c!2s402%202nd%20St%2C%20Grace%20Park%20East%2C%20Caloocan%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1690000000000!5m2!1sen!2sph" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Barangay 118 Location Map">
+                </iframe>
+                <div class="map-info">
+                    <p class="address" id="barangay-address">402 2nd St, Grace Park East, Caloocan, Metro Manila</p>
+                    <p id="barangay-location">Barangay 118 Hall, Grace Park East, Caloocan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-light">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Find answers to common questions about our barangay and services</p>
+            
+            <div class="faq-container" id="faq-container">
+                <!-- FAQs will be loaded dynamically here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-white" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 20px;" id="contact-section-title">Get In Touch</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 40px;">We're here to help. Contact us for any inquiries or concerns.</p>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Location</h3>
+                            <p id="contact-address">402 2nd St, Grace Park East, Caloocan, Metro Manila</p>
+                            <a href="https://maps.app.goo.gl/vic9Xuyab5eZhxSaA" target="_blank" class="map-link-button">
+                                <i class="fas fa-map"></i> <span id="map-link-text">View on Google Maps</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p id="contact-email">info@barangay118.gov.ph</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <p id="contact-phone">(02) 8123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Office Hours</h3>
+                            <p id="contact-hours-weekdays">Monday-Friday: 8:00 AM - 5:00 PM</p>
+                            <p id="contact-hours-saturday">Saturday: 8:00 AM - 12:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="from_name">Your Name *</label>
+                            <input type="text" id="from_name" name="from_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="from_email">Your Email * <small>(Gmail only)</small></label>
+                            <input type="email" id="from_email" name="from_email" class="form-control" required>
+                            <small class="email-hint" style="font-size: 0.9rem; color: var(--gray); display: block; margin-top: 5px;">Only Gmail addresses are accepted (@gmail.com)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1rem;">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="dynamic-footer">
+    </footer>
+
+    <div class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>Message sent successfully!</span>
+    </div>
+
+    <!-- Main JavaScript for AboutUs Page -->
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        // Initialize Firebase
+        let db = null;
+        let unsubscribe = null;
+        
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.database();
+            console.log("Firebase Realtime Database initialized successfully");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        // Default data structure - ALIGNED WITH NEW FIREBASE STRUCTURE
+        const aboutUsContent = {
+            "01_hero": {
+                order: 1,
+                title: "Barangay Information",
+                description: "Learn about our barangay's mission, leadership, services, and commitment to the community."
+            },
+            "02_story": {
+                order: 2,
+                title: "Our Community Story",
+                content1: "For over 62 years, Barangay 118 has stood as a pillar of public service — committed to delivering efficient, transparent, and accessible government services to our residents. Located in the heart of the city, our barangay is home to a vibrant community of families, businesses, and institutions working together for progress and unity.",
+                content2: "Through the launch of our Online System, we are taking our commitment to the next level — providing 24/7 access to essential services from the comfort of your home. This digital transformation bridges the gap between the barangay administration and the people we serve, ensuring convenience and connectivity for all.",
+                content3: "Behind every program and project is a dedicated team of officials and staff who serve with integrity, transparency, and compassion — ensuring that every resident feels heard, supported, and cared for.",
+                image: "Screen Shot 2025-11-23 at 10.35.19 AM.png"
+            },
+            "03_missionVision": {
+                order: 3,
+                title: "Our Mission & Vision",
+                mission: {
+                    title: "Our Mission",
+                    description: "To provide efficient, transparent, and accessible government services to all residents through innovative digital solutions, fostering a connected and empowered community."
+                },
+                vision: {
+                    title: "Our Vision", 
+                    description: "To be a model barangay known for excellent public service, community engagement, and technological innovation that improves the quality of life for all residents."
+                }
+            },
+            "04_officials": {
+                order: 4,
+                subtitle: "Meet the dedicated team serving our community",
+                members: [
+                    { id: 1, avatar: 'J', name: 'Jerryllyn D. Bolo', position: 'Chairwoman', description: 'Leading Barangay 118 with dedication and commitment to community service.' },
+                    { id: 2, avatar: 'J', name: 'Jeremy Abesamis', position: 'SK Chairman', description: 'Representing the youth of Barangay 118 and advocating for their needs.' },
+                    { id: 3, avatar: 'R', name: 'Richard Rayos', position: 'Secretary', description: 'Managing barangay documentation and administrative processes.' },
+                    { id: 4, avatar: 'C', name: 'Carolina T. Manabat', position: 'Treasurer', description: 'Overseeing barangay finances and budget management.' },
+                    { id: 5, avatar: 'A', name: 'Annalyn Abesamis', position: 'Kagawad', description: 'Committee on Violence Against Women and Children.' },
+                    { id: 6, avatar: 'J', name: 'Joemarie F. Dohinog', position: 'Kagawad', description: 'Committee on Infrastructure.' },
+                    { id: 7, avatar: 'R', name: 'Ronald Allan Mateo', position: 'Kagawad', description: 'Committee on Public Safety.' },
+                    { id: 8, avatar: 'L', name: 'Lucas Badilla', position: 'Kagawad', description: 'Committee on Health and Sanitation.' },
+                    { id: 9, avatar: 'N', name: 'Novel Nolasco', position: 'Kagawad', description: 'Committee on Peace and Order.' },
+                    { id: 10, avatar: 'M', name: 'Ma. Theresa Neri', position: 'Kagawad', description: 'Committee on Education.' },
+                    { id: 11, avatar: 'A', name: 'Alex Bolo', position: 'Kagawad', description: 'Committee on Environmental.' }
+                ]
+            },
+            "05_committees": {
+                order: 5,
+                subtitle: "Our specialized committees addressing various community needs",
+                list: [
+                    {
+                        id: 1,
+                        icon: 'fas fa-shield-heart',
+                        name: 'Committee on Violence Against Women and Children',
+                        chairperson: 'Annalyn Abesamis',
+                        description: 'Addressing issues related to violence against women and children and providing support services. This committee ensures protection and empowerment for vulnerable groups in our community.'
+                    },
+                    {
+                        id: 2,
+                        icon: 'fas fa-hammer',
+                        name: 'Committee on Infrastructure',
+                        chairperson: 'Joemarie F. Dohinog',
+                        description: 'Overseeing barangay infrastructure projects and maintenance of public facilities. This committee ensures our community has well-maintained roads, buildings, and public spaces.'
+                    },
+                    {
+                        id: 3,
+                        icon: 'fas fa-shield-halved',
+                        name: 'Committee on Public Safety',
+                        chairperson: 'Ronald Allan Mateo',
+                        description: 'Ensuring the safety and security of residents through various safety programs. This committee coordinates with local authorities to maintain a secure environment for all.'
+                    },
+                    {
+                        id: 4,
+                        icon: 'fas fa-hand-holding-medical',
+                        name: 'Committee on Health and Sanitation',
+                        chairperson: 'Lucas Badilla',
+                        description: 'Promoting health programs and maintaining cleanliness in the community. This committee organizes medical missions and ensures proper waste management.'
+                    },
+                    {
+                        id: 5,
+                        icon: 'fas fa-balance-scale',
+                        name: 'Committee on Peace and Order',
+                        chairperson: 'Novel Nolasco',
+                        description: 'Maintaining peace and order within the barangay through community policing. This committee resolves disputes and promotes harmonious living.'
+                    },
+                    {
+                        id: 6,
+                        icon: 'fas fa-graduation-cap',
+                        name: 'Committee on Education',
+                        chairperson: 'Ma. Theresa Neri',
+                        description: 'Supporting educational initiatives and programs for residents of all ages. This committee provides scholarships and organizes literacy programs.'
+                    },
+                    {
+                        id: 7,
+                        icon: 'fas fa-leaf',
+                        name: 'Committee on Environmental',
+                        chairperson: 'Alex Bolo',
+                        description: 'Implementing environmental programs and sustainability initiatives. This committee promotes green spaces and environmental awareness campaigns.'
+                    }
+                ]
+            },
+            "06_documents": {
+                order: 6,
+                subtitle: "Information about the documents you can request and their requirements",
+                files: [
+                    { 
+                        id: 1, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Barangay Clearance', 
+                        description: 'Required for various transactions including employment, business permits, and legal matters. This document certifies your good standing in the community.', 
+                        requirements: ['Valid government-issued ID', 'Proof of Residency (utility bill or lease agreement)', 'Community Tax Certificate (cedula)'], 
+                        processingTime: '10-15 minutes' 
+                    },
+                    { 
+                        id: 2, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Certificate of Residency', 
+                        description: 'Proof of residency in Barangay 118 for various purposes such as school enrollment, loan applications, and government transactions.', 
+                        requirements: ['Valid government-issued ID', 'Proof of Residency (utility bill or barangay ID)', 'Completed application form'], 
+                        processingTime: 'Same day' 
+                    },
+                    { 
+                        id: 3, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Certificate of Indigency', 
+                        description: 'For availing government assistance programs and benefits. This document certifies your eligibility for social welfare programs.', 
+                        requirements: ['Valid ID', 'Proof of Income or Affidavit of No Income', 'Proof of Residency'], 
+                        processingTime: '1-2 days' 
+                    },
+                    { 
+                        id: 4, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Barangay ID', 
+                        description: 'Official identification card issued by Barangay 118. Valid for local transactions and as supplementary identification.', 
+                        requirements: ['Valid ID (if available)', 'Proof of Residency', '1x1 ID Photo', 'Completed application form'], 
+                        processingTime: '3-5 working days' 
+                    },
+                ]
+            },
+            "07_location": {
+                order: 7,
+                title: "Barangay Location",
+                subtitle: "Find our barangay hall and important facilities",
+                address: '402 2nd St, Grace Park East, Caloocan, Metro Manila',
+                location: 'Barangay 118 Hall, Grace Park East, Caloocan',
+                mapLink: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.756058428442!2d120.98186107483958!3d14.617918276090184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5f6a5b2c8b1%3A0x3a5c6c3c3c3c3c3c!2s402%202nd%20St%2C%20Grace%20Park%20East%2C%20Caloocan%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1690000000000!5m2!1sen!2sph"
+            },
+            "08_contact": {
+                order: 8,
+                title: "Get In Touch",
+                address: '402 2nd St, Grace Park East, Caloocan, Metro Manila',
+                email: 'info@barangay118.gov.ph',
+                phone: '(02) 8123-4567',
+                mapLink: "https://maps.app.goo.gl/vic9Xuyab5eZhxSaA",
+                hours: {
+                    weekdays: 'Monday-Friday: 8:00 AM - 5:00 PM',
+                    saturday: 'Saturday: 8:00 AM - 12:00 PM'
+                },
+                mapLinkText: "View on Google Maps"
+            },
+            "09_faqs": {
+                order: 9,
+                list: [
+                    { 
+                        id: 1, 
+                        question: 'What are the office hours of the barangay hall?', 
+                        answer: 'Our barangay hall is open from Monday to Friday, 8:00 AM to 5:00 PM, and on Saturdays from 8:00 AM to 12:00 PM. We are closed on Sundays and holidays.' 
+                    },
+                    { 
+                        id: 2, 
+                        question: 'How can I request a Barangay Clearance?', 
+                        answer: 'Required documents: Valid government-issued ID (driver\'s license, passport, voter\'s ID), proof of residency (utility bill, lease/rental contract), completed barangay clearance application form, Community Tax Certificate (cedula), and passport-size photo if required. Fees: Free (no payment required). Processing time: Usually issued immediately (10–15 minutes). Where & How to apply: Apply in person at Barangay 118 Hall, weekdays 8 AM–5 PM. Submit requirements and receive your clearance.' 
+                    },
+                    { 
+                        id: 3, 
+                        question: 'How can I request a Certificate of Residency?', 
+                        answer: 'Required documents: Government-issued ID, proof of address (utility bill, lease, or cedula), and completed residency certificate form. Fees: Free (no payment required). Processing time: On the spot or same day. Where & How to apply: Apply at Barangay 118 Hall, weekdays 8 AM–5 PM. Present your documents and receive the certificate.' 
+                    },
+                    { 
+                        id: 4, 
+                        question: 'How can I request a Certificate of Indigency?', 
+                        answer: 'Required documents: Government-issued ID, proof of residence (barangay ID, voter\'s record, or utility bill), supporting income documents if applicable, and purpose statement. Fees: Free. Processing time: Usually issued immediately. Where & How to apply: Submit request at Barangay 118 Hall, weekdays 8 AM–5 PM. The officer will review and issue the certificate.' 
+                    },
+                    { 
+                        id: 5, 
+                        question: 'How can I get a Barangay ID?', 
+                        answer: 'Required documents: Valid ID (if any), proof of residency (utility bill, barangay certificate, or cedula), 1–2 passport-size photos, and completed application form. Fees: Free. Processing time: Usually issued on the same day. Where & How to apply: Apply at Barangay 118 Hall, weekdays 8 AM–5 PM. Submit your requirements and receive your Barangay ID.' 
+                    },
+                    { 
+                        id: 6, 
+                        question: 'How can I report a community concern?', 
+                        answer: 'You can report concerns by visiting the Barangay 118 Hall, calling our office at (02) 8123-4567, or using the contact form on our website. For emergencies, contact proper emergency services first. You may also use the "Get In Touch" section on our site; our team will review and assist you accordingly.' 
+                    }
+                ]
+            }
+        };
+
+        // Load data from Firebase Realtime Database (02_aboutUs)
+        async function loadData() {
+            try {
+                if (db) {
+                    // Load from '02_aboutUs' path in Realtime Database (new structure)
+                    const aboutUsRef = db.ref('02_aboutUs');
+                    const snapshot = await aboutUsRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        
+                        // Deep merge Firebase data with local data
+                        deepMergeData(aboutUsContent, firebaseData);
+                        
+                        console.log("AboutUs data loaded from Firebase Realtime Database (02_aboutUs)");
+                        localStorage.setItem("aboutUsContent", JSON.stringify(aboutUsContent));
+                    } else {
+                        console.log("No Firebase data found in Realtime Database at 02_aboutUs, using localStorage");
+                        loadFromLocalStorage();
+                    }
+                } else {
+                    console.log("Firebase not available, using localStorage");
+                    loadFromLocalStorage();
+                }
+            } catch (error) {
+                console.error("Error loading from Firebase:", error);
+                loadFromLocalStorage();
+            }
+            updateUI();
+            renderHeader();
+            renderFooter();
+        }
+
+        // Deep merge function for nested objects
+        function deepMergeData(target, source) {
+            for (const key in source) {
+                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                    if (!target[key]) target[key] = {};
+                    deepMergeData(target[key], source[key]);
+                } else {
+                    target[key] = source[key];
+                }
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem("aboutUsContent");
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    deepMergeData(aboutUsContent, parsedData);
+                    console.log("AboutUs data loaded from localStorage");
+                } else {
+                    console.log("Using default AboutUs data");
+                }
+            } catch (error) {
+                console.error("Error loading from localStorage:", error);
+            }
+        }
+
+        // Setup Firebase real-time listener for Realtime Database (02_aboutUs)
+        function setupFirebaseListener() {
+            if (!db) return;
+            
+            try {
+                const aboutUsRef = db.ref('02_aboutUs');
+                let isFirstLoad = true; // Flag to track first load
+                
+                unsubscribe = aboutUsRef.on('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        
+                        // Deep merge Firebase data
+                        deepMergeData(aboutUsContent, firebaseData);
+                        
+                        updateUI();
+                        renderHeader();
+                        renderFooter();
+                        localStorage.setItem("aboutUsContent", JSON.stringify(aboutUsContent));
+                        console.log("AboutUs data updated from Firebase in real-time (02_aboutUs)");
+                        
+                        // Only show notification if it's NOT the first load (real update)
+                        if (!isFirstLoad) {
+                            showToast('AboutUs content updated from admin!', 'success');
+                        } else {
+                            isFirstLoad = false; // Set to false after first load
+                        }
+                    }
+                }, (error) => {
+                    console.error("Firebase listener error:", error);
+                });
+            } catch (error) {
+                console.error("Failed to setup Firebase listener:", error);
+            }
+        }
+
+        // Render dynamic header - Load header data from main admin panel (PanelAdmin.html)
+        async function renderHeader() {
+            const headerContainer = document.getElementById('dynamic-header');
+            if (!headerContainer) return;
+            
+            // Load header data from main admin panel (PanelAdmin.html controls this)
+            let headerData = {
+                systemName: "BARANGAY 118 ONLINE SYSTEM",
+                hero: {
+                    headerLogo: "Logo-Favicon-removebg-preview.png"
+                }
+            };
+            
+            try {
+                if (db) {
+                    const mainDataRef = db.ref('01_main');
+                    const snapshot = await mainDataRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        
+                        // Get system name from PanelAdmin.html structure
+                        if (firebaseData["01_systemName"]) {
+                            headerData.systemName = firebaseData["01_systemName"];
+                        }
+                        
+                        // Get header logo from PanelAdmin.html structure
+                        if (firebaseData["02_hero"]?.headerLogo) {
+                            headerData.hero.headerLogo = firebaseData["02_hero"].headerLogo;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading header data:", error);
+            }
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            
+            headerContainer.innerHTML = `
+                <div class="container">
+                    <div class="navbar">
+                        <a href="index.html" id="home-logo" class="logo" aria-label="Barangay 118 Online System Home">
+                            <img src="${headerData.hero.headerLogo}" 
+                                 alt="Barangay 118 Official Logo" 
+                                 class="logo-image" 
+                                 id="header-logo" 
+                                 width="70" height="70">
+                            <h1 id="system-name">${headerData.systemName}</h1>
+                        </a>
+
+                        <nav class="nav-links" aria-label="Main navigation">
+                            <a href="index.html" ${currentPage === 'index.html' || currentPage === '' ? 'class="active"' : ''} aria-label="Home page">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>Home</span>
+                            </a>
+                            <a href="AboutUs.html" ${currentPage === 'AboutUs.html' ? 'class="active"' : ''} aria-current="page" aria-label="About Barangay 118 page">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>About Us</span>
+                            </a>
+                            <a href="News.html" ${currentPage === 'News.html' ? 'class="active"' : ''} aria-label="Barangay News page">
+                                <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                <span>News</span>
+                            </a>
+                            <a href="Emergency.html" ${currentPage === 'Emergency.html' ? 'class="active"' : ''} aria-label="Barangay Emergency page">
+                                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                <span>Emergency</span>
+                            </a>
+                            <a href="CreateAnAccount.html" ${currentPage === 'CreateAnAccount.html' ? 'class="active"' : ''} aria-label="Create an account page">
+                                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                                <span>Create Account</span>
+                            </a>
+                            <a href="LogIn.html" ${currentPage === 'LogIn.html' ? 'class="active"' : ''} aria-label="Login page">
+                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                <span>Login</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render dynamic footer - Load footer data from main admin panel (PanelAdmin.html)
+        async function renderFooter() {
+            const footerContainer = document.getElementById('dynamic-footer');
+            if (!footerContainer) return;
+            
+            // Load footer data from main admin panel (PanelAdmin.html controls this)
+            let footerData = {
+                title: "Barangay 118 Online System",
+                description: "Secure and efficient online services for Barangay 118. Connecting our community through technology.",
+                contactInfo: {
+                    addressLine1: "402 2nd St, Grace Park East, Caloocan",
+                    addressLine2: "Metro Manila, Philippines",
+                    phone: "(02) 8123-4567",
+                    email: "info@barangay118.gov.ph",
+                    officeHours: "Mon–Fri: 8:00 AM – 5:00 PM"
+                },
+                socialMedia: {
+                    facebook: "https://facebook.com/barangay118",
+                    messenger: "https://m.me/barangay118"
+                },
+                copyright: "&copy; 2025 Barangay 118 Online System. All Rights Reserved."
+            };
+            
+            try {
+                if (db) {
+                    const mainDataRef = db.ref('01_main');
+                    const snapshot = await mainDataRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        const footerSource = firebaseData["04_footer"] || {};
+                        
+                        // Get all footer data from PanelAdmin.html structure
+                        if (footerSource.title) footerData.title = footerSource.title;
+                        if (footerSource.description) footerData.description = footerSource.description;
+                        
+                        if (footerSource.contactInfo) {
+                            if (footerSource.contactInfo.addressLine1) footerData.contactInfo.addressLine1 = footerSource.contactInfo.addressLine1;
+                            if (footerSource.contactInfo.addressLine2) footerData.contactInfo.addressLine2 = footerSource.contactInfo.addressLine2;
+                            if (footerSource.contactInfo.phone) footerData.contactInfo.phone = footerSource.contactInfo.phone;
+                            if (footerSource.contactInfo.email) footerData.contactInfo.email = footerSource.contactInfo.email;
+                            if (footerSource.contactInfo.officeHours) footerData.contactInfo.officeHours = footerSource.contactInfo.officeHours;
+                        }
+                        
+                        if (footerSource.socialMedia) {
+                            if (footerSource.socialMedia.facebook) footerData.socialMedia.facebook = footerSource.socialMedia.facebook;
+                            if (footerSource.socialMedia.messenger) footerData.socialMedia.messenger = footerSource.socialMedia.messenger;
+                        }
+                        
+                        if (footerSource.copyright) footerData.copyright = footerSource.copyright;
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading footer data:", error);
+            }
+            
+            footerContainer.innerHTML = `
+                <div class="container" id="footer-container">
+                    <div class="footer-content" id="footer-content">
+                        <!-- Left Column: System Info -->
+                        <div class="footer-column" id="footer-system-column">
+                            <h3 id="footer-title" class="footer-title">
+                                ${footerData.title}
+                            </h3>
+                            <p id="footer-description" class="footer-description">
+                                ${footerData.description}
+                            </p>
+                        </div>
+
+                        <!-- Center Footer -->
+                        <div class="footer-center" id="footer-center">
+                            <div class="footer-row" id="footer-row">
+                                <!-- Contact Info -->
+                                <div class="footer-column" id="footer-contact-column">
+                                    <h3 id="footer-contact-title">Contact Info</h3>
+                                    <ul id="footer-contact-info" class="footer-contact-info">
+                                        <li>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span id="footer-address-line1">
+                                                ${footerData.contactInfo.addressLine1}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-map-pin"></i>
+                                            <span id="footer-address-line2">
+                                                ${footerData.contactInfo.addressLine2}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-phone"></i>
+                                            <span id="footer-phone">
+                                                ${footerData.contactInfo.phone}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-envelope"></i>
+                                            <span id="footer-email">
+                                                ${footerData.contactInfo.email}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-clock"></i>
+                                            <span id="footer-office-hours">
+                                                ${footerData.contactInfo.officeHours}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Social / Links -->
+                                <div class="footer-column" id="footer-links-column">
+                                    <h3 id="footer-social-title">Follow Us</h3>
+                                    <ul class="footer-links" id="footer-social-links">
+                                        <li id="footer-facebook-item">
+                                            <i class="fab fa-facebook"></i>
+                                            <a id="footer-facebook-link" href="${footerData.socialMedia.facebook}" target="_blank">
+                                                <span id="footer-facebook-text"> Facebook</span>
+                                            </a>
+                                        </li>
+                                        <li id="footer-messenger-item">
+                                            <i class="fab fa-facebook-messenger"></i>
+                                            <a id="footer-messenger-link" href="${footerData.socialMedia.messenger}" target="_blank">
+                                                <span id="footer-messenger-text"> Messenger Chat</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Copyright -->
+                    <div class="copyright" id="footer-copyright">
+                        <p id="copyright-text">
+                            ${footerData.copyright}
+                        </p>
+                    </div>
+                </div>`;
+        }
+
+        // Update UI with loaded data
+        function updateUI() {
+            try {
+                // Update AboutUs content
+                const aboutHeroTitle = document.getElementById("about-hero-title");
+                if (aboutHeroTitle && aboutUsContent["01_hero"]?.title) aboutHeroTitle.textContent = aboutUsContent["01_hero"].title;
+                
+                const aboutHeroDesc = document.getElementById("about-hero-description");
+                if (aboutHeroDesc && aboutUsContent["01_hero"]?.description) aboutHeroDesc.textContent = aboutUsContent["01_hero"].description;
+                
+                // Story section
+                const storyTitle = document.getElementById("about-story-title");
+                if (storyTitle && aboutUsContent["02_story"]?.title) storyTitle.textContent = aboutUsContent["02_story"].title;
+                
+                const storyContent1 = document.getElementById("about-story-content-1");
+                if (storyContent1 && aboutUsContent["02_story"]?.content1) storyContent1.textContent = aboutUsContent["02_story"].content1;
+                
+                const storyContent2 = document.getElementById("about-story-content-2");
+                if (storyContent2 && aboutUsContent["02_story"]?.content2) storyContent2.textContent = aboutUsContent["02_story"].content2;
+                
+                const storyContent3 = document.getElementById("about-story-content-3");
+                if (storyContent3 && aboutUsContent["02_story"]?.content3) storyContent3.textContent = aboutUsContent["02_story"].content3;
+                
+                const barangayImage = document.getElementById("about-barangay-image");
+                if (barangayImage && aboutUsContent["02_story"]?.image) barangayImage.src = aboutUsContent["02_story"].image;
+                
+                // Mission & Vision
+                const missionTitle = document.getElementById("mission-title");
+                if (missionTitle && aboutUsContent["03_missionVision"]?.mission?.title) missionTitle.textContent = aboutUsContent["03_missionVision"].mission.title;
+                
+                const missionDesc = document.getElementById("mission-description");
+                if (missionDesc && aboutUsContent["03_missionVision"]?.mission?.description) missionDesc.textContent = aboutUsContent["03_missionVision"].mission.description;
+                
+                const visionTitle = document.getElementById("vision-title");
+                if (visionTitle && aboutUsContent["03_missionVision"]?.vision?.title) visionTitle.textContent = aboutUsContent["03_missionVision"].vision.title;
+                
+                const visionDesc = document.getElementById("vision-description");
+                if (visionDesc && aboutUsContent["03_missionVision"]?.vision?.description) visionDesc.textContent = aboutUsContent["03_missionVision"].vision.description;
+                
+                // Officials
+                const officialsSubtitle = document.getElementById("officials-subtitle");
+                if (officialsSubtitle && aboutUsContent["04_officials"]?.subtitle) officialsSubtitle.textContent = aboutUsContent["04_officials"].subtitle;
+                renderOfficials(aboutUsContent["04_officials"]?.members || []);
+                
+                // Committees
+                const committeesSubtitle = document.getElementById("committees-subtitle");
+                if (committeesSubtitle && aboutUsContent["05_committees"]?.subtitle) committeesSubtitle.textContent = aboutUsContent["05_committees"].subtitle;
+                renderCommittees(aboutUsContent["05_committees"]?.list || []);
+                
+                // Documents
+                const documentsSubtitle = document.getElementById("documents-subtitle");
+                if (documentsSubtitle && aboutUsContent["06_documents"]?.subtitle) documentsSubtitle.textContent = aboutUsContent["06_documents"].subtitle;
+                renderDocuments(aboutUsContent["06_documents"]?.files || []);
+                
+                // Location
+                const locationTitle = document.getElementById("location-title");
+                if (locationTitle && aboutUsContent["07_location"]?.title) locationTitle.textContent = aboutUsContent["07_location"].title;
+                
+                const locationSubtitle = document.getElementById("location-subtitle");
+                if (locationSubtitle && aboutUsContent["07_location"]?.subtitle) locationSubtitle.textContent = aboutUsContent["07_location"].subtitle;
+                
+                const barangayAddress = document.getElementById("barangay-address");
+                if (barangayAddress && aboutUsContent["07_location"]?.address) barangayAddress.textContent = aboutUsContent["07_location"].address;
+                
+                const barangayLocation = document.getElementById("barangay-location");
+                if (barangayLocation && aboutUsContent["07_location"]?.location) barangayLocation.textContent = aboutUsContent["07_location"].location;
+                
+                // Update Google Maps iframe
+                const mapIframe = document.getElementById("barangay-map-iframe");
+                if (mapIframe && aboutUsContent["07_location"]?.mapLink) {
+                    mapIframe.src = aboutUsContent["07_location"].mapLink;
+                }
+                
+                // Contact Section
+                const contactSectionTitle = document.getElementById("contact-section-title");
+                if (contactSectionTitle && aboutUsContent["08_contact"]?.title) contactSectionTitle.textContent = aboutUsContent["08_contact"].title;
+                
+                const contactAddress = document.getElementById("contact-address");
+                if (contactAddress && aboutUsContent["08_contact"]?.address) contactAddress.textContent = aboutUsContent["08_contact"].address;
+                
+                const contactEmail = document.getElementById("contact-email");
+                if (contactEmail && aboutUsContent["08_contact"]?.email) contactEmail.textContent = aboutUsContent["08_contact"].email;
+                
+                const contactPhone = document.getElementById("contact-phone");
+                if (contactPhone && aboutUsContent["08_contact"]?.phone) contactPhone.textContent = aboutUsContent["08_contact"].phone;
+                
+                const contactHoursWeekdays = document.getElementById("contact-hours-weekdays");
+                if (contactHoursWeekdays && aboutUsContent["08_contact"]?.hours?.weekdays) contactHoursWeekdays.textContent = aboutUsContent["08_contact"].hours.weekdays;
+                
+                const contactHoursSaturday = document.getElementById("contact-hours-saturday");
+                if (contactHoursSaturday && aboutUsContent["08_contact"]?.hours?.saturday) contactHoursSaturday.textContent = aboutUsContent["08_contact"].hours.saturday;
+                
+                const mapLinkText = document.getElementById("map-link-text");
+                if (mapLinkText && aboutUsContent["08_contact"]?.mapLinkText) mapLinkText.textContent = aboutUsContent["08_contact"].mapLinkText;
+                
+                // Update map link button href
+                const mapLinkButton = document.querySelector('.map-link-button');
+                if (mapLinkButton && aboutUsContent["08_contact"]?.mapLink) {
+                    mapLinkButton.href = aboutUsContent["08_contact"].mapLink;
+                }
+                
+                // FAQs
+                renderFAQs(aboutUsContent["09_faqs"]?.list || []);
+                
+                console.log("AboutUs UI updated successfully");
+            } catch (error) {
+                console.error("Error updating UI:", error);
+            }
+        }
+
+        // Render officials dynamically
+        function renderOfficials(officials) {
+            const container = document.getElementById('officials-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (officials.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--gray); grid-column: 1 / -1;">No officials information available.</p>';
+                return;
+            }
+            
+            officials.forEach(official => {
+                const card = document.createElement('div');
+                card.className = 'official-card';
+                
+                let avatarHTML = '';
+                if (official.avatar && official.avatar.startsWith('http')) {
+                    avatarHTML = `<img src="${official.avatar}" alt="${official.name}" class="official-avatar-img">`;
+                    card.innerHTML = `
+                        <div class="official-avatar" style="background: none; padding: 0;">
+                            ${avatarHTML}
+                        </div>
+                        <div class="official-name">${official.name || 'Unnamed Official'}</div>
+                        <div class="official-position">${official.position || 'Position not specified'}</div>
+                        <p>${official.description || 'No description available.'}</p>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="official-avatar">${official.avatar || (official.name ? official.name.charAt(0) : '?')}</div>
+                        <div class="official-name">${official.name || 'Unnamed Official'}</div>
+                        <div class="official-position">${official.position || 'Position not specified'}</div>
+                        <p>${official.description || 'No description available.'}</p>
+                    `;
+                }
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Render committees dynamically
+        function renderCommittees(committees) {
+            const container = document.getElementById('committees-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (committees.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--gray); width: 100%;">No committees information available.</p>';
+                return;
+            }
+            
+            committees.forEach(committee => {
+                const card = document.createElement('div');
+                card.className = 'committee-card';
+                card.innerHTML = `
+                    <div class="committee-icon"><i class="${committee.icon || 'fas fa-users'}"></i></div>
+                    <div class="committee-name">${committee.name || 'Unnamed Committee'}</div>
+                    <div class="committee-chairperson">${committee.chairperson ? 'Chairperson: ' + committee.chairperson : 'No chairperson specified'}</div>
+                    <p>${committee.description || 'No description available.'}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // Render documents dynamically
+        function renderDocuments(documents) {
+            const container = document.getElementById('documents-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (documents.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--gray); grid-column: 1 / -1;">No documents information available.</p>';
+                return;
+            }
+            
+            documents.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = 'document-card';
+                
+                let requirementsHTML = '';
+                if (doc.requirements && doc.requirements.length > 0) {
+                    requirementsHTML = `
+                        <p><strong>Requirements:</strong></p>
+                        <ul class="requirements-list">
+                            ${doc.requirements.map(req => `<li>${req}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                
+                let processingHTML = '';
+                if (doc.processingTime) {
+                    processingHTML = `<div class="processing-time"><i class="fas fa-clock"></i> Processing Time: ${doc.processingTime}</div>`;
+                }
+                
+                card.innerHTML = `
+                    <div class="document-icon"><i class="${doc.icon || 'fas fa-file-alt'}"></i></div>
+                    <div class="document-name">${doc.name || 'Unnamed Document'}</div>
+                    <div class="document-description">
+                        <p>${doc.description || 'No description available.'}</p>
+                        ${requirementsHTML}
+                        ${processingHTML}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Render FAQs dynamically
+        function renderFAQs(faqs) {
+            const container = document.getElementById('faq-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (faqs.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--gray);">No FAQs available.</p>';
+                return;
+            }
+            
+            faqs.forEach(faq => {
+                const item = document.createElement('div');
+                item.className = 'faq-item';
+                item.innerHTML = `
+                    <div class="faq-question">
+                        <span>${faq.question || 'Question not available'}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>${faq.answer || 'Answer not available'}</p>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // ====================
+        // CAROUSEL FUNCTIONALITY
+        // ====================
+        function initCarousel() {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.querySelector('.nav-arrow.prev');
+            const nextBtn = document.querySelector('.nav-arrow.next');
+            let currentSlide = 0;
+            
+            if (!slides.length) return;
+            
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[index].classList.add('active');
+                
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === index);
+                });
+                
+                currentSlide = index;
+            }
+            
+            function nextSlide() {
+                let newIndex = currentSlide + 1;
+                if (newIndex >= slides.length) newIndex = 0;
+                showSlide(newIndex);
+            }
+            
+            function prevSlide() {
+                let newIndex = currentSlide - 1;
+                if (newIndex < 0) newIndex = slides.length - 1;
+                showSlide(newIndex);
+            }
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    prevSlide();
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    nextSlide();
+                });
+            }
+            
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const carouselContainer = document.querySelector('.carousel-container');
+            
+            if (carouselContainer) {
+                carouselContainer.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+                
+                carouselContainer.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+                
+                let slideInterval = setInterval(nextSlide, 25000);
+
+                carouselContainer.addEventListener('mouseenter', () => {
+                    clearInterval(slideInterval);
+                });
+
+                carouselContainer.addEventListener('mouseleave', () => {
+                    clearInterval(slideInterval);
+                    slideInterval = setInterval(nextSlide, 25000);
+                });
+            }
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const swipeDistance = touchEndX - touchStartX;
+                
+                if (Math.abs(swipeDistance) < swipeThreshold) return;
+                
+                if (swipeDistance > 0) {
+                    prevSlide();
+                } else {
+                    nextSlide();
+                }
+            }
+        }
+
+        // ====================
+        // FAQ FUNCTIONALITY
+        // ====================
+        function initFAQs() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.faq-question')) {
+                    const item = e.target.closest('.faq-item');
+                    item.classList.toggle('active');
+                }
+            });
+        }
+
+        // ====================
+        // CONTACT FORM HANDLING
+        // ====================
+        function initContactForm() {
+            emailjs.init("KkQSfG62Jg8W8uies");
+            
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleFormSubmit);
+                
+                const emailInput = document.querySelector('input[name="from_email"]');
+                if (emailInput) {
+                    emailInput.addEventListener('input', validateEmail);
+                }
+            }
+            
+            function isValidGmail(email) {
+                const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+                return gmailRegex.test(email);
+            }
+            
+            function validateEmail(e) {
+                const email = e.target.value.trim();
+                if (email && !isValidGmail(email)) {
+                    e.target.style.borderColor = 'var(--error)';
+                } else {
+                    e.target.style.borderColor = 'var(--gray-border)';
+                }
+            }
+            
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                const emailInput = e.target.from_email;
+                const email = emailInput.value.trim();
+                
+                if (!isValidGmail(email)) {
+                    showToast('Please use a valid Gmail address (@gmail.com only)', 'error');
+                    emailInput.style.borderColor = 'var(--error)';
+                    return;
+                }
+                
+                emailInput.style.borderColor = 'var(--gray-border)';
+                
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                const now = new Date();
+                const formattedTime = now.toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+                
+                // Save to Firebase Realtime Database under 02_aboutUs/userFeedback
+                if (db) {
+                    try {
+                        const feedbackRef = db.ref('02_aboutUs/userFeedback');
+                        const newFeedbackRef = feedbackRef.push();
+                        newFeedbackRef.set({
+                            userName: e.target.from_name.value,
+                            userEmail: e.target.from_email.value,
+                            subject: e.target.subject.value,
+                            message: e.target.message.value,
+                            status: 'unread',
+                            date: now.toLocaleDateString(),
+                            time: now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+                            timestamp: now.getTime()
+                        });
+                        console.log('Feedback saved to Firebase Realtime Database');
+                    } catch (error) {
+                        console.error('Error saving feedback to Firebase:', error);
+                    }
+                }
+                
+                const templateParams = {
+                    from_name: e.target.from_name.value,
+                    from_email: e.target.from_email.value,
+                    subject: e.target.subject.value,
+                    message: e.target.message.value,
+                    time: formattedTime,
+                    date: formattedTime
+                };
+                
+                emailjs.send('service_upx49ro', 'template_4loo5dp', templateParams)
+                    .then((response) => {
+                        console.log('SUCCESS!', response.status, response.text);
+                        showToast('Message sent successfully!', 'success');
+                        
+                        e.target.reset();
+                    })
+                    .catch((error) => {
+                        console.log('FAILED...', error);
+                        showToast('Message saved! We will contact you soon.', 'info');
+                        
+                        e.target.reset();
+                    })
+                    .finally(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    });
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.querySelector('.toast');
+            if (toast) {
+                const icon = type === 'success' ? 'fa-check-circle' : 
+                            type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+                toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+                
+                if (type === 'success') {
+                    toast.style.background = 'var(--success)';
+                } else if (type === 'error') {
+                    toast.style.background = 'var(--error)';
+                } else {
+                    toast.style.background = 'var(--primary)';
+                }
+                
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setupFirebaseListener();
+            initCarousel();
+            initFAQs();
+            initContactForm();
+            
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'aboutUsContent') {
+                    loadFromLocalStorage();
+                    updateUI();
+                    renderHeader();
+                    renderFooter();
+                    showToast('AboutUs content updated from admin panel!', 'success');
+                }
+            });
+            
+            console.log("AboutUs page loaded successfully");
+        });
+
+        // Clean up Firebase listener when page unloads
+        window.addEventListener('beforeunload', function() {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        });
+    </script>
+
+</body>
+</html>

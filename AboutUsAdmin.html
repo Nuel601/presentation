@@ -1,0 +1,3117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Admin | Barangay 118</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="AboutUsAdmin.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo" onclick="myFunction()">
+                    <div class="logo-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>BARANGAY 118 ADMIN PANEL</h1>
+                        <p>About Us Control Center</p>
+                    </div>
+                </div>
+
+                <div class="nav-links">
+                    <a href="PanelAdmin.html">Dashboard</a>
+                    <a href="AboutUsAdmin.html" class="active">AboutUs</a>
+                    <a href="NewsAdmin.html">News</a>
+                    <a href="EmergencyAdmin.html">Emergency</a>
+                    <a href="CreateAccountAdmin.html">Create</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title"><i class="fas fa-cogs"></i> Control Center</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-tab="welcome"><span class="sidebar-icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard</a></li>
+                <li><a href="#" data-tab="hero"><span class="sidebar-icon"><i class="fas fa-heading"></i></span> Hero</a></li>
+                <li><a href="#" data-tab="story"><span class="sidebar-icon"><i class="fas fa-book"></i></span> Story</a></li>
+                <li><a href="#" data-tab="mission"><span class="sidebar-icon"><i class="fas fa-bullseye"></i></span> Mission & Vision</a></li>
+                <li><a href="#" data-tab="officials"><span class="sidebar-icon"><i class="fas fa-users"></i></span> Barangay Officials</a></li>
+                <li><a href="#" data-tab="committees"><span class="sidebar-icon"><i class="fas fa-user-friends"></i></span> Committees</a></li>
+                <li><a href="#" data-tab="documents"><span class="sidebar-icon"><i class="fas fa-file-alt"></i></span> Document Requirements</a></li>
+                <li><a href="#" data-tab="location"><span class="sidebar-icon"><i class="fas fa-map-marker-alt"></i></span> Location</a></li>
+                <li><a href="#" data-tab="contact"><span class="sidebar-icon"><i class="fas fa-phone-alt"></i></span> Contact Information</a></li>
+                <li><a href="#" data-tab="faq"><span class="sidebar-icon"><i class="fas fa-question-circle"></i></span> FAQ</a></li>
+                <li><a href="#" data-tab="userFeedback"><span class="sidebar-icon"><i class="fas fa-comments"></i></span> User Feedback</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="LogIn.html" class="sidebar-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <!-- Dashboard Tab -->
+            <div id="welcome" class="tab-content active">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="system-status">Ready</div>
+                            <div class="stat-label">System Status</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="user-feedback-count">0</div>
+                            <div class="stat-label">User Feedback</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="last-updated">Never</div>
+                            <div class="stat-label">Last Updated</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="data-size">0 KB</div>
+                            <div class="stat-label">Data Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-check-circle"></i> System Ready!</strong> Welcome to the Barangay 118 Admin Control Panel.
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" id="preview-site-btn">
+                            <i class="fas fa-external-link-alt"></i> Preview Site
+                        </button>
+                        <button class="btn btn-secondary" id="export-news-btn">
+                            <i class="fas fa-download"></i> Export News Data
+                        </button>
+                        <button class="btn btn-success" id="backup-btn">
+                            <i class="fas fa-database"></i> Backup Data
+                        </button>
+                        <button class="btn btn-warning" id="refresh-btn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                        <button class="btn btn-danger" id="clear-all-data-btn">
+                            <i class="fas fa-trash"></i> Clear All Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div id="recent-activity">
+                        <p style="color: var(--gray); text-align: center; padding: 20px;">
+                            <i class="fas fa-clock"></i> Activity log will appear here...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="welcome-guide" class="guide-section">
+                        <h4>Dashboard Overview</h4>
+                        <p>The dashboard provides a quick overview of your system's key metrics and recent activity.</p>
+                        <ul>
+                            <li>Monitor system status and data size</li>
+                            <li>Track last updated time and user feedback count</li>
+                            <li>View recent system activity</li>
+                            <li>Use quick actions for common tasks</li>
+                            <li><strong>CONNECTED:</strong> Using Firebase Realtime Database with structured format (02_aboutUs)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Tab -->
+            <div id="hero" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-heading"></i> Hero Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Update the Hero section that appears at the top of your About Us page.</p>
+                    
+                    <form id="hero-form">
+                        <div class="form-group">
+                            <label class="form-label" for="hero-title">Hero Title</label>
+                            <input type="text" class="form-control" id="hero-title" placeholder="Enter hero title">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Main title that appears on the About Us page</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="hero-description">Hero Description</label>
+                            <textarea class="form-control" id="hero-description" placeholder="Enter hero description"></textarea>
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Description text below the main title</small>
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Hero Section
+                            </button>
+                            <button type="button" class="btn btn-warning" id="hero-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="hero-guide" class="guide-section">
+                        <h4>Hero Section</h4>
+                        <p>Customize the Hero section of your About Us page.</p>
+                        <ul>
+                            <li>Update the page title and description</li>
+                            <li>Changes appear immediately on the main site</li>
+                            <li>Use descriptive titles for better user experience</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Tab -->
+            <div id="story" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-book"></i> Story Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Tell the story of your barangay and upload an image of your barangay hall or community.</p>
+                    
+                    <form id="story-form">
+                        <div class="form-group">
+                            <label class="form-label" for="story-title">Story Title</label>
+                            <input type="text" class="form-control" id="story-title" placeholder="Enter story title">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="story-content1">Story Content 1</label>
+                            <textarea class="form-control" id="story-content1" placeholder="Enter first paragraph"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="story-content2">Story Content 2</label>
+                            <textarea class="form-control" id="story-content2" placeholder="Enter second paragraph"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="story-content3">Story Content 3</label>
+                            <textarea class="form-control" id="story-content3" placeholder="Enter third paragraph"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="story-image">Barangay Image URL</label>
+                            <input type="text" class="form-control" id="story-image" placeholder="https://example.com/barangay-image.jpg">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Enter direct URL to high-quality barangay image</small>
+                            <div class="image-preview-container">
+                                <img id="story-image-preview" class="image-preview" alt="Barangay image preview">
+                            </div>
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Story Section
+                            </button>
+                            <button type="button" class="btn btn-warning" id="story-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="story-guide" class="guide-section">
+                        <h4>Story Section</h4>
+                        <p>Customize the story section with your barangay's story and image.</p>
+                        <ul>
+                            <li>Update the story title and paragraphs</li>
+                            <li>Add a barangay hall or community image</li>
+                            <li>Preview images before saving</li>
+                            <li>Changes appear on the About Us page</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission & Vision Tab -->
+            <div id="mission" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-bullseye"></i> Mission & Vision Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Define your barangay's mission and vision statements.</p>
+                    
+                    <form id="mission-form">
+                        <div class="form-group">
+                            <label class="form-label" for="mission-vision-title">Section Title</label>
+                            <input type="text" class="form-control" id="mission-vision-title" placeholder="Enter section title">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="mission-title">Mission Title</label>
+                                <input type="text" class="form-control" id="mission-title" placeholder="Enter mission title">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="vision-title">Vision Title</label>
+                                <input type="text" class="form-control" id="vision-title" placeholder="Enter vision title">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="mission-text">Mission Text</label>
+                                <textarea class="form-control" id="mission-text" placeholder="Enter mission statement"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="vision-text">Vision Text</label>
+                                <textarea class="form-control" id="vision-text" placeholder="Enter vision statement"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Mission & Vision
+                            </button>
+                            <button type="button" class="btn btn-warning" id="mission-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="mission-guide" class="guide-section">
+                        <h4>Mission & Vision Section</h4>
+                        <p>Define your barangay's mission and vision statements.</p>
+                        <ul>
+                            <li>Update section title</li>
+                            <li>Update mission and vision titles</li>
+                            <li>Edit mission and vision statements</li>
+                            <li>Keep statements concise and impactful</li>
+                            <li>Changes appear on the About Us page</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barangay Officials Tab -->
+            <div id="officials" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-users"></i> Barangay Officials Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage the list of barangay officials. You can add, edit, or remove officials as needed.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="officials-subtitle">Officials Subtitle</label>
+                        <input type="text" class="form-control" id="officials-subtitle" placeholder="Enter officials subtitle">
+                        <small style="color: var(--gray); margin-top: 5px; display: block;">Subtitle that appears above the officials list</small>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-info-circle"></i> Pro Tip:</strong> Click on any official to edit their details.
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-official-tab="existing">
+                            <i class="fa-solid fa-users"></i> Existing Officials
+                        </div>
+                        <div class="tab" data-official-tab="add">
+                            <i class="fa-solid fa-user-plus"></i> Add New Official
+                        </div>
+
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="officials-search" placeholder="Search officials by name or position...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-officials" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Avatar</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="officials-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-official" class="sub-tab-content">
+                        <form id="official-form">
+                            <input type="hidden" id="official-edit-id" value="">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="official-name">Name *</label>
+                                    <input type="text" class="form-control" id="official-name" placeholder="Enter official name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="official-position">Position *</label>
+                                    <input type="text" class="form-control" id="official-position" placeholder="Enter official position" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="official-description">Description</label>
+                                <textarea class="form-control" id="official-description" placeholder="Enter official description"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="official-avatar">Profile Image URL or Initial</label>
+                                <input type="text" class="form-control" id="official-avatar" placeholder="Enter image URL or single character initial">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Enter direct URL to profile image OR a single character (e.g., "J" for Jerryllyn)</small>
+                                <div class="image-preview-container">
+                                    <img id="official-avatar-preview" class="avatar-preview" alt="Official avatar preview">
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="official-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Official
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="official-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="officials-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset All Officials
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="officials-guide" class="guide-section">
+                        <h4>Barangay Officials Management</h4>
+                        <p>Manage all barangay officials and their information.</p>
+                        <ul>
+                            <li>Add, edit, and delete officials</li>
+                            <li>Upload profile images for each official</li>
+                            <li>Include detailed descriptions for each official</li>
+                            <li>Changes appear on the About Us page</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Committees Tab -->
+            <div id="committees" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-user-friends"></i> Committees Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage the different committees in your barangay and their members.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="committees-subtitle">Committees Subtitle</label>
+                        <input type="text" class="form-control" id="committees-subtitle" placeholder="Enter committees subtitle">
+                        <small style="color: var(--gray); margin-top: 5px; display: block;">Subtitle that appears above the committees list</small>
+                    </div>
+                          
+                    <div class="tabs">
+                        <div class="tab active" data-committee-tab="existing">
+                            <i class="fa-solid fa-shield"></i> Existing Committees
+                        </div>
+                        <div class="tab" data-committee-tab="add">
+                            <i class="fa-solid fa-circle-plus"></i> Add New Committee
+                        </div>
+
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="committees-search" placeholder="Search committees by title...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-committees" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Committee Name</th>
+                                    <th>Chairperson</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="committees-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-committee" class="sub-tab-content">
+                        <form id="committee-form">
+                            <input type="hidden" id="committee-edit-id" value="">
+                            <div class="form-group">
+                                <label class="form-label" for="committee-name">Committee Name *</label>
+                                <input type="text" class="form-control" id="committee-name" placeholder="Enter committee name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="committee-chairperson">Committee Chairperson</label>
+                                <input type="text" class="form-control" id="committee-chairperson" placeholder="Enter committee chairperson">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="committee-description">Committee Description</label>
+                                <textarea class="form-control" id="committee-description" placeholder="Enter committee description"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="committee-icon">Committee Icon Class</label>
+                                <input type="text" class="form-control" id="committee-icon" placeholder="fas fa-users">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">
+                                    Enter FontAwesome icon class (e.g., <code>fas fa-users</code>, <code>fas fa-shield-heart</code>). 
+                                    You can browse all icons here: <a href="https://fontawesome.com/search#icongrid" target="_blank">FontAwesome Icons</a>
+                                </small>                                
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="committee-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Committee
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="committee-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="committees-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset All Committees
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="committees-guide" class="guide-section">
+                        <h4>Committees Management</h4>
+                        <p>Manage barangay committees and their members.</p>
+                        <ul>
+                            <li>Add, edit, and delete committees</li>
+                            <li>Include committee name, chairperson, and description</li>
+                            <li>Add FontAwesome icon for each committee</li>
+                            <li>Organize by committee functions</li>
+                            <li>Keep information up-to-date</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Tab -->
+            <div id="documents" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-file-alt"></i> Document Requirements Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">List the documents residents can request and their requirements.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="documents-subtitle">Documents Subtitle</label>
+                        <input type="text" class="form-control" id="documents-subtitle" placeholder="Enter documents subtitle">
+                        <small style="color: var(--gray); margin-top: 5px; display: block;">Subtitle that appears above the documents list</small>
+                    </div>
+                  
+                    <div class="tabs">
+                        <div class="tab active" data-document-tab="existing">
+                            <i class="fa-solid fa-file-lines"></i> Existing Documents
+                        </div>
+                        <div class="tab" data-document-tab="add">
+                            <i class="fa-solid fa-file-circle-plus"></i> Add New Document
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="documents-search" placeholder="Search documents by title...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-documents" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Requirements</th>
+                                    <th>Processing Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="documents-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-document" class="sub-tab-content">
+                        <form id="document-form">
+                            <input type="hidden" id="document-edit-id" value="">
+                            <div class="form-group">
+                                <label class="form-label" for="document-title">Document Title *</label>
+                                <input type="text" class="form-control" id="document-title" placeholder="Enter document title" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="document-description">Document Description</label>
+                                <textarea class="form-control" id="document-description" placeholder="Describe the document purpose"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="document-requirements">Requirements</label>
+                                <textarea class="form-control" id="document-requirements" placeholder="Enter requirements (one per line)"></textarea>
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Each line will become a separate requirement</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="document-processing-time">Processing Time</label>
+                                <input type="text" class="form-control" id="document-processing-time" placeholder="e.g., 10-15 minutes, Same day">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="document-icon">Document Icon Class</label>
+                                <input type="text" class="form-control" id="document-icon" placeholder="fas fa-file-alt">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">
+                                    Enter FontAwesome icon class (e.g., <code>fas fa-home</code>). 
+                                    <a href="https://fontawesome.com/search#icongrid" target="_blank">Browse icons here</a>
+                                </small>
+                                
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="document-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Document
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="document-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="documents-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset All Documents
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="documents-guide" class="guide-section">
+                        <h4>Document Requirements Management</h4>
+                        <p>Manage document requirements and information.</p>
+                        <ul>
+                            <li>Add, edit, and delete document types</li>
+                            <li>Include descriptions and requirements</li>
+                            <li>Specify processing time</li>
+                            <li>Add FontAwesome icon for each document type</li>
+                            <li>Keep information accurate and up-to-date</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Tab -->
+            <div id="location" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Location Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Provide information about your barangay's location.</p>
+                    
+                    <form id="location-form">
+                        <div class="form-group">
+                            <label class="form-label" for="location-title">Section Title</label>
+                            <input type="text" class="form-control" id="location-title" placeholder="Enter section title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="location-subtitle">Section Subtitle</label>
+                            <input type="text" class="form-control" id="location-subtitle" placeholder="Enter section subtitle">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="map-link">Map Embed URL *</label>
+                            <input type="text" class="form-control" id="map-link" placeholder="Enter Google Maps embed URL">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">
+                                Paste the full Google Maps embed URL (<code>iframe src</code>).Example/preview: 
+                                <a href="https://www.google.com/maps/@12.0694778,122.0595622,6.56z?entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D" target="_blank">View on Google Maps</a></small>                              
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="map-address">Map Address</label>
+                            <input type="text" class="form-control" id="map-address" placeholder="Enter map address">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="map-location">Location Name</label>
+                            <input type="text" class="form-control" id="map-location" placeholder="e.g., Barangay 118 Hall, Grace Park East, Caloocan">
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Location Section
+                            </button>
+                            <button type="button" class="btn btn-warning" id="location-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="location-guide" class="guide-section">
+                        <h4>Location Section</h4>
+                        <p>Provide information about your barangay's location.</p>
+                        <ul>
+                            <li>Update section title and subtitle</li>
+                            <li>Modify map embed URL (Google Maps iframe src)</li>
+                            <li>Update barangay address</li>
+                            <li>Specify location name</li>
+                            <li>Changes appear on the About Us page</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Tab -->
+            <div id="contact" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-phone-alt"></i> Contact Information</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Update your barangay's contact details. Form split into two columns for better readability.</p>
+                    
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label class="form-label" for="contact-title">Section Title</label>
+                            <input type="text" class="form-control" id="contact-title" placeholder="Enter section title">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="contact-address">Location Address</label>
+                                <input type="text" class="form-control" id="contact-address" placeholder="Enter location address">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="contact-email">Email Address</label>
+                                <input type="text" class="form-control" id="contact-email" placeholder="Enter email address">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="contact-phone">Phone Number</label>
+                                <input type="text" class="form-control" id="contact-phone" placeholder="Enter phone number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="contact-map-link">Map Link URL</label>
+                                <input type="text" class="form-control" id="contact-map-link" placeholder="Enter Google Maps link URL">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="contact-map-link-text">Map Link Text</label>
+                                <input type="text" class="form-control" id="contact-map-link-text" placeholder="Enter map link text">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="contact-hours-weekdays">Weekday Hours</label>
+                                <input type="text" class="form-control" id="contact-hours-weekdays" placeholder="Monday-Friday: 8:00 AM - 5:00 PM">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contact-hours-saturday">Saturday Hours</label>
+                            <input type="text" class="form-control" id="contact-hours-saturday" placeholder="Saturday: 8:00 AM - 12:00 PM">
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Contact Information
+                            </button>
+                            <button type="button" class="btn btn-warning" id="contact-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="contact-guide" class="guide-section">
+                        <h4>Contact Information</h4>
+                        <p>Update your barangay's contact details.</p>
+                        <ul>
+                            <li>Update section title and address</li>
+                            <li>Modify email and phone number</li>
+                            <li>Customize map link text and URL</li>
+                            <li>Set office hours for weekdays and Saturdays</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Tab -->
+            <div id="faq" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-question-circle"></i> FAQ Section</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage frequently asked questions and their answers.</p>
+        
+                    <div class="tabs">
+                        <div class="tab active" data-faq-tab="existing">
+                            <i class="fa-solid fa-question-circle"></i> Existing FAQs
+                        </div>
+                        <div class="tab" data-faq-tab="add">
+                            <i class="fa-solid fa-circle-plus"></i> Add New FAQ
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="faq-search" placeholder="Search FAQs by question...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-faqs" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Question</th>
+                                    <th>Answer</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="faq-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-faq" class="sub-tab-content">
+                        <form id="faq-form">
+                            <input type="hidden" id="faq-edit-id" value="">
+                            <div class="form-group">
+                                <label class="form-label" for="faq-question">Question *</label>
+                                <input type="text" class="form-control" id="faq-question" placeholder="Enter FAQ question" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="faq-answer">Answer *</label>
+                                <textarea class="form-control" id="faq-answer" placeholder="Enter FAQ answer" required></textarea>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="faq-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add FAQ
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="faq-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="faq-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset All FAQs
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="faq-guide" class="guide-section">
+                        <h4>FAQ Management</h4>
+                        <p>Manage frequently asked questions and their answers.</p>
+                        <ul>
+                            <li>Add, edit, and delete FAQs</li>
+                            <li>Provide clear and concise answers</li>
+                            <li>Organize by common topics</li>
+                            <li>Keep information up-to-date</li>
+                            <li>Changes are saved to Firebase Realtime Database</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Feedback Tab -->
+            <div id="userFeedback" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-comments"></i> User Feedback</h2>
+                        <div class="action-buttons">
+                            <a href="AboutUs.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">View and manage user feedback from the contact form. Feedback is stored in Firebase Realtime Database.</p>
+                                 
+                    <div class="tabs">
+                        <div class="tab active" data-feedback-tab="all">
+                            <i class="fa-solid fa-envelope"></i> All Feedback
+                        </div>
+                        <div class="tab" data-feedback-tab="unread">
+                            <i class="fa-solid fa-envelope-circle-check"></i> Unread
+                        </div>
+                        <div class="tab" data-feedback-tab="read">
+                            <i class="fa-solid fa-envelope-open-text"></i> Read
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="feedback-search" placeholder="Search feedback by name, email, subject, or message...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="feedback-content" class="sub-tab-content active">
+                        <table class="data-table feedback-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User Name</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feedback-table-body">
+                                <!-- Feedback rows will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="userFeedback-guide" class="guide-section">
+                        <h4>User Feedback Management</h4>
+                        <p>Manage user feedback from the contact form stored in Firebase.</p>
+                        <ul>
+                            <li>View all user messages with details</li>
+                            <li>Mark messages as read or unread</li>
+                            <li>Delete messages when no longer needed</li>
+                            <li>Use search to find specific messages</li>
+                            <li>Feedback is stored in Firebase Realtime Database under userFeedback</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Save Status Indicator -->
+    <div id="save-status" class="save-status">• Connected to DataBase</div>
+
+    <!-- Feedback Details Modal -->
+    <div id="feedback-modal" class="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Feedback Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="feedback-detail-item">
+                    <div class="feedback-detail-label">Name:</div>
+                    <div class="feedback-detail-value" id="feedback-detail-name"></div>
+                </div>
+                <div class="feedback-detail-item">
+                    <div class="feedback-detail-label">Email:</div>
+                    <div class="feedback-detail-value" id="feedback-detail-email"></div>
+                </div>
+                <div class="feedback-detail-item">
+                    <div class="feedback-detail-label">Subject:</div>
+                    <div class="feedback-detail-value" id="feedback-detail-subject"></div>
+                </div>
+                <div class="feedback-detail-item">
+                    <div class="feedback-detail-label">Message:</div>
+                    <div class="feedback-detail-value" id="feedback-detail-message"></div>
+                </div>
+                <div class="feedback-detail-item">
+                    <div class="feedback-detail-label">Date:</div>
+                    <div class="feedback-detail-value" id="feedback-detail-date"></div>
+                </div>
+                <div class="feedback-detail-item">
+                    <div class="feedback-detail-label">Time:</div>
+                    <div class="feedback-detail-value" id="feedback-detail-time"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" id="feedback-modal-delete-btn">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button class="btn btn-warning btn-sm" id="feedback-modal-mark-read-btn">
+                    <i class="fas fa-check-circle"></i> Mark as Read
+                </button>
+                <button class="btn btn-secondary btn-sm" id="feedback-modal-close-btn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+
+function myFunction() {
+    location.reload(); // or any action
+}
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        // Initialize Firebase
+        let db = null;
+        let unsubscribe = null;
+        let feedbackUnsubscribe = null;
+        
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.database();
+            console.log("Firebase Realtime Database initialized successfully in Admin Panel");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        const defaultAboutUsData = {
+            "01_hero": {
+                order: 1,
+                title: "Barangay Information",
+                description: "Learn about our barangay's mission, leadership, services, and commitment to the community."
+            },
+            "02_story": {
+                order: 2,
+                title: "Our Community Story",
+                content1: "For over 62 years, Barangay 118 has stood as a pillar of public service — committed to delivering efficient, transparent, and accessible government services to our residents. Located in the heart of the city, our barangay is home to a vibrant community of families, businesses, and institutions working together for progress and unity.",
+                content2: "Through the launch of our Online System, we are taking our commitment to the next level — providing 24/7 access to essential services from the comfort of your home. This digital transformation bridges the gap between the barangay administration and the people we serve, ensuring convenience and connectivity for all.",
+                content3: "Behind every program and project is a dedicated team of officials and staff who serve with integrity, transparency, and compassion — ensuring that every resident feels heard, supported, and cared for.",
+                image: "Screen Shot 2025-11-23 at 10.35.19 AM.png"
+            },
+            "03_missionVision": {
+                order: 3,
+                title: "Our Mission & Vision",
+                mission: {
+                    title: "Our Mission",
+                    description: "To provide efficient, transparent, and accessible government services to all residents through innovative digital solutions, fostering a connected and empowered community."
+                },
+                vision: {
+                    title: "Our Vision",
+                    description: "To be a model barangay known for excellent public service, community engagement, and technological innovation that improves the quality of life for all residents."
+                }
+            },
+            "04_officials": {
+                order: 4,
+                subtitle: "Meet the dedicated team serving our community",
+                members: [
+                    { id: 1, avatar: 'J', name: 'Jerryllyn D. Bolo', position: 'Chairwoman', description: 'Leading Barangay 118 with dedication and commitment to community service.' },
+                    { id: 2, avatar: 'J', name: 'Jeremy Abesamis', position: 'SK Chairman', description: 'Representing the youth of Barangay 118 and advocating for their needs.' },
+                    { id: 3, avatar: 'R', name: 'Richard Rayos', position: 'Secretary', description: 'Managing barangay documentation and administrative processes.' },
+                    { id: 4, avatar: 'C', name: 'Carolina T. Manabat', position: 'Treasurer', description: 'Overseeing barangay finances and budget management.' },
+                    { id: 5, avatar: 'A', name: 'Annalyn Abesamis', position: 'Kagawad', description: 'Committee on Violence Against Women and Children.' },
+                    { id: 6, avatar: 'J', name: 'Joemarie F. Dohinog', position: 'Kagawad', description: 'Committee on Infrastructure.' },
+                    { id: 7, avatar: 'R', name: 'Ronald Allan Mateo', position: 'Kagawad', description: 'Committee on Public Safety.' },
+                    { id: 8, avatar: 'L', name: 'Lucas Badilla', position: 'Kagawad', description: 'Committee on Health and Sanitation.' },
+                    { id: 9, avatar: 'N', name: 'Novel Nolasco', position: 'Kagawad', description: 'Committee on Peace and Order.' },
+                    { id: 10, avatar: 'M', name: 'Ma. Theresa Neri', position: 'Kagawad', description: 'Committee on Education.' },
+                    { id: 11, avatar: 'A', name: 'Alex Bolo', position: 'Kagawad', description: 'Committee on Environmental.' }
+                ]
+            },
+            "05_committees": {
+                order: 5,
+                subtitle: "Our specialized committees addressing various community needs",
+                list: [
+                    { id: 1, icon: 'fas fa-shield-heart', name: 'Committee on Violence Against Women and Children', chairperson: 'Annalyn Abesamis', description: 'Addressing issues related to violence against women and children and providing support services. This committee ensures protection and empowerment for vulnerable groups in our community.' },
+                    { id: 2, icon: 'fas fa-hammer', name: 'Committee on Infrastructure', chairperson: 'Joemarie F. Dohinog', description: 'Overseeing barangay infrastructure projects and maintenance of public facilities. This committee ensures our community has well-maintained roads, buildings, and public spaces.' },
+                    { id: 3, icon: 'fas fa-user-shield', name: 'Committee on Public Safety', chairperson: 'Ronald Allan Mateo', description: 'Ensuring the safety and security of residents through various safety programs. This committee coordinates with local authorities to maintain a secure environment for all.' },
+                    { id: 4, icon: 'fas fa-hand-holding-medical', name: 'Committee on Health and Sanitation', chairperson: 'Lucas Badilla', description: 'Promoting health programs and maintaining cleanliness in the community. This committee organizes medical missions and ensures proper waste management.' },
+                    { id: 5, icon: 'fas fa-peace', name: 'Committee on Peace and Order', chairperson: 'Novel Nolasco', description: 'Maintaining peace and order within the barangay through community policing. This committee resolves disputes and promotes harmonious living.' },
+                    { id: 6, icon: 'fas fa-graduation-cap', name: 'Committee on Education', chairperson: 'Ma. Theresa Neri', description: 'Supporting educational initiatives and programs for residents of all ages. This committee provides scholarships and organizes literacy programs.' },
+                    { id: 7, icon: 'fas fa-leaf', name: 'Committee on Environmental', chairperson: 'Alex Bolo', description: 'Implementing environmental programs and sustainability initiatives. This committee promotes green spaces and environmental awareness campaigns.' }
+                ]
+            },
+            "06_documents": {
+                order: 6,
+                subtitle: "Information about the documents you can request and their requirements",
+                files: [
+                    { 
+                        id: 1, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Barangay Clearance', 
+                        description: 'Required for various transactions including employment, business permits, and legal matters. This document certifies your good standing in the community.', 
+                        requirements: ['Valid government-issued ID', 'Proof of Residency (utility bill or lease agreement)', 'Community Tax Certificate (cedula)'], 
+                        processingTime: '10-15 minutes' 
+                    },
+                    { 
+                        id: 2, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Certificate of Residency', 
+                        description: 'Proof of residency in Barangay 118 for various purposes such as school enrollment, loan applications, and government transactions.', 
+                        requirements: ['Valid government-issued ID', 'Proof of Residency (utility bill or barangay ID)', 'Completed application form'], 
+                        processingTime: 'Same day' 
+                    },
+                    { 
+                        id: 3, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Certificate of Indigency', 
+                        description: 'For availing government assistance programs and benefits. This document certifies your eligibility for social welfare programs.', 
+                        requirements: ['Valid ID', 'Proof of Income or Affidavit of No Income', 'Proof of Residency'], 
+                        processingTime: '1-2 days' 
+                    },
+                    { 
+                        id: 4, 
+                        icon: 'fas fa-file-alt',
+                        name: 'Barangay ID', 
+                        description: 'Official identification card issued by Barangay 118. Valid for local transactions and as supplementary identification.', 
+                        requirements: ['Valid ID (if available)', 'Proof of Residency', '1x1 ID Photo', 'Completed application form'], 
+                        processingTime: '3-5 working days' 
+                    },
+                ]
+            },
+            "07_location": {
+                order: 7,
+                title: "Barangay Location",
+                subtitle: "Find our barangay hall and important facilities",
+                mapLink: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.756058428442!2d120.98186107483958!3d14.617918276090184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5f6a5b2c8b1%3A0x3a5c6c3c3c3c3c3c!2s402%202nd%20St%2C%20Grace%20Park%20East%2C%20Caloocan%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1690000000000!5m2!1sen!2sph",
+                address: '402 2nd St, Grace Park East, Caloocan, Metro Manila',
+                location: 'Barangay 118 Hall, Grace Park East, Caloocan'
+            },
+            "08_contact": {
+                order: 8,
+                title: "Get In Touch",
+                address: '402 2nd St, Grace Park East, Caloocan, Metro Manila',
+                email: 'info@barangay118.gov.ph',
+                phone: '(02) 8123-4567',
+                mapLink: "https://maps.app.goo.gl/vic9Xuyab5eZhxSaA",
+                mapLinkText: "View on Google Maps",
+                hours: {
+                    weekdays: 'Monday-Friday: 8:00 AM - 5:00 PM',
+                    saturday: 'Saturday: 8:00 AM - 12:00 PM'
+                }
+            },
+            "09_faqs": {
+                order: 9,
+                list: [
+                    {
+                        id: 1,
+                        question: 'What are the office hours of the barangay hall?',
+                        answer: 'Our barangay hall is open from Monday to Friday, 8:00 AM to 5:00 PM, and on Saturdays from 8:00 AM to 12:00 PM. We are closed on Sundays and holidays.'
+                    },
+                    {
+                        id: 2,
+                        question: 'How can I request a Barangay Clearance?',
+                        answer: 'Required documents: Valid government-issued ID (driver\'s license, passport, voter\'s ID), proof of residency (utility bill, lease/rental contract), completed barangay clearance application form, Community Tax Certificate (cedula), and passport-size photo if required. Fees: Free (no payment required). Processing time: Usually issued immediately (10–15 minutes). Where & How to apply: Apply in person at Barangay 118 Hall, weekdays 8 AM–5 PM. Submit requirements and receive your clearance.'
+                    },
+                    {
+                        id: 3,
+                        question: 'How can I request a Certificate of Residency?',
+                        answer: 'Required documents: Government-issued ID, proof of address (utility bill, lease, or cedula), and completed residency certificate form. Fees: Free (no payment required). Processing time: On the spot or same day. Where & How to apply: Apply at Barangay 118 Hall, weekdays 8 AM–5 PM. Present your documents and receive the certificate.'
+                    },
+                    {
+                        id: 4,
+                        question: 'How can I request a Certificate of Indigency?',
+                        answer: 'Required documents: Government-issued ID, proof of residence (barangay ID, voter\'s record, or utility bill), supporting income documents if applicable, and purpose statement. Fees: Free. Processing time: Usually issued immediately. Where & How to apply: Submit request at Barangay 118 Hall, weekdays 8 AM–5 PM. The officer will review and issue the certificate.'
+                    },
+                    {
+                        id: 5,
+                        question: 'How can I get a Barangay ID?',
+                        answer: 'Required documents: Valid ID (if any), proof of residency (utility bill, barangay certificate, or cedula), 1–2 passport-size photos, and completed application form. Fees: Free. Processing time: Usually issued on the same day. Where & How to apply: Apply at Barangay 118 Hall, weekdays 8 AM–5 PM. Submit your requirements and receive your Barangay ID.'
+                    },
+                    {
+                        id: 6,
+                        question: 'How can I report a community concern?',
+                        answer: 'You can report concerns by visiting the Barangay 118 Hall, calling our office at (02) 8123-4567, or using the contact form on our website. For emergencies, contact proper emergency services first. You may also use the "Get In Touch" section on our site; our team will review and assist you accordingly.'
+                    }
+                ]
+            }
+        };
+
+        // Enhanced About Us Admin Panel with Firebase Realtime Database Integration
+        class AboutUsAdminPanel {
+            constructor() {
+                this.dataKey = 'aboutUsContent';
+                this.currentData = null;
+                this.activityLog = [];
+                this.lastSavedData = null;
+                this.saveStatusTimeout = null;
+                this.currentFeedbackFilter = 'all';
+                this.renderedTabs = new Set();
+                this.currentFeedbackKey = null;
+                this.db = db;
+                this.unsubscribe = null;
+                this.feedbackUnsubscribe = null;
+                this.feedbackData = {};
+                this.lastUpdated = null;
+                this.init();
+            }
+
+            init() {
+                this.loadData();
+                this.lastSavedData = JSON.parse(JSON.stringify(this.currentData));
+                this.setupEventListeners();
+                this.updateDashboard();
+                this.logActivity('System initialized with Firebase Realtime Database integration', 'success');
+                this.updateSaveStatus('• Ready to Save');
+                this.setupFirebaseListener();
+                this.setupFeedbackListener();
+                
+                this.hideAllTabs();
+                this.switchTab('welcome');
+                this.setupFeedbackModal();
+                
+                // Initialize system status
+                this.checkFirebaseConnection();
+            }
+
+            checkFirebaseConnection() {
+                if (this.db) {
+                    // Update system status to "Online"
+                    const systemStatus = document.getElementById('system-status');
+                    if (systemStatus) {
+                        systemStatus.textContent = 'Online';
+                        systemStatus.style.color = 'var(--success)';
+                    }
+                } else {
+                    const systemStatus = document.getElementById('system-status');
+                    if (systemStatus) {
+                        systemStatus.textContent = 'Offline';
+                        systemStatus.style.color = 'var(--error)';
+                    }
+                }
+            }
+
+            hideAllTabs() {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+            }
+
+            getDefaultData() {
+                return JSON.parse(JSON.stringify(defaultAboutUsData));
+            }
+
+            deepMergeData(target, source) {
+                for (const key in source) {
+                    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                        if (!target[key]) target[key] = {};
+                        this.deepMergeData(target[key], source[key]);
+                    } else {
+                        target[key] = source[key];
+                    }
+                }
+            }
+
+            async loadData() {
+                let loaded = false;
+                if (this.db) {
+                    try {
+                        const aboutUsRef = this.db.ref('02_aboutUs');
+                        const snapshot = await aboutUsRef.once('value');
+                        
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            this.currentData = this.getDefaultData();
+                            this.deepMergeData(this.currentData, firebaseData);
+                            console.log('AboutUs data loaded from Firebase Realtime Database (02_aboutUs)');
+                            loaded = true;
+                        }
+                    } catch (error) {
+                        console.error('Error loading from Firebase Realtime Database:', error);
+                    }
+                }
+
+                // If Firebase didn't load, try localStorage
+                if (!loaded) {
+                    const savedData = localStorage.getItem(this.dataKey);
+                    if (savedData) {
+                        try {
+                            this.currentData = JSON.parse(savedData);
+                            console.log('AboutUs data loaded from localStorage');
+                            loaded = true;
+                        } catch (error) {
+                            console.error('Error parsing localStorage data:', error);
+                        }
+                    }
+                }
+                
+                // If neither, use default
+                if (!loaded) {
+                    this.currentData = this.getDefaultData();
+                    console.log('Using pre-loaded default AboutUs data');
+                }
+                
+                this.populateForms();
+                this.lastUpdated = new Date();
+                this.updateDashboard();
+            }
+
+            setupFirebaseListener() {
+                if (!this.db) return;
+                
+                try {
+                    const aboutUsRef = this.db.ref('02_aboutUs');
+                    
+                    this.unsubscribe = aboutUsRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            
+                            // Update local data
+                            this.deepMergeData(this.currentData, firebaseData);
+                            
+                            // Update the form fields
+                            this.populateForms();
+                            this.renderOfficialsTable();
+                            this.renderCommitteesTable();
+                            this.renderDocumentsTable();
+                            this.renderFAQTable();
+                            this.lastUpdated = new Date();
+                            this.updateDashboard();
+                            
+                            // Update localStorage as backup
+                            localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                            
+                            this.logActivity('AboutUs data updated from Firebase Realtime Database in real-time', 'info');
+                            this.showAlert('AboutUs data synchronized from Firebase Realtime Database', 'info');
+                        }
+                    }, (error) => {
+                        console.error("Firebase Realtime Database listener error:", error);
+                    });
+                } catch (error) {
+                    console.error("Failed to setup Firebase Realtime Database listener:", error);
+                }
+            }
+
+            setupFeedbackListener() {
+                if (!this.db) return;
+                
+                try {
+                    const feedbackRef = this.db.ref('02_aboutUs/userFeedback');
+                    
+                    this.feedbackUnsubscribe = feedbackRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            this.feedbackData = snapshot.val() || {};
+                            this.renderFeedbackTable(this.currentFeedbackFilter);
+                            this.updateDashboard();
+                            this.logActivity('User feedback updated from Firebase', 'info');
+                        }
+                    }, (error) => {
+                        console.error("Firebase feedback listener error:", error);
+                    });
+                } catch (error) {
+                    console.error("Failed to setup Firebase feedback listener:", error);
+                }
+            }
+
+            hasActualChanges() {
+                if (!this.lastSavedData) return true;
+                
+                const currentDataStr = JSON.stringify(this.currentData);
+                const lastSavedDataStr = JSON.stringify(this.lastSavedData);
+                
+                return currentDataStr !== lastSavedDataStr;
+            }
+
+            async saveData(forceSave = false) {
+                if (!forceSave && !this.hasActualChanges()) {
+                    console.log('No changes detected, skipping save');
+                    this.updateSaveStatus('No changes to save', 'info');
+                    this.showAlert('No changes to save', 'info');
+                    return true;
+                }
+
+                let saved = false;
+                
+                try {
+                    // Save to Firebase Realtime Database (02_aboutUs)
+                    if (this.db) {
+                        await this.db.ref('02_aboutUs').set(this.currentData);
+                        console.log('AboutUs data saved to Firebase Realtime Database (02_aboutUs)');
+                    }
+                    
+                    // Also save to localStorage as backup
+                    localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                    console.log('AboutUs data saved to localStorage');
+                    saved = true;
+                    
+                    this.lastSavedData = JSON.parse(JSON.stringify(this.currentData));
+                    this.lastUpdated = new Date();
+                    
+                    this.updateDashboard();
+                    this.updateSaveStatus('Saved to Database', 'success');
+                    this.logActivity('AboutUs data saved successfully to Firebase Realtime Database (02_aboutUs)', 'success');
+                    
+                    // Trigger storage event for user view to update
+                    window.dispatchEvent(new StorageEvent('storage', {
+                        key: this.dataKey,
+                        newValue: JSON.stringify(this.currentData)
+                    }));
+                    
+                } catch (error) {
+                    console.error('Save failed:', error);
+                    this.updateSaveStatus('Save failed', 'error');
+                    this.logActivity('AboutUs data save failed', 'error');
+                    saved = false;
+                }
+                
+                return saved;
+            }
+            
+            updateSaveStatus(message = '• Manual Save', type = 'default') {
+                const statusElement = document.getElementById('save-status');
+                if (!statusElement) return;
+                
+                if (this.saveStatusTimeout) {
+                    clearTimeout(this.saveStatusTimeout);
+                }
+                
+                statusElement.textContent = message;
+                statusElement.className = 'save-status';
+                
+                if (type === 'success') {
+                    statusElement.classList.add('success');
+                } else if (type === 'warning') {
+                    statusElement.classList.add('warning');
+                } else if (type === 'error') {
+                    statusElement.classList.add('error');
+                } else if (type === 'info') {
+                    statusElement.classList.add('info');
+                }
+                
+                if (type === 'success' || type === 'info' || type === 'warning') {
+                    this.saveStatusTimeout = setTimeout(() => {
+                        statusElement.textContent = '• Connected to DataBase';
+                        statusElement.className = 'save-status';
+                    }, 3000);
+                }
+            }
+
+            populateForms() {
+                if (!this.currentData) return;
+                document.getElementById('hero-title').value = this.currentData["01_hero"]?.title || '';
+                document.getElementById('hero-description').value = this.currentData["01_hero"]?.description || '';
+                document.getElementById('story-title').value = this.currentData["02_story"]?.title || '';
+                document.getElementById('story-content1').value = this.currentData["02_story"]?.content1 || '';
+                document.getElementById('story-content2').value = this.currentData["02_story"]?.content2 || '';
+                document.getElementById('story-content3').value = this.currentData["02_story"]?.content3 || '';
+                document.getElementById('story-image').value = this.currentData["02_story"]?.image || '';
+                document.getElementById('mission-vision-title').value = this.currentData["03_missionVision"]?.title || '';
+                document.getElementById('mission-title').value = this.currentData["03_missionVision"]?.mission?.title || '';
+                document.getElementById('mission-text').value = this.currentData["03_missionVision"]?.mission?.description || '';
+                document.getElementById('vision-title').value = this.currentData["03_missionVision"]?.vision?.title || '';
+                document.getElementById('vision-text').value = this.currentData["03_missionVision"]?.vision?.description || '';
+                document.getElementById('officials-subtitle').value = this.currentData["04_officials"]?.subtitle || '';
+                document.getElementById('committees-subtitle').value = this.currentData["05_committees"]?.subtitle || '';
+                document.getElementById('documents-subtitle').value = this.currentData["06_documents"]?.subtitle || '';
+                document.getElementById('location-title').value = this.currentData["07_location"]?.title || '';
+                document.getElementById('location-subtitle').value = this.currentData["07_location"]?.subtitle || '';
+                document.getElementById('map-link').value = this.currentData["07_location"]?.mapLink || '';
+                document.getElementById('map-address').value = this.currentData["07_location"]?.address || '';
+                document.getElementById('map-location').value = this.currentData["07_location"]?.location || '';
+                document.getElementById('contact-title').value = this.currentData["08_contact"]?.title || '';
+                document.getElementById('contact-address').value = this.currentData["08_contact"]?.address || '';
+                document.getElementById('contact-email').value = this.currentData["08_contact"]?.email || '';
+                document.getElementById('contact-phone').value = this.currentData["08_contact"]?.phone || '';
+                document.getElementById('contact-map-link').value = this.currentData["08_contact"]?.mapLink || '';
+                document.getElementById('contact-map-link-text').value = this.currentData["08_contact"]?.mapLinkText || '';
+                document.getElementById('contact-hours-weekdays').value = this.currentData["08_contact"]?.hours?.weekdays || '';
+                document.getElementById('contact-hours-saturday').value = this.currentData["08_contact"]?.hours?.saturday || '';
+                this.updateImagePreviews();
+            }
+
+            updateImagePreviews() {
+                const storyPreview = document.getElementById('story-image-preview');
+                const officialPreview = document.getElementById('official-avatar-preview');
+
+                if (storyPreview && this.currentData["02_story"]?.image) {
+                    storyPreview.src = this.currentData["02_story"].image;
+                    storyPreview.classList.add('visible');
+                }
+
+                if (officialPreview) {
+                    officialPreview.classList.remove('visible');
+                }
+            }
+
+            setupEventListeners() {
+                // Sidebar navigation
+                document.querySelector('.sidebar-menu').addEventListener('click', (e) => {
+                    const link = e.target.closest('a');
+                    if (link && link.hasAttribute('data-tab')) {
+                        e.preventDefault();
+                        const tabId = link.getAttribute('data-tab');
+                        this.switchTab(tabId);
+                    }
+                });
+
+                // Sidebar logout button
+                document.querySelector('.sidebar-logout-btn').addEventListener('click', (e) => {
+                    if (!confirm('Are you sure you want to logout?')) {
+                        e.preventDefault();
+                    }
+                });
+
+                // Sub-tabs
+                document.querySelectorAll('[data-official-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchOfficialTab(tab.getAttribute('data-official-tab'));
+                    });
+                });
+
+                document.querySelectorAll('[data-committee-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchCommitteeTab(tab.getAttribute('data-committee-tab'));
+                    });
+                });
+
+                document.querySelectorAll('[data-document-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchDocumentTab(tab.getAttribute('data-document-tab'));
+                    });
+                });
+
+                document.querySelectorAll('[data-faq-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchFAQTab(tab.getAttribute('data-faq-tab'));
+                    });
+                });
+
+                document.querySelectorAll('[data-feedback-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchFeedbackTab(tab.getAttribute('data-feedback-tab'));
+                    });
+                });
+
+                // Form submissions
+                this.setupFormListeners();
+
+                // Quick action buttons
+                document.getElementById('preview-site-btn').addEventListener('click', () => {
+                    window.open('AboutUs.html', '_blank');
+                });
+
+                // Export News Data Button - NEW FUNCTIONALITY
+                document.getElementById('export-news-btn').addEventListener('click', async () => {
+                    await this.exportNewsData();
+                });
+
+                document.getElementById('backup-btn').addEventListener('click', () => {
+                    this.backupData();
+                    this.showAlert('Backup created successfully!', 'success');
+                });
+
+                document.getElementById('refresh-btn').addEventListener('click', () => {
+                    this.loadData();
+                    this.showAlert('Data refreshed from Firebase Realtime Database!', 'success');
+                });
+
+                document.getElementById('clear-all-data-btn').addEventListener('click', () => {
+                    if (confirm('Clear ALL AboutUs data from Firebase Realtime Database? This will remove everything from 02_aboutUs node and cannot be undone.')) {
+                        this.clearAllData();
+                    }
+                });
+
+                // Image preview handlers
+                document.getElementById('story-image').addEventListener('input', (e) => {
+                    this.updateImagePreview('story-image-preview', e.target.value);
+                });
+
+                document.getElementById('official-avatar').addEventListener('input', (e) => {
+                    this.updateImagePreview('official-avatar-preview', e.target.value);
+                });
+
+                // Search handlers
+                document.getElementById('officials-search').addEventListener('input', (e) => {
+                    this.searchOfficials(e.target.value);
+                });
+
+                document.getElementById('committees-search').addEventListener('input', (e) => {
+                    this.searchCommittees(e.target.value);
+                });
+
+                document.getElementById('documents-search').addEventListener('input', (e) => {
+                    this.searchDocuments(e.target.value);
+                });
+
+                document.getElementById('faq-search').addEventListener('input', (e) => {
+                    this.searchFAQ(e.target.value);
+                });
+
+                document.getElementById('feedback-search').addEventListener('input', (e) => {
+                    this.searchFeedback(e.target.value);
+                });
+
+                // Prevent form submission from reloading page
+                document.querySelectorAll('form').forEach(form => {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                    });
+                });
+            }
+
+            // Export News Data Function - NEW
+            async exportNewsData() {
+                try {
+                    if (!this.db) {
+                        this.showAlert('Firebase not connected. Cannot export news data.', 'error');
+                        return;
+                    }
+
+                    this.showAlert('Exporting news data from Firebase...', 'info');
+                    
+                    // Get news data from Firebase (assuming it's stored in 03_news node)
+                    const newsRef = this.db.ref('03_news');
+                    const snapshot = await newsRef.once('value');
+                    
+                    if (!snapshot.exists()) {
+                        this.showAlert('No news data found in Firebase.', 'warning');
+                        return;
+                    }
+
+                    const newsData = snapshot.val();
+                    
+                    // Create JSON file
+                    const dataStr = JSON.stringify(newsData, null, 2);
+                    const blob = new Blob([dataStr], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    
+                    // Create filename with current date
+                    const currentDate = new Date().toISOString().split('T')[0];
+                    link.href = url;
+                    link.download = `barangay118-news-data-${currentDate}.json`;
+                    
+                    // Trigger download
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    
+                    this.showAlert('News data exported successfully!', 'success');
+                    this.logActivity('News data exported from Firebase', 'success');
+                    
+                } catch (error) {
+                    console.error('Error exporting news data:', error);
+                    this.showAlert('Failed to export news data: ' + error.message, 'error');
+                }
+            }
+
+            setupFormListeners() {
+                // Hero Form
+                document.getElementById('hero-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const oldData = {
+                        heroTitle: this.currentData["01_hero"].title,
+                        heroDescription: this.currentData["01_hero"].description
+                    };
+                    
+                    const newData = {
+                        heroTitle: document.getElementById('hero-title').value,
+                        heroDescription: document.getElementById('hero-description').value
+                    };
+                    
+                    if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+                        this.currentData["01_hero"].title = newData.heroTitle;
+                        this.currentData["01_hero"].description = newData.heroDescription;
+                        this.currentData["01_hero"].order = 1;
+                        
+                        await this.saveData();
+                        this.showAlert('Hero section updated successfully!', 'success');
+                        this.logActivity('Hero section updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in Hero section', 'info');
+                    }
+                });
+
+                // Hero Reset to Defaults
+                document.getElementById('hero-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Hero section to defaults? This will reset and save immediately.')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        this.currentData["01_hero"] = {...defaultData["01_hero"]};
+                        this.currentData["01_hero"].order = 1;
+                        
+                        document.getElementById('hero-title').value = defaultData["01_hero"].title;
+                        document.getElementById('hero-description').value = defaultData["01_hero"].description;
+                        
+                        await this.saveData(true);
+                        this.showAlert('Hero section reset to defaults and saved to Firebase Realtime Database!', 'success');
+                        this.logActivity('Hero section reset to defaults and saved', 'warning');
+                    }
+                });
+
+                // Story Form
+                document.getElementById('story-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const oldData = {...this.currentData["02_story"]};
+                    const newData = {
+                        title: document.getElementById('story-title').value,
+                        content1: document.getElementById('story-content1').value,
+                        content2: document.getElementById('story-content2').value,
+                        content3: document.getElementById('story-content3').value,
+                        image: document.getElementById('story-image').value
+                    };
+                    
+                    if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+                        this.currentData["02_story"] = newData;
+                        this.currentData["02_story"].order = 2;
+                        
+                        await this.saveData();
+                        this.showAlert('Story section updated successfully!', 'success');
+                        this.logActivity('Story section updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in Story section', 'info');
+                    }
+                });
+
+                // Story Reset to Defaults
+                document.getElementById('story-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Story section to defaults? This will reset and save immediately.')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        this.currentData["02_story"] = {...defaultData["02_story"]};
+                        this.currentData["02_story"].order = 2;
+                        
+                        document.getElementById('story-title').value = defaultData["02_story"].title;
+                        document.getElementById('story-content1').value = defaultData["02_story"].content1;
+                        document.getElementById('story-content2').value = defaultData["02_story"].content2;
+                        document.getElementById('story-content3').value = defaultData["02_story"].content3;
+                        document.getElementById('story-image').value = defaultData["02_story"].image;
+                        
+                        this.updateImagePreviews();
+                        
+                        await this.saveData(true);
+                        this.showAlert('Story section reset to defaults and saved to Firebase Realtime Database!', 'success');
+                        this.logActivity('Story section reset to defaults and saved', 'warning');
+                    }
+                });
+
+                // Mission Form
+                document.getElementById('mission-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const oldData = {...this.currentData["03_missionVision"]};
+                    const newData = {
+                        title: document.getElementById('mission-vision-title').value,
+                        mission: {
+                            title: document.getElementById('mission-title').value,
+                            description: document.getElementById('mission-text').value
+                        },
+                        vision: {
+                            title: document.getElementById('vision-title').value,
+                            description: document.getElementById('vision-text').value
+                        }
+                    };
+                    
+                    if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+                        this.currentData["03_missionVision"] = newData;
+                        this.currentData["03_missionVision"].order = 3;
+                        
+                        await this.saveData();
+                        this.showAlert('Mission & Vision updated successfully!', 'success');
+                        this.logActivity('Mission & Vision updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in Mission & Vision', 'info');
+                    }
+                });
+
+                // Mission Reset to Defaults
+                document.getElementById('mission-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Mission & Vision to defaults? This will reset and save immediately.')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        this.currentData["03_missionVision"] = {...defaultData["03_missionVision"]};
+                        this.currentData["03_missionVision"].order = 3;
+                        
+                        document.getElementById('mission-vision-title').value = defaultData["03_missionVision"].title;
+                        document.getElementById('mission-title').value = defaultData["03_missionVision"].mission.title;
+                        document.getElementById('mission-text').value = defaultData["03_missionVision"].mission.description;
+                        document.getElementById('vision-title').value = defaultData["03_missionVision"].vision.title;
+                        document.getElementById('vision-text').value = defaultData["03_missionVision"].vision.description;
+                        
+                        await this.saveData(true);
+                        this.showAlert('Mission & Vision reset to defaults and saved to Firebase Realtime Database!', 'success');
+                        this.logActivity('Mission & Vision reset to defaults and saved', 'warning');
+                    }
+                });
+
+                // Officials Subtitle
+                document.getElementById('officials-subtitle').addEventListener('change', async (e) => {
+                    if (this.currentData["04_officials"].subtitle !== e.target.value) {
+                        this.currentData["04_officials"].subtitle = e.target.value;
+                        await this.saveData();
+                        this.showAlert('Officials subtitle updated!', 'success');
+                    }
+                });
+
+                // Official Form
+                document.getElementById('official-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('official-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const officialData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["04_officials"].members.length > 0 ? Math.max(...this.currentData["04_officials"].members.map(o => o.id)) + 1 : 1),
+                        name: document.getElementById('official-name').value,
+                        position: document.getElementById('official-position').value,
+                        description: document.getElementById('official-description').value,
+                        avatar: document.getElementById('official-avatar').value || ''
+                    };
+
+                    if (!officialData.avatar || officialData.avatar === '') {
+                        officialData.avatar = officialData.name.charAt(0);
+                    }
+
+                    if (isEditing) {
+                        const index = this.currentData["04_officials"].members.findIndex(o => o.id == editId);
+                        if (index !== -1) {
+                            this.currentData["04_officials"].members[index] = officialData;
+                        }
+                        this.logActivity(`Official updated: "${officialData.name}"`, 'success');
+                        this.showAlert('Official updated successfully!', 'success');
+                    } else {
+                        this.currentData["04_officials"].members.push(officialData);
+                        this.logActivity(`Official added: "${officialData.name}"`, 'success');
+                        this.showAlert('Official added successfully!', 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderOfficialsTable();
+
+                    document.getElementById('official-form').reset();
+                    document.getElementById('official-edit-id').value = '';
+                    document.getElementById('official-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Official';
+                    document.getElementById('official-cancel-edit').style.display = 'none';
+
+                    if (isEditing) {
+                        this.switchOfficialTab('existing');
+                    }
+                });
+
+                // Committees Subtitle
+                document.getElementById('committees-subtitle').addEventListener('change', async (e) => {
+                    if (this.currentData["05_committees"].subtitle !== e.target.value) {
+                        this.currentData["05_committees"].subtitle = e.target.value;
+                        await this.saveData();
+                        this.showAlert('Committees subtitle updated!', 'success');
+                    }
+                });
+
+                // Committee Form
+                document.getElementById('committee-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('committee-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const committeeData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["05_committees"].list.length > 0 ? Math.max(...this.currentData["05_committees"].list.map(c => c.id)) + 1 : 1),
+                        name: document.getElementById('committee-name').value,
+                        chairperson: document.getElementById('committee-chairperson').value,
+                        description: document.getElementById('committee-description').value,
+                        icon: document.getElementById('committee-icon').value || 'fas fa-users'
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["05_committees"].list.findIndex(c => c.id == editId);
+                        if (index !== -1) {
+                            this.currentData["05_committees"].list[index] = committeeData;
+                        }
+                        this.logActivity(`Committee updated: "${committeeData.name}"`, 'success');
+                        this.showAlert('Committee updated successfully!', 'success');
+                    } else {
+                        this.currentData["05_committees"].list.push(committeeData);
+                        this.logActivity(`Committee added: "${committeeData.name}"`, 'success');
+                        this.showAlert('Committee added successfully!', 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderCommitteesTable();
+
+                    document.getElementById('committee-form').reset();
+                    document.getElementById('committee-edit-id').value = '';
+                    document.getElementById('committee-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Committee';
+                    document.getElementById('committee-cancel-edit').style.display = 'none';
+
+                    if (isEditing) {
+                        this.switchCommitteeTab('existing');
+                    }
+                });
+
+                // Documents Subtitle
+                document.getElementById('documents-subtitle').addEventListener('change', async (e) => {
+                    if (this.currentData["06_documents"].subtitle !== e.target.value) {
+                        this.currentData["06_documents"].subtitle = e.target.value;
+                        await this.saveData();
+                        this.showAlert('Documents subtitle updated!', 'success');
+                    }
+                });
+
+                // Document Form
+                document.getElementById('document-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('document-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const docData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["06_documents"].files.length > 0 ? Math.max(...this.currentData["06_documents"].files.map(d => d.id)) + 1 : 1),
+                        name: document.getElementById('document-title').value,
+                        description: document.getElementById('document-description').value,
+                        requirements: document.getElementById('document-requirements').value.split('\n').filter(req => req.trim() !== ''),
+                        processingTime: document.getElementById('document-processing-time').value || '',
+                        icon: document.getElementById('document-icon').value || 'fas fa-file-alt'
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["06_documents"].files.findIndex(d => d.id == editId);
+                        if (index !== -1) {
+                            this.currentData["06_documents"].files[index] = docData;
+                        }
+                        this.logActivity(`Document updated: "${docData.name}"`, 'success');
+                        this.showAlert('Document updated successfully!', 'success');
+                    } else {
+                        this.currentData["06_documents"].files.push(docData);
+                        this.logActivity(`Document added: "${docData.name}"`, 'success');
+                        this.showAlert('Document added successfully!', 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderDocumentsTable();
+
+                    document.getElementById('document-form').reset();
+                    document.getElementById('document-edit-id').value = '';
+                    document.getElementById('document-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Document';
+                    document.getElementById('document-cancel-edit').style.display = 'none';
+
+                    if (isEditing) {
+                        this.switchDocumentTab('existing');
+                    }
+                });
+
+                // FAQ Form
+                document.getElementById('faq-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('faq-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const faqData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["09_faqs"].list.length > 0 ? Math.max(...this.currentData["09_faqs"].list.map(f => f.id)) + 1 : 1),
+                        question: document.getElementById('faq-question').value,
+                        answer: document.getElementById('faq-answer').value
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["09_faqs"].list.findIndex(f => f.id == editId);
+                        if (index !== -1) {
+                            this.currentData["09_faqs"].list[index] = faqData;
+                        }
+                        this.logActivity(`FAQ updated: "${faqData.question}"`, 'success');
+                        this.showAlert('FAQ updated successfully!', 'success');
+                    } else {
+                        this.currentData["09_faqs"].list.push(faqData);
+                        this.logActivity(`FAQ added: "${faqData.question}"`, 'success');
+                        this.showAlert('FAQ added successfully!', 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderFAQTable();
+
+                    document.getElementById('faq-form').reset();
+                    document.getElementById('faq-edit-id').value = '';
+                    document.getElementById('faq-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add FAQ';
+                    document.getElementById('faq-cancel-edit').style.display = 'none';
+
+                    if (isEditing) {
+                        this.switchFAQTab('existing');
+                    }
+                });
+
+                // Location Form
+                document.getElementById('location-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const oldData = {...this.currentData["07_location"]};
+                    const newData = {
+                        title: document.getElementById('location-title').value,
+                        subtitle: document.getElementById('location-subtitle').value,
+                        mapLink: document.getElementById('map-link').value,
+                        address: document.getElementById('map-address').value,
+                        location: document.getElementById('map-location').value
+                    };
+                    
+                    if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+                        this.currentData["07_location"] = newData;
+                        this.currentData["07_location"].order = 7;
+                        
+                        await this.saveData();
+                        this.showAlert('Location section updated successfully!', 'success');
+                        this.logActivity('Location section updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in Location section', 'info');
+                    }
+                });
+
+                // Location Reset to Defaults
+                document.getElementById('location-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Location section to defaults? This will reset and save immediately.')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        this.currentData["07_location"] = {...defaultData["07_location"]};
+                        this.currentData["07_location"].order = 7;
+                        
+                        document.getElementById('location-title').value = defaultData["07_location"].title;
+                        document.getElementById('location-subtitle').value = defaultData["07_location"].subtitle;
+                        document.getElementById('map-link').value = defaultData["07_location"].mapLink;
+                        document.getElementById('map-address').value = defaultData["07_location"].address;
+                        document.getElementById('map-location').value = defaultData["07_location"].location;
+                        
+                        await this.saveData(true);
+                        this.showAlert('Location section reset to defaults and saved to Firebase Realtime Database!', 'success');
+                        this.logActivity('Location section reset to defaults and saved', 'warning');
+                    }
+                });
+
+                // Contact Form
+                document.getElementById('contact-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const oldData = {...this.currentData["08_contact"]};
+                    const newData = {
+                        title: document.getElementById('contact-title').value,
+                        address: document.getElementById('contact-address').value,
+                        email: document.getElementById('contact-email').value,
+                        phone: document.getElementById('contact-phone').value,
+                        mapLinkText: document.getElementById('contact-map-link-text').value,
+                        mapLink: document.getElementById('contact-map-link').value,
+                        hours: {
+                            weekdays: document.getElementById('contact-hours-weekdays').value,
+                            saturday: document.getElementById('contact-hours-saturday').value
+                        }
+                    };
+                    
+                    if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+                        this.currentData["08_contact"] = newData;
+                        this.currentData["08_contact"].order = 8;
+                        
+                        await this.saveData();
+                        this.showAlert('Contact information updated successfully!', 'success');
+                        this.logActivity('Contact information updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in contact information', 'info');
+                    }
+                });
+
+                // Contact Reset to Defaults
+                document.getElementById('contact-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Contact section to defaults? This will reset and save immediately.')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        this.currentData["08_contact"] = {...defaultData["08_contact"]};
+                        this.currentData["08_contact"].order = 8;
+                        
+                        document.getElementById('contact-title').value = defaultData["08_contact"].title;
+                        document.getElementById('contact-address').value = defaultData["08_contact"].address;
+                        document.getElementById('contact-email').value = defaultData["08_contact"].email;
+                        document.getElementById('contact-phone').value = defaultData["08_contact"].phone;
+                        document.getElementById('contact-map-link-text').value = defaultData["08_contact"].mapLinkText;
+                        document.getElementById('contact-map-link').value = defaultData["08_contact"].mapLink;
+                        document.getElementById('contact-hours-weekdays').value = defaultData["08_contact"].hours.weekdays;
+                        document.getElementById('contact-hours-saturday').value = defaultData["08_contact"].hours.saturday;
+                        
+                        await this.saveData(true);
+                        this.showAlert('Contact section reset to defaults and saved to Firebase Realtime Database!', 'success');
+                        this.logActivity('Contact section reset to defaults and saved', 'warning');
+                    }
+                });
+
+                // Officials Reset All Button
+                document.getElementById('officials-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset ALL officials to defaults? This will remove all current officials and restore defaults.')) {
+                        const defaultData = this.getDefaultData();
+                        this.currentData["04_officials"] = {...defaultData["04_officials"]};
+                        this.currentData["04_officials"].order = 4;
+                        await this.saveData();
+                        this.renderOfficialsTable();
+                        this.showAlert('All officials reset to defaults!', 'success');
+                        this.logActivity('All officials reset to defaults', 'warning');
+                    }
+                });
+
+                // Committees Reset All Button
+                document.getElementById('committees-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset ALL committees to defaults? This will remove all current committees and restore defaults.')) {
+                        const defaultData = this.getDefaultData();
+                        this.currentData["05_committees"] = {...defaultData["05_committees"]};
+                        this.currentData["05_committees"].order = 5;
+                        await this.saveData();
+                        this.renderCommitteesTable();
+                        this.showAlert('All committees reset to defaults!', 'success');
+                        this.logActivity('All committees reset to defaults', 'warning');
+                    }
+                });
+
+                // Documents Reset All Button
+                document.getElementById('documents-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset ALL documents to defaults? This will remove all current documents and restore defaults.')) {
+                        const defaultData = this.getDefaultData();
+                        this.currentData["06_documents"] = {...defaultData["06_documents"]};
+                        this.currentData["06_documents"].order = 6;
+                        await this.saveData();
+                        this.renderDocumentsTable();
+                        this.showAlert('All documents reset to defaults!', 'success');
+                        this.logActivity('All documents reset to defaults', 'warning');
+                    }
+                });
+
+                // FAQ Reset All Button
+                document.getElementById('faq-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset ALL FAQs to defaults? This will remove all current FAQs and restore defaults.')) {
+                        const defaultData = this.getDefaultData();
+                        this.currentData["09_faqs"] = {...defaultData["09_faqs"]};
+                        this.currentData["09_faqs"].order = 9;
+                        await this.saveData();
+                        this.renderFAQTable();
+                        this.showAlert('All FAQs reset to defaults!', 'success');
+                        this.logActivity('All FAQs reset to defaults', 'warning');
+                    }
+                });
+
+                // Cancel buttons
+                document.getElementById('official-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('official-form').reset();
+                    document.getElementById('official-edit-id').value = '';
+                    document.getElementById('official-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Official';
+                    document.getElementById('official-cancel-edit').style.display = 'none';
+                });
+
+                document.getElementById('committee-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('committee-form').reset();
+                    document.getElementById('committee-edit-id').value = '';
+                    document.getElementById('committee-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Committee';
+                    document.getElementById('committee-cancel-edit').style.display = 'none';
+                });
+
+                document.getElementById('document-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('document-form').reset();
+                    document.getElementById('document-edit-id').value = '';
+                    document.getElementById('document-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Document';
+                    document.getElementById('document-cancel-edit').style.display = 'none';
+                });
+
+                document.getElementById('faq-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('faq-form').reset();
+                    document.getElementById('faq-edit-id').value = '';
+                    document.getElementById('faq-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add FAQ';
+                    document.getElementById('faq-cancel-edit').style.display = 'none';
+                });
+            }
+
+            setupFeedbackModal() {
+                // Close modal buttons
+                document.getElementById('feedback-modal-close-btn').addEventListener('click', () => {
+                    document.getElementById('feedback-modal').classList.remove('active');
+                });
+
+                document.querySelector('#feedback-modal .close-modal').addEventListener('click', () => {
+                    document.getElementById('feedback-modal').classList.remove('active');
+                });
+
+                // Delete feedback from modal
+                document.getElementById('feedback-modal-delete-btn').addEventListener('click', () => {
+                    if (this.currentFeedbackKey !== null) {
+                        if (confirm('Are you sure you want to delete this feedback?')) {
+                            this.deleteFeedback(this.currentFeedbackKey);
+                            document.getElementById('feedback-modal').classList.remove('active');
+                        }
+                    }
+                });
+
+                // Mark as read from modal
+                document.getElementById('feedback-modal-mark-read-btn').addEventListener('click', () => {
+                    if (this.currentFeedbackKey !== null) {
+                        this.markFeedbackAsRead(this.currentFeedbackKey);
+                        document.getElementById('feedback-modal').classList.remove('active');
+                    }
+                });
+
+                // Close modal when clicking outside
+                document.getElementById('feedback-modal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('feedback-modal')) {
+                        document.getElementById('feedback-modal').classList.remove('active');
+                    }
+                });
+            }
+
+            switchTab(tabId) {
+                console.log('Switching to tab:', tabId);
+                
+                // Update sidebar active state
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const targetLink = document.querySelector(`[data-tab="${tabId}"]`);
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                }
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Show the selected tab content
+                const selectedTab = document.getElementById(tabId);
+                if (selectedTab) {
+                    selectedTab.classList.add('active');
+                }
+                
+                this.updateQuickGuide(tabId);
+                
+                // Scroll to top of admin-content area
+                document.querySelector('.admin-content').scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+                // Load specific content for certain tabs
+                if (tabId === 'officials' && !this.renderedTabs.has('officials')) {
+                    this.renderOfficialsTable();
+                    this.renderedTabs.add('officials');
+                } else if (tabId === 'committees' && !this.renderedTabs.has('committees')) {
+                    this.renderCommitteesTable();
+                    this.renderedTabs.add('committees');
+                } else if (tabId === 'documents' && !this.renderedTabs.has('documents')) {
+                    this.renderDocumentsTable();
+                    this.renderedTabs.add('documents');
+                } else if (tabId === 'faq' && !this.renderedTabs.has('faq')) {
+                    this.renderFAQTable();
+                    this.renderedTabs.add('faq');
+                } else if (tabId === 'userFeedback' && !this.renderedTabs.has('userFeedback')) {
+                    this.renderFeedbackTable();
+                    this.renderedTabs.add('userFeedback');
+                }
+            }
+
+            switchOfficialTab(tab) {
+                document.querySelectorAll('[data-official-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-official-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#officials .sub-tab-content').forEach(t => t.classList.remove('active'));
+                document.getElementById(tab === 'existing' ? 'existing-officials' : 'add-official').classList.add('active');
+            }
+
+            switchCommitteeTab(tab) {
+                document.querySelectorAll('[data-committee-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-committee-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#committees .sub-tab-content').forEach(t => t.classList.remove('active'));
+                document.getElementById(tab === 'existing' ? 'existing-committees' : 'add-committee').classList.add('active');
+            }
+
+            switchDocumentTab(tab) {
+                document.querySelectorAll('[data-document-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-document-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#documents .sub-tab-content').forEach(t => t.classList.remove('active'));
+                document.getElementById(tab === 'existing' ? 'existing-documents' : 'add-document').classList.add('active');
+            }
+
+            switchFAQTab(tab) {
+                document.querySelectorAll('[data-faq-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-faq-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#faq .sub-tab-content').forEach(t => t.classList.remove('active'));
+                document.getElementById(tab === 'existing' ? 'existing-faqs' : 'add-faq').classList.add('active');
+            }
+
+            switchFeedbackTab(tab) {
+                document.querySelectorAll('[data-feedback-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-feedback-tab="${tab}"]`).classList.add('active');
+                this.currentFeedbackFilter = tab;
+                this.renderFeedbackTable(tab);
+            }
+
+            updateQuickGuide(tabId) {
+                document.querySelectorAll('.guide-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                const guideId = `${tabId}-guide`;
+                const guideSection = document.getElementById(guideId);
+                if (guideSection) {
+                    guideSection.style.display = 'block';
+                }
+            }
+
+            updateDashboard() {
+                if (!this.currentData) return;
+                
+                // Update dashboard stats - System Status already updated in checkFirebaseConnection()
+                
+                // Last Updated - DATE ONLY
+                const lastUpdatedText = this.lastUpdated ? this.lastUpdated.toLocaleDateString() : 'Never';
+                document.getElementById('last-updated').textContent = lastUpdatedText;
+                
+                // User Feedback Count
+                const feedbackCount = this.feedbackData ? Object.keys(this.feedbackData).length : 0;
+                document.getElementById('user-feedback-count').textContent = feedbackCount;
+                
+                // Calculate data size
+                const dataSize = JSON.stringify(this.currentData).length;
+                document.getElementById('data-size').textContent = `${Math.round(dataSize / 1024)} KB`;
+            }
+
+            updateImagePreview(previewId, url) {
+                const preview = document.getElementById(previewId);
+                if (preview) {
+                    if (url) {
+                        preview.src = url;
+                        preview.classList.add('visible');
+                    } else {
+                        preview.classList.remove('visible');
+                    }
+                }
+            }
+
+            // Render methods - UPDATED FOR CORRECT COLUMNS
+            renderOfficialsTable() {
+                console.log('Rendering officials table');
+                const tbody = document.getElementById('officials-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["04_officials"].members || this.currentData["04_officials"].members.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--gray); padding: 30px;">No officials yet. Add your first official!</td></tr>`;
+                    return;
+                }
+
+                this.currentData["04_officials"].members.forEach((official, index) => {
+                    let avatarHTML = '';
+                    if (official.avatar && (official.avatar.startsWith('http') || official.avatar.startsWith('data:'))) {
+                        avatarHTML = `<img src="${official.avatar}" alt="${official.name}" class="avatar-preview" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">`;
+                    } else {
+                        const initial = official.avatar || official.name.charAt(0);
+                        avatarHTML = `<div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">${initial}</div>`;
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                ${avatarHTML}
+                            </div>
+                        </td>
+                        <td><strong>${official.name}</strong></td>
+                        <td>${official.position}</td>
+                        <td>${official.description || 'No description'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-official" data-id="${official.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-official" data-id="${official.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-official').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteOfficial(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-official').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editOfficial(id);
+                    });
+                });
+            }
+
+            renderCommitteesTable() {
+                console.log('Rendering committees table');
+                const tbody = document.getElementById('committees-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["05_committees"].list || this.currentData["05_committees"].list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--gray); padding: 30px;">No committees yet. Add your first committee!</td></tr>`;
+                    return;
+                }
+
+                this.currentData["05_committees"].list.forEach((committee, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${committee.name}</strong></td>
+                        <td>${committee.chairperson || 'No chairperson specified'}</td>
+                        <td>${committee.description ? (committee.description.substring(0, 50) + (committee.description.length > 50 ? '...' : '')) : 'No description'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-committee" data-id="${committee.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-committee" data-id="${committee.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-committee').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteCommittee(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-committee').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editCommittee(id);
+                    });
+                });
+            }
+
+            renderDocumentsTable() {
+                console.log('Rendering documents table');
+                const tbody = document.getElementById('documents-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["06_documents"].files || this.currentData["06_documents"].files.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--gray); padding: 30px;">No documents yet. Add your first document!</td></tr>`;
+                    return;
+                }
+
+                this.currentData["06_documents"].files.forEach((doc, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${doc.name}</strong></td>
+                        <td>${doc.description ? (doc.description.substring(0, 50) + (doc.description.length > 50 ? '...' : '')) : 'No description'}</td>
+                        <td>${doc.requirements ? doc.requirements.join(', ').substring(0, 50) + (doc.requirements.join(', ').length > 50 ? '...' : '') : 'No requirements'}</td>
+                        <td>${doc.processingTime || 'Not specified'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-document" data-id="${doc.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-document" data-id="${doc.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-document').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteDocument(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-document').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editDocument(id);
+                    });
+                });
+            }
+
+            renderFAQTable() {
+                console.log('Rendering FAQ table');
+                const tbody = document.getElementById('faq-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["09_faqs"].list || this.currentData["09_faqs"].list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--gray); padding: 30px;">No FAQs yet. Add your first FAQ!</td></tr>`;
+                    return;
+                }
+
+                this.currentData["09_faqs"].list.forEach((faq, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${faq.question}</strong></td>
+                        <td>${faq.answer ? faq.answer.substring(0, 50) + (faq.answer.length > 50 ? '...' : '') : 'No answer'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-faq" data-id="${faq.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-faq" data-id="${faq.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-faq').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteFAQ(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-faq').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editFAQ(id);
+                    });
+                });
+            }
+
+            renderFeedbackTable(filter = 'all') {
+                console.log('Rendering feedback table with filter:', filter);
+                const tbody = document.getElementById('feedback-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+                
+                if (!this.feedbackData || Object.keys(this.feedbackData).length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--gray); padding: 30px;">No feedback messages found.</td></tr>`;
+                    return;
+                }
+                
+                // Convert object to array and filter
+                let feedbackArray = Object.entries(this.feedbackData).map(([key, value]) => ({
+                    key,
+                    ...value
+                }));
+                
+                if (filter === 'unread') {
+                    feedbackArray = feedbackArray.filter(item => item.status === 'unread');
+                } else if (filter === 'read') {
+                    feedbackArray = feedbackArray.filter(item => item.status === 'read');
+                }
+                
+                if (feedbackArray.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--gray); padding: 30px;">No feedback messages found for this filter.</td></tr>`;
+                    return;
+                }
+                
+                // Sort by timestamp (newest first)
+                feedbackArray.sort((a, b) => {
+                    return (b.timestamp || 0) - (a.timestamp || 0);
+                });
+                
+                feedbackArray.forEach((item, index) => {
+                    const date = new Date(item.timestamp);
+                    const dateString = date.toLocaleDateString();
+                    const timeString = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    const statusBadge = item.status === 'unread' ? 
+                        '<span class="status-badge status-unread"><i class="fas fa-envelope"></i> Unread</span>' : 
+                        '<span class="status-badge status-read"><i class="fas fa-envelope-open"></i> Read</span>';
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${item.userName || 'No Name'}</strong></td>
+                        <td>${item.subject || 'No Subject'}</td>
+                        <td>${item.date || 'No Date'}</td>
+                        <td>${item.time || 'No Time'}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm view-feedback-btn" data-key="${item.key}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-feedback-btn" data-key="${item.key}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Attach event listeners to feedback buttons
+                document.querySelectorAll('.view-feedback-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const key = e.target.closest('button').getAttribute('data-key');
+                        this.viewFeedbackDetails(key);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-feedback-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const key = e.target.closest('button').getAttribute('data-key');
+                        this.deleteFeedback(key);
+                    });
+                });
+                
+                // Attach event listeners to status badges
+                document.querySelectorAll('.status-badge').forEach(badge => {
+                    badge.addEventListener('click', (e) => {
+                        const key = e.target.closest('button').parentElement.querySelector('.view-feedback-btn').getAttribute('data-key');
+                        this.toggleFeedbackStatus(key);
+                    });
+                });
+            }
+
+            // Edit methods
+            editOfficial(id) {
+                const official = this.currentData["04_officials"].members.find(o => o.id === id);
+                if (!official) return;
+                
+                this.switchOfficialTab('add');
+                
+                document.getElementById('official-edit-id').value = official.id;
+                document.getElementById('official-name').value = official.name;
+                document.getElementById('official-position').value = official.position;
+                document.getElementById('official-description').value = official.description || '';
+                document.getElementById('official-avatar').value = official.avatar || '';
+                
+                document.getElementById('official-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Official';
+                document.getElementById('official-cancel-edit').style.display = 'inline-block';
+                
+                this.updateImagePreview('official-avatar-preview', official.avatar);
+                this.logActivity(`Editing official: "${official.name}"`, 'info');
+            }
+
+            editCommittee(id) {
+                const committee = this.currentData["05_committees"].list.find(c => c.id === id);
+                if (!committee) return;
+                
+                this.switchCommitteeTab('add');
+                
+                document.getElementById('committee-edit-id').value = committee.id;
+                document.getElementById('committee-name').value = committee.name;
+                document.getElementById('committee-chairperson').value = committee.chairperson || '';
+                document.getElementById('committee-description').value = committee.description || '';
+                document.getElementById('committee-icon').value = committee.icon || 'fas fa-users';
+                
+                document.getElementById('committee-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Committee';
+                document.getElementById('committee-cancel-edit').style.display = 'inline-block';
+                
+                this.logActivity(`Editing committee: "${committee.name}"`, 'info');
+            }
+
+            editDocument(id) {
+                const doc = this.currentData["06_documents"].files.find(d => d.id === id);
+                if (!doc) return;
+                
+                this.switchDocumentTab('add');
+                
+                document.getElementById('document-edit-id').value = doc.id;
+                document.getElementById('document-title').value = doc.name;
+                document.getElementById('document-description').value = doc.description || '';
+                document.getElementById('document-requirements').value = doc.requirements ? doc.requirements.join('\n') : '';
+                document.getElementById('document-processing-time').value = doc.processingTime || '';
+                document.getElementById('document-icon').value = doc.icon || 'fas fa-file-alt';
+                
+                document.getElementById('document-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Document';
+                document.getElementById('document-cancel-edit').style.display = 'inline-block';
+                
+                this.logActivity(`Editing document: "${doc.name}"`, 'info');
+            }
+
+            editFAQ(id) {
+                const faq = this.currentData["09_faqs"].list.find(f => f.id === id);
+                if (!faq) return;
+                
+                this.switchFAQTab('add');
+                
+                document.getElementById('faq-edit-id').value = faq.id;
+                document.getElementById('faq-question').value = faq.question;
+                document.getElementById('faq-answer').value = faq.answer;
+                
+                document.getElementById('faq-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update FAQ';
+                document.getElementById('faq-cancel-edit').style.display = 'inline-block';
+                
+                this.logActivity(`Editing FAQ: "${faq.question}"`, 'info');
+            }
+
+            viewFeedbackDetails(key) {
+                const item = this.feedbackData[key];
+                if (!item) return;
+
+                this.currentFeedbackKey = key;
+
+                document.getElementById('feedback-detail-name').textContent = item.userName || 'No Name';
+                document.getElementById('feedback-detail-email').textContent = item.userEmail || 'No Email';
+                document.getElementById('feedback-detail-subject').textContent = item.subject || 'No Subject';
+                document.getElementById('feedback-detail-message').textContent = item.message || 'No Message';
+                
+                const date = new Date(item.timestamp);
+                document.getElementById('feedback-detail-date').textContent = date.toLocaleDateString();
+                document.getElementById('feedback-detail-time').textContent = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                document.getElementById('feedback-modal').classList.add('active');
+            }
+
+            // Delete methods
+            async deleteOfficial(id) {
+                if (confirm('Are you sure you want to delete this official?')) {
+                    this.currentData["04_officials"].members = this.currentData["04_officials"].members.filter(o => o.id !== id);
+                    await this.saveData();
+                    this.renderOfficialsTable();
+                    this.logActivity(`Official deleted`, 'error');
+                    this.showAlert('Official deleted successfully', 'success');
+                }
+            }
+
+            async deleteCommittee(id) {
+                if (confirm('Are you sure you want to delete this committee?')) {
+                    this.currentData["05_committees"].list = this.currentData["05_committees"].list.filter(c => c.id !== id);
+                    await this.saveData();
+                    this.renderCommitteesTable();
+                    this.logActivity(`Committee deleted`, 'error');
+                    this.showAlert('Committee deleted successfully', 'success');
+                }
+            }
+
+            async deleteDocument(id) {
+                if (confirm('Are you sure you want to delete this document?')) {
+                    this.currentData["06_documents"].files = this.currentData["06_documents"].files.filter(d => d.id !== id);
+                    await this.saveData();
+                    this.renderDocumentsTable();
+                    this.logActivity(`Document deleted`, 'error');
+                    this.showAlert('Document deleted successfully', 'success');
+                }
+            }
+
+            async deleteFAQ(id) {
+                if (confirm('Are you sure you want to delete this FAQ?')) {
+                    this.currentData["09_faqs"].list = this.currentData["09_faqs"].list.filter(f => f.id !== id);
+                    await this.saveData();
+                    this.renderFAQTable();
+                    this.logActivity(`FAQ deleted`, 'error');
+                    this.showAlert('FAQ deleted successfully', 'success');
+                }
+            }
+
+            async toggleFeedbackStatus(key) {
+                if (!this.db || !key) return;
+                
+                try {
+                    const feedbackRef = this.db.ref(`02_aboutUs/userFeedback/${key}`);
+                    const currentStatus = this.feedbackData[key]?.status || 'unread';
+                    const newStatus = currentStatus === 'unread' ? 'read' : 'unread';
+                    
+                    await feedbackRef.update({ status: newStatus });
+                    this.logActivity(`Feedback status updated`, 'success');
+                    this.showAlert('Feedback status updated', 'success');
+                } catch (error) {
+                    console.error('Error updating feedback status:', error);
+                    this.showAlert('Error updating feedback status', 'error');
+                }
+            }
+
+            async deleteFeedback(key) {
+                if (confirm('Are you sure you want to delete this feedback?')) {
+                    if (!this.db || !key) return;
+                    
+                    try {
+                        const feedbackRef = this.db.ref(`02_aboutUs/userFeedback/${key}`);
+                        await feedbackRef.remove();
+                        this.logActivity(`Feedback deleted`, 'error');
+                        this.showAlert('Feedback deleted successfully', 'success');
+                    } catch (error) {
+                        console.error('Error deleting feedback:', error);
+                        this.showAlert('Error deleting feedback', 'error');
+                    }
+                }
+            }
+
+            async markFeedbackAsRead(key) {
+                if (!this.db || !key) return;
+                
+                try {
+                    const feedbackRef = this.db.ref(`02_aboutUs/userFeedback/${key}`);
+                    await feedbackRef.update({ status: 'read' });
+                    this.logActivity(`Feedback marked as read`, 'success');
+                    this.showAlert('Feedback marked as read', 'success');
+                } catch (error) {
+                    console.error('Error marking feedback as read:', error);
+                    this.showAlert('Error marking feedback as read', 'error');
+                }
+            }
+
+            // Search methods
+            searchOfficials(query) {
+                const tbody = document.getElementById('officials-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const id = row.cells[0].textContent.toLowerCase();
+                    const name = row.cells[2].textContent.toLowerCase();
+                    const position = row.cells[3].textContent.toLowerCase();
+                    const description = row.cells[4].textContent.toLowerCase();
+                    
+                    if (id.includes(searchText) || name.includes(searchText) || position.includes(searchText) || description.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchCommittees(query) {
+                const tbody = document.getElementById('committees-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const id = row.cells[0].textContent.toLowerCase();
+                    const title = row.cells[1].textContent.toLowerCase();
+                    const chairperson = row.cells[2].textContent.toLowerCase();
+                    const description = row.cells[3].textContent.toLowerCase();
+                    
+                    if (id.includes(searchText) || title.includes(searchText) || chairperson.includes(searchText) || description.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchDocuments(query) {
+                const tbody = document.getElementById('documents-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const id = row.cells[0].textContent.toLowerCase();
+                    const title = row.cells[1].textContent.toLowerCase();
+                    const description = row.cells[2].textContent.toLowerCase();
+                    const requirements = row.cells[3].textContent.toLowerCase();
+                    const processingTime = row.cells[4].textContent.toLowerCase();
+                    
+                    if (id.includes(searchText) || title.includes(searchText) || description.includes(searchText) || requirements.includes(searchText) || processingTime.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchFAQ(query) {
+                const tbody = document.getElementById('faq-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const id = row.cells[0].textContent.toLowerCase();
+                    const question = row.cells[1].textContent.toLowerCase();
+                    const answer = row.cells[2].textContent.toLowerCase();
+                    
+                    if (id.includes(searchText) || question.includes(searchText) || answer.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchFeedback(query) {
+                const tbody = document.getElementById('feedback-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const id = row.cells[0].textContent.toLowerCase();
+                    const name = row.cells[1].textContent.toLowerCase();
+                    const subject = row.cells[2].textContent.toLowerCase();
+                    const date = row.cells[3].textContent.toLowerCase();
+                    const time = row.cells[4].textContent.toLowerCase();
+                    const status = row.cells[5].textContent.toLowerCase();
+                    
+                    if (id.includes(searchText) || name.includes(searchText) || subject.includes(searchText) || date.includes(searchText) || time.includes(searchText) || status.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            backupData() {
+                const dataStr = JSON.stringify(this.currentData, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `aboutus-backup-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                this.logActivity('AboutUs data backed up successfully', 'success');
+                this.showAlert('AboutUs data backed up successfully!', 'success');
+            }
+
+            async clearAllData() {
+                if (confirm('Clear ALL AboutUs data from Firebase Realtime Database? This will remove everything from 02_aboutUs node and cannot be undone.')) {
+                    try {
+                        if (this.db) {
+                            await this.db.ref('02_aboutUs').remove();
+                        }
+                        localStorage.removeItem(this.dataKey);
+                        this.currentData = this.getDefaultData();
+                        this.populateForms();
+                        await this.saveData(true);
+                        this.logActivity('All AboutUs data cleared', 'error');
+                        this.showAlert('All AboutUs data has been cleared', 'success');
+                    } catch (error) {
+                        console.error('Error clearing data:', error);
+                        this.showAlert('Error clearing AboutUs data', 'error');
+                    }
+                }
+            }
+
+            showAlert(message, type) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `<strong><i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i> ${message}</strong>`;
+                
+                const currentTab = document.querySelector('.tab-content.active');
+                if (currentTab) {
+                    currentTab.insertBefore(alert, currentTab.firstChild);
+                }
+                
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.remove();
+                    }
+                }, 5000);
+            }
+
+            logActivity(message, type) {
+                const activity = {
+                    timestamp: new Date().toLocaleTimeString(),
+                    message: message,
+                    type: type
+                };
+                this.activityLog.unshift(activity);
+                if (this.activityLog.length > 10) {
+                    this.activityLog.pop();
+                }
+                this.updateActivityLog();
+            }
+
+            updateActivityLog() {
+                const container = document.getElementById('recent-activity');
+                if (!container) return;
+
+                if (this.activityLog.length === 0) {
+                    container.innerHTML = `<p style="color: var(--gray); text-align: center; padding: 20px;"><i class="fas fa-clock"></i> No recent activity</p>`;
+                    return;
+                }
+
+                container.innerHTML = this.activityLog.map(activity => `
+                    <div style="padding: 10px 15px; border-left: 3px solid ${
+                        activity.type === 'success' ? 'var(--success)' : 
+                        activity.type === 'error' ? 'var(--error)' : 'var(--warning)'
+                    }; margin-bottom: 10px; background: var(--gray-light); border-radius: 0 var(--radius) var(--radius) 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                            <span style="font-weight: 600;">${activity.message}</span>
+                            <small style="color: var(--gray);">${activity.timestamp}</small>
+                        </div>
+                    </div>`).join('');
+            }
+
+            cleanup() {
+                if (this.unsubscribe) {
+                    this.unsubscribe();
+                }
+                if (this.feedbackUnsubscribe) {
+                    this.feedbackUnsubscribe();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.aboutUsAdminPanel = new AboutUsAdminPanel();
+            window.addEventListener('beforeunload', () => {
+                if (window.aboutUsAdminPanel) {
+                    window.aboutUsAdminPanel.cleanup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Services - Admin | Barangay 118</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="EmergencyAdmin.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo" onclick="myFunction()">
+                    <div class="logo-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>BARANGAY 118 ADMIN PANEL</h1>
+                        <p>Emergency Services Control Center</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="PanelAdmin.html">Dashboard</a>
+                    <a href="AboutUsAdmin.html">AboutUs</a>
+                    <a href="NewsAdmin.html">News</a>
+                    <a href="EmergencyAdmin.html" class="active">Emergency</a>
+                    <a href="CreateAccountAdmin.html">Create</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-panel">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title"><i class="fas fa-cogs"></i> Control Center</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-tab="dashboard"><span class="sidebar-icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard</a></li>
+                <li><a href="#" data-tab="hero"><span class="sidebar-icon"><i class="fas fa-heading"></i></span> Page Hero</a></li>
+                <li><a href="#" data-tab="quickcall"><span class="sidebar-icon"><i class="fas fa-phone-alt"></i></span> Quick Call</a></li>
+                <li><a href="#" data-tab="contacts"><span class="sidebar-icon"><i class="fas fa-address-book"></i></span> Contacts Directory</a></li>
+                <li><a href="#" data-tab="procedures"><span class="sidebar-icon"><i class="fas fa-list-check"></i></span> Emergency Procedures</a></li>
+                <li><a href="#" data-tab="facilities"><span class="sidebar-icon"><i class="fas fa-map-marker-alt"></i></span> Facilities</a></li>
+                <li><a href="#" data-tab="preparation"><span class="sidebar-icon"><i class="fas fa-kit-medical"></i></span> Preparation</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="LogIn.html" class="sidebar-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <!-- DASHBOARD TAB -->
+            <div id="dashboard" class="tab-content active">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Emergency Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="system-status">Ready</div>
+                            <div class="stat-label">System Status</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-contacts">0</div>
+                            <div class="stat-label">Total Contacts</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-facilities">0</div>
+                            <div class="stat-label">Emergency Facilities</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="last-updated">Never</div>
+                            <div class="stat-label">Last Updated</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="data-size">0 KB</div>
+                            <div class="stat-label">Data Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-check-circle"></i> System Ready!</strong> Manage all emergency services for Barangay 118.
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" id="preview-site-btn">
+                            <i class="fas fa-external-link-alt"></i> Preview Site
+                        </button>
+                        <button class="btn btn-secondary" id="export-data-btn">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn-success" id="backup-data-btn">
+                            <i class="fas fa-database"></i> Backup Data
+                        </button>
+                        <button class="btn btn-warning" id="refresh-data-btn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                        <button class="btn btn-danger" id="clear-data-btn">
+                            <i class="fas fa-trash"></i> Clear All Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div id="recent-activity">
+                        <p style="color: var(--gray); text-align: center; padding: 20px;">
+                            <i class="fas fa-clock"></i> Activity log will appear here...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="dashboard-guide" class="guide-section">
+                        <h4>Emergency Management System</h4>
+                        <p>Manage all emergency services, contacts, procedures, and facilities for Barangay 118 using Firebase Realtime Database.</p>
+                        <ul>
+                            <li><strong>Quick Call:</strong> Manage emergency contact numbers for immediate access</li>
+                            <li><strong>Contacts Directory:</strong> Detailed emergency contacts by category (Medical, Fire, Police, Barangay)</li>
+                            <li><strong>Emergency Procedures:</strong> Step-by-step instructions for different scenarios</li>
+                            <li><strong>Facilities:</strong> Nearby emergency facilities with map links</li>
+                            <li><strong>Preparation:</strong> Emergency preparedness kit checklist</li>
+                            <li><strong>Firebase Integration:</strong> All data stored in Firebase Realtime Database (04_Emergency)</li>
+                            <li><strong>Real-time Updates:</strong> Changes appear instantly on the Emergency page</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE HERO TAB -->
+            <div id="hero" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-heading"></i> Page Hero Section</h2>
+                        <div class="action-buttons">
+                            <a href="Emergency.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Update the hero section that appears at the top of your Emergency Services page.</p>
+                    
+                    <form id="hero-form">
+                        <div class="form-group">
+                            <label class="form-label" for="hero-title">Hero Title *</label>
+                            <input type="text" class="form-control" id="hero-title" placeholder="Enter hero title" value="Emergency Assistance">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="hero-description">Hero Description</label>
+                            <textarea class="form-control" id="hero-description" placeholder="Enter hero description">Quick access to emergency services for Barangay 118 residents</textarea>
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Brief description that appears below the title</small>
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Hero
+                            </button>
+                            <button type="button" class="btn btn-warning" id="hero-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="hero-guide" class="guide-section">
+                        <h4>Page Hero Settings</h4>
+                        <p>Customize the main hero section of your Emergency page.</p>
+                        <ul>
+                            <li><strong>Hero Title:</strong> Update the main page title</li>
+                            <li><strong>Hero Description:</strong> Update the page description</li>
+                            <li><strong>Changes appear immediately</strong> on the main site</li>
+                            <li><strong>Data is saved to Firebase</strong> Realtime Database (04_Emergency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUICK CALL TAB -->
+            <div id="quickcall" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-phone-alt"></i> Quick Call Management</h2>
+                        <div class="action-buttons">
+                            <a href="Emergency.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Add, edit, or delete emergency contact numbers for quick access. These contacts are prominently displayed for immediate access during emergencies.</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-quickcall-tab="existing">
+                            <i class="fa-solid fa-phone"></i> Existing Contacts
+                        </div>
+                        <div class="tab" data-quickcall-tab="add">
+                            <i class="fa-solid fa-plus-circle"></i> Add New Contact
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="quickcall-search" placeholder="Search contacts...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-quickcall" class="sub-tab-content active">
+                        <div class="alert alert-success">
+                            <strong><i class="fas fa-info-circle"></i> Pro Tip:</strong> Click on any contact to edit it.
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Title</th>
+                                    <th>Number</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quickcall-table-body">
+                                <!-- Quick call contacts will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-quickcall" class="sub-tab-content">
+                        <form id="quickcall-form">
+                            <input type="hidden" id="quickcall-edit-id" value="">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="quickcall-title">Contact Title *</label>
+                                    <input type="text" class="form-control" id="quickcall-title" placeholder="Enter contact title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="quickcall-number">Phone Number *</label>
+                                    <input type="text" class="form-control" id="quickcall-number" placeholder="Enter phone number" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="quickcall-subtitle">Subtitle</label>
+                                    <input type="text" class="form-control" id="quickcall-subtitle" placeholder="Enter subtitle (optional)">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="quickcall-type">Contact Type *</label>
+                                    <select class="form-control" id="quickcall-type" required>
+                                        <option value="">Select type</option>
+                                        <option value="critical">Critical</option>
+                                        <option value="urgent">Urgent</option>
+                                        <option value="important">Important</option>
+                                        <option value="normal">Normal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="quickcall-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Contact
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="quickcall-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="quickcall-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="quickcall-guide" class="guide-section">
+                        <h4>Quick Call Management</h4>
+                        <p>Manage emergency contact numbers for quick access.</p>
+                        <ul>
+                            <li><strong>Add Contact:</strong> Fill in title, number, and select type</li>
+                            <li><strong>Edit Contact:</strong> Click on any contact to edit</li>
+                            <li><strong>Delete Contact:</strong> Remove outdated contacts</li>
+                            <li><strong>Contact Types:</strong> Critical, Urgent, Important, Normal</li>
+                            <li><strong>Firebase:</strong> All data stored in Firebase Realtime Database (04_Emergency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACTS DIRECTORY TAB -->
+            <div id="contacts" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-address-book"></i> Contacts Directory Management</h2>
+                        <div class="action-buttons">
+                            <a href="Emergency.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage detailed emergency contacts organized by category (Medical, Fire, Police, Barangay).</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-contacts-tab="existing">
+                            <i class="fa-solid fa-folder"></i> Existing Categories
+                        </div>
+                        <div class="tab" data-contacts-tab="add">
+                            <i class="fa-solid fa-plus-circle"></i> Add New Category
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="contacts-search" placeholder="Search contacts...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-contacts" class="sub-tab-content active">
+                        <div id="contacts-container" class="compact-grid">
+                            <!-- Contact categories will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div id="add-contacts" class="sub-tab-content">
+                        <form id="contacts-form">
+                            <input type="hidden" id="contacts-edit-id" value="">
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="contacts-category-title">Category Title *</label>
+                                <input type="text" class="form-control" id="contacts-category-title" placeholder="Enter category title" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Contact Items</label>
+                                <div id="contacts-items-container">
+                                    <!-- Contact items will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="add-contact-item-btn" style="margin-top: 10px;">
+                                    <i class="fas fa-plus"></i> Add Contact Item
+                                </button>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="contacts-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Category
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="contacts-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="contacts-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="contacts-guide" class="guide-section">
+                        <h4>Contacts Directory Management</h4>
+                        <p>Manage detailed emergency contacts organized by category.</p>
+                        <ul>
+                            <li><strong>Add Category:</strong> Create new contact categories</li>
+                            <li><strong>Edit Category:</strong> Click Edit button on any category</li>
+                            <li><strong>Delete Category:</strong> Remove entire category with all contacts</li>
+                            <li><strong>Contact Details:</strong> Each item includes title, number, description, and hours</li>
+                            <li><strong>Firebase:</strong> All data stored in Firebase Realtime Database (04_Emergency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EMERGENCY PROCEDURES TAB -->
+            <div id="procedures" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-list-check"></i> Emergency Procedures Management</h2>
+                        <div class="action-buttons">
+                            <a href="Emergency.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage emergency procedures with step-by-step instructions for different scenarios.</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-procedures-tab="existing">
+                            <i class="fa-solid fa-list-check"></i> Existing Procedures
+                        </div>
+                        <div class="tab" data-procedures-tab="add">
+                            <i class="fa-solid fa-plus-circle"></i> Add New Procedure
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="procedures-search" placeholder="Search procedures...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-procedures" class="sub-tab-content active">
+                        <div id="procedures-container" class="compact-grid">
+                            <!-- Procedures will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div id="add-procedures" class="sub-tab-content">
+                        <form id="procedures-form">
+                            <input type="hidden" id="procedures-edit-id" value="">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="procedures-title">Procedure Title *</label>
+                                    <input type="text" class="form-control" id="procedures-title" placeholder="Enter procedure title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="procedures-icon">Icon</label>
+                                    <select class="form-control" id="procedures-icon" required>
+                                        <option value="">Select icon</option>
+                                        <option value="fas fa-fire">Fire</option>
+                                        <option value="fas fa-heartbeat">Medical</option>
+                                        <option value="fas fa-house-tsunami">Earthquake</option>
+                                        <option value="fas fa-cloud-showers-heavy">Typhoon/Flood</option>
+                                        <option value="fas fa-bolt">Electrical</option>
+                                        <option value="fas fa-triangle-exclamation">General Emergency</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Procedure Steps *</label>
+                                <div id="procedures-steps-container">
+                                    <!-- Steps will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="add-step-btn" style="margin-top: 10px;">
+                                    <i class="fas fa-plus"></i> Add Step
+                                </button>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="procedures-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Procedure
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="procedures-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="procedures-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="procedures-guide" class="guide-section">
+                        <h4>Emergency Procedures Management</h4>
+                        <p>Manage emergency procedures with step-by-step instructions.</p>
+                        <ul>
+                            <li><strong>Add Procedure:</strong> Fill in title, select icon, and add steps</li>
+                            <li><strong>Edit Procedure:</strong> Click Edit button on any procedure</li>
+                            <li><strong>Delete Procedure:</strong> Remove entire procedure</li>
+                            <li><strong>Icon Selection:</strong> Choose appropriate icons for each procedure type</li>
+                            <li><strong>Firebase:</strong> All data stored in Firebase Realtime Database (04_Emergency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FACILITIES TAB -->
+            <div id="facilities" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Facilities Management</h2>
+                        <div class="action-buttons">
+                            <a href="Emergency.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage nearest emergency facilities with location details and map links.</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-facilities-tab="existing">
+                            <i class="fa-solid fa-map-marker-alt"></i> Existing Facilities
+                        </div>
+                        <div class="tab" data-facilities-tab="add">
+                            <i class="fa-solid fa-plus-circle"></i> Add New Facility
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="facilities-search" placeholder="Search facilities...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-facilities" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="facilities-table-body">
+                                <!-- Facilities will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-facilities" class="sub-tab-content">
+                        <form id="facilities-form">
+                            <input type="hidden" id="facilities-edit-id" value="">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="facilities-name">Facility Name *</label>
+                                    <input type="text" class="form-control" id="facilities-name" placeholder="Enter facility name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="facilities-type">Facility Type *</label>
+                                    <select class="form-control" id="facilities-type" required>
+                                        <option value="">Select type</option>
+                                        <option value="medical">Medical</option>
+                                        <option value="fire">Fire Station</option>
+                                        <option value="police">Police Station</option>
+                                        <option value="barangay">Barangay Hall</option>
+                                        <option value="evacuation">Evacuation Center</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="facilities-address">Address *</label>
+                                <textarea class="form-control" id="facilities-address" placeholder="Enter full address" required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="facilities-distance">Distance from Barangay</label>
+                                    <input type="text" class="form-control" id="facilities-distance" placeholder="e.g., 1.4 km from Barangay 118">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="facilities-hours">Operating Hours</label>
+                                    <input type="text" class="form-control" id="facilities-hours" placeholder="e.g., 24/7 Service">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="facilities-map-link">Google Maps Link *</label>
+                                <input type="text" class="form-control" id="facilities-map-link" placeholder="Enter Google Maps URL" required>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="facilities-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Facility
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="facilities-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="facilities-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="facilities-guide" class="guide-section">
+                        <h4>Facilities Management</h4>
+                        <p>Manage nearest emergency facilities with location details.</p>
+                        <ul>
+                            <li><strong>Add Facility:</strong> Fill in name, type, address, and map link</li>
+                            <li><strong>Edit Facility:</strong> Click Edit button on any facility</li>
+                            <li><strong>Delete Facility:</strong> Remove outdated facility information</li>
+                            <li><strong>Google Maps:</strong> Include Google Maps links for directions</li>
+                            <li><strong>Firebase:</strong> All data stored in Firebase Realtime Database (04_Emergency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREPARATION TAB -->
+            <div id="preparation" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-kit-medical"></i> Preparation Management</h2>
+                        <div class="action-buttons">
+                            <a href="Emergency.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage emergency preparedness kit checklist and important tips.</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-preparation-tab="existing">
+                            <i class="fa-solid fa-kit-medical"></i> Existing Categories
+                        </div>
+                        <div class="tab" data-preparation-tab="add">
+                            <i class="fa-solid fa-plus-circle"></i> Add New Category
+                        </div>
+                        <div class="tab" data-preparation-tab="tips">
+                            <i class="fa-solid fa-lightbulb"></i> Manage Tips
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="preparation-search" placeholder="Search categories...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-preparation" class="sub-tab-content active">
+                        <div id="preparation-container" class="compact-grid">
+                            <!-- Preparation categories will be populated here -->
+                        </div>
+                        
+                        <div id="tips-section" style="margin-top: 30px;">
+                            <div id="tips-container">
+                                <!-- Tips will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="add-preparation" class="sub-tab-content">
+                        <form id="preparation-form">
+                            <input type="hidden" id="preparation-edit-id" value="">
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="preparation-category">Category Title *</label>
+                                <input type="text" class="form-control" id="preparation-category" placeholder="Enter category title" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Checklist Items</label>
+                                <div id="preparation-items-container">
+                                    <!-- Items will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="add-checklist-item-btn" style="margin-top: 10px;">
+                                    <i class="fas fa-plus"></i> Add Item
+                                </button>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="preparation-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Category
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="preparation-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="preparation-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div id="tips-preparation" class="sub-tab-content">
+                        <form id="tips-form">
+                            <div class="form-group">
+                                <label class="form-label" for="tips-title">Tips Title</label>
+                                <input type="text" class="form-control" id="tips-title" placeholder="Enter tips title" value="Important Tips:">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Tips List</label>
+                                <div id="tips-list-container">
+                                    <!-- Tips will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="add-tip-btn" style="margin-top: 10px;">
+                                    <i class="fas fa-plus"></i> Add Tip
+                                </button>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Save Tips
+                                </button>
+                                <button type="button" class="btn btn-danger" id="tips-cancel-btn">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="preparation-guide" class="guide-section">
+                        <h4>Preparation Management</h4>
+                        <p>Manage emergency preparedness kit checklist and tips.</p>
+                        <ul>
+                            <li><strong>Add Category:</strong> Create new checklist categories</li>
+                            <li><strong>Edit Category:</strong> Click Edit button on any category</li>
+                            <li><strong>Delete Category:</strong> Remove entire category</li>
+                            <li><strong>Manage Tips:</strong> Edit important emergency tips</li>
+                            <li><strong>Firebase:</strong> All data stored in Firebase Realtime Database (04_Emergency)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Status Indicator -->
+    <div id="save-status" class="save-status">• Ready to Save</div>
+
+    <script>
+
+        
+
+function myFunction() {
+    location.reload();
+}
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        let db = null;
+        let unsubscribe = null;
+        
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.database();
+            console.log("Firebase Realtime Database initialized successfully in Emergency Admin Panel");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        const defaultEmergencyData = {
+            "01_hero": {
+                order: 1,
+                title: "Emergency Assistance",
+                description: "Quick access to emergency services for Barangay 118 residents"
+            },
+            "02_quickCall": {
+                order: 2,
+                title: "Emergency Contact Numbers",
+                description: "Reference only. Please dial these numbers manually when needed.",
+                cards: [
+                    { 
+                        id: 1, 
+                        type: "critical", 
+                        title: "Medical Emergency", 
+                        subtitle: "Ambulance & Medical Assistance", 
+                        number: "911" 
+                    },
+                    { 
+                        id: 2, 
+                        type: "urgent", 
+                        title: "Fire Emergency", 
+                        subtitle: "Fire Department & Rescue", 
+                        number: "(02) 8426-0219" 
+                    },
+                    { 
+                        id: 3, 
+                        type: "important", 
+                        title: "Police Emergency", 
+                        subtitle: "Crime & Police Assistance", 
+                        number: "117" 
+                    },
+                    { 
+                        id: 4, 
+                        type: "normal", 
+                        title: "Barangay Hotline", 
+                        subtitle: "Local Emergency Assistance", 
+                        number: "(02) 8123-4567" 
+                    }
+                ]
+            },
+            "03_contacts": {
+                order: 3,
+                title: "Emergency Contacts Directory",
+                accordions: [
+                    {
+                        id: 1,
+                        title: "Medical Services",
+                        items: [
+                            { 
+                                id: 1, 
+                                title: "Emergency Medical Services", 
+                                number: "911", 
+                                description: "24/7 ambulance and emergency medical response", 
+                                hours: "Available: 24/7" 
+                            },
+                            { 
+                                id: 2, 
+                                title: "Caloocan City Medical Center", 
+                                number: "(02) 8292-1111", 
+                                description: "Nearest public hospital for emergencies", 
+                                hours: "Emergency Room: 24/7" 
+                            }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        title: "Fire Department",
+                        items: [
+                            { 
+                                id: 3, 
+                                title: "Caloocan Fire Department", 
+                                number: "(02) 8426-0219", 
+                                description: "Fire emergencies and rescue operations", 
+                                hours: "Available: 24/7" 
+                            }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        title: "Police Services",
+                        items: [
+                            { 
+                                id: 4, 
+                                title: "Caloocan Police Department", 
+                                number: "117 / (02) 83612629", 
+                                description: "Police assistance and crime reporting", 
+                                hours: "Emergency Hotline: 117 (24/7)" 
+                            }
+                        ]
+                    },
+                    {
+                        id: 4,
+                        title: "Barangay Services",
+                        items: [
+                            { 
+                                id: 5, 
+                                title: "Barangay 118 Emergency", 
+                                number: "(02) 8123-4567", 
+                                description: "Local emergencies and community assistance", 
+                                hours: "Office: 8AM–5PM (Mon–Fri)<br>Emergency: 24/7" 
+                            },
+                            { 
+                                id: 6, 
+                                title: "Barangay 118 Disaster Council", 
+                                number: "0999-123-4567", 
+                                description: "Disaster response team", 
+                                hours: "Mobile: 24/7 during disasters" 
+                            }
+                        ]
+                    }
+                ]
+            },
+            "04_procedures": {
+                order: 4,
+                title: "Emergency Procedures",
+                description: "Step-by-step guide for different emergencies",
+                cards: [
+                    { 
+                        id: 1, 
+                        icon: "fas fa-fire", 
+                        title: "Fire Emergency", 
+                        steps: [
+                            "Shout \"Fire!\" to alert everyone",
+                            "Call 911 or fire department",
+                            "Use stairs, not elevators",
+                            "Crawl low under smoke"
+                        ]
+                    },
+                    { 
+                        id: 2, 
+                        icon: "fas fa-heartbeat", 
+                        title: "Medical Emergency", 
+                        steps: [
+                            "Ensure area is safe",
+                            "Call 911 immediately",
+                            "Provide basic care if trained",
+                            "Clear path for responders"
+                        ]
+                    },
+                    { 
+                        id: 3, 
+                        icon: "fas fa-house-tsunami", 
+                        title: "Earthquake", 
+                        steps: [
+                            "DROP to the ground",
+                            "COVER under sturdy furniture",
+                            "HOLD ON until shaking stops",
+                            "Evacuate if necessary"
+                        ]
+                    },
+                    { 
+                        id: 4, 
+                        icon: "fas fa-cloud-showers-heavy", 
+                        title: "Typhoon/Flood", 
+                        steps: [
+                            "Stay updated on warnings",
+                            "Move to higher ground if flooding",
+                            "Avoid flood waters",
+                            "Have emergency kit ready"
+                        ]
+                    }
+                ]
+            },
+            "05_facilities": {
+                order: 5,
+                title: "Nearest Emergency Facilities",
+                cards: [
+                    { 
+                        id: 1, 
+                        type: "fire", 
+                        title: "Caloocan Fire Station Main", 
+                        address: "226 Maria Clara St, Grace Park East, Caloocan, 1403 Metro Manila", 
+                        distance: "1.4 km from Barangay 118", 
+                        hours: "24/7 Service", 
+                        mapLink: "https://maps.app.goo.gl/BNyMdWZcx3sgE5TV8" 
+                    },
+                    { 
+                        id: 2, 
+                        type: "medical", 
+                        title: "Caloocan City Medical Center", 
+                        address: "3rd Street, 9th Ave, Grace Park East, Caloocan, Metro Manila", 
+                        distance: "950 m from Barangay 118", 
+                        hours: "24/7 Emergency Room", 
+                        mapLink: "https://maps.app.goo.gl/jqq6xJQ7yRbdTT779" 
+                    },
+                    { 
+                        id: 3, 
+                        type: "police", 
+                        title: "Caloocan Police Station 1", 
+                        address: "C3 Road, 8th Street, de Jesus, Grace Park, Caloocan, 1404 Metro Manila", 
+                        distance: "1 km from Barangay 118", 
+                        hours: "24/7 Emergency", 
+                        mapLink: "https://maps.app.goo.gl/gabonpQy56tayH469" 
+                    },
+                    { 
+                        id: 4, 
+                        type: "barangay", 
+                        title: "Barangay 118 Hall", 
+                        address: "402 2nd St, Grace Park East, Caloocan, Metro Manila", 
+                        distance: "Within Barangay 118", 
+                        hours: "8AM-5PM (Mon-Fri)", 
+                        mapLink: "https://maps.app.goo.gl/rnBHFzifAcRywgjx5" 
+                    }
+                ]
+            },
+            "06_preparation": {
+                order: 6,
+                title: "Emergency Preparedness Kit",
+                description: "Essential items to prepare for emergencies",
+                checklist: [
+                    {
+                        id: 1,
+                        category: "Medical & First Aid",
+                        items: [
+                            "Bandages and antiseptic",
+                            "Prescription medications",
+                            "Pain relievers",
+                            "Medical gloves"
+                        ]
+                    },
+                    {
+                        id: 2,
+                        category: "Food & Water",
+                        items: [
+                            "3-day water supply (1 gallon/person/day)",
+                            "Non-perishable food",
+                            "Manual can opener",
+                            "Energy bars"
+                        ]
+                    },
+                    {
+                        id: 3,
+                        category: "Light & Communication",
+                        items: [
+                            "Flashlight with extra batteries",
+                            "Portable phone charger",
+                            "Battery-powered radio",
+                            "Whistle"
+                        ]
+                    },
+                    {
+                        id: 4,
+                        category: "Important Documents",
+                        items: [
+                            "Copies of IDs in waterproof container",
+                            "Insurance papers",
+                            "Medical records",
+                            "Emergency contact list"
+                        ]
+                    }
+                ],
+                tips: {
+                    title: "Important Tips:",
+                    items: [
+                        "Store kit in accessible location",
+                        "Check and update every 6 months",
+                        "Have one kit at home and one in car",
+                        "Include special needs items (baby, elderly, pets)"
+                    ]
+                }
+            }
+        };
+
+        class EmergencyAdminPanel {
+            constructor() {
+                this.dataKey = 'emergencyData';
+                this.currentData = null;
+                this.activityLog = [];
+                this.lastSavedData = null;
+                this.saveStatusTimeout = null;
+                this.renderedTabs = new Set();
+                this.db = db;
+                this.unsubscribe = null;
+                this.lastUpdated = null;
+                this.isDataLoaded = false;
+                this.init();
+            }
+
+            init() {
+                if (this.db) {
+                    this.checkFirebaseConnection();
+                }
+                this.loadData();
+                this.lastSavedData = JSON.parse(JSON.stringify(this.currentData));
+                this.setupEventListeners();
+                this.updateDashboard();
+                this.logActivity('System initialized with Firebase Realtime Database integration', 'success');
+                this.updateSaveStatus('• Ready to Save');
+                this.setupFirebaseListener();             
+                this.hideAllTabs();
+                this.switchTab('dashboard');
+            }
+
+            hideAllTabs() {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+            }
+
+            getDefaultData() {
+                return JSON.parse(JSON.stringify(defaultEmergencyData));
+            }
+
+            deepMergeData(target, source) {
+                for (const key in source) {
+                    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                        if (!target[key]) target[key] = {};
+                        this.deepMergeData(target[key], source[key]);
+                    } else if (Array.isArray(source[key])) {
+                        target[key] = [...source[key]];
+                    } else {
+                        target[key] = source[key];
+                    }
+                }
+            }
+
+            checkFirebaseConnection() {
+                const statusElement = document.getElementById('system-status');
+                if (!statusElement) return;
+                
+                if (this.db) {
+                    statusElement.textContent = 'Online';
+                    statusElement.style.color = '#28a745';
+                } else {
+                    statusElement.textContent = 'Local Mode';
+                    statusElement.style.color = '#ffc107';
+                }
+            }
+
+            async loadData() {
+                let loaded = false;
+                if (this.db) {
+                    try {
+                        const emergencyRef = this.db.ref('04_Emergency');
+                        const snapshot = await emergencyRef.once('value');
+                        
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            this.currentData = this.getDefaultData();
+                            this.deepMergeData(this.currentData, firebaseData);
+                            console.log('Emergency data loaded from Firebase Realtime Database (04_Emergency)');
+                            this.isDataLoaded = true;
+                            loaded = true;
+                        } else {
+                            this.currentData = this.getDefaultData();
+                            this.isDataLoaded = true;
+                            await this.saveData(true);
+                            console.log('Default Emergency data saved to Firebase');
+                            loaded = true;
+                        }
+                    } catch (error) {
+                        console.error('Error loading from Firebase Realtime Database:', error);
+                    }
+                }
+
+                if (!loaded) {
+                    const savedData = localStorage.getItem(this.dataKey);
+                    if (savedData) {
+                        try {
+                            this.currentData = JSON.parse(savedData);
+                            console.log('Emergency data loaded from localStorage');
+                            this.isDataLoaded = true;
+                            loaded = true;
+                        } catch (error) {
+                            console.error('Error parsing localStorage data:', error);
+                        }
+                    }
+                }
+                
+                if (!loaded) {
+                    this.currentData = this.getDefaultData();
+                    console.log('Using pre-loaded default Emergency data');
+                    this.isDataLoaded = true;
+                }
+                
+                this.populateForms();
+                this.lastUpdated = new Date();
+                this.updateDashboard();
+            }
+
+            setupFirebaseListener() {
+                if (!this.db) return;
+                
+                try {
+                    const emergencyRef = this.db.ref('04_Emergency');
+                    
+                    this.unsubscribe = emergencyRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            
+                            this.deepMergeData(this.currentData, firebaseData);
+                            this.isDataLoaded = true;
+                            this.populateForms();
+                            this.renderQuickCallTable();
+                            this.renderContacts();
+                            this.renderProcedures();
+                            this.renderFacilitiesTable();
+                            this.renderPreparation();
+                            this.lastUpdated = new Date();
+                            this.updateDashboard();
+
+                            localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                            
+                            this.logActivity('Emergency data updated from Firebase Realtime Database in real-time', 'info');
+                            this.showAlert('Emergency data synchronized from Firebase Realtime Database', 'info');
+                        }
+                    }, (error) => {
+                        console.error("Firebase Realtime Database listener error:", error);
+                    });
+                } catch (error) {
+                    console.error("Failed to setup Firebase Realtime Database listener:", error);
+                }
+            }
+
+            hasActualChanges() {
+                if (!this.lastSavedData) return true;
+                
+                const currentDataStr = JSON.stringify(this.currentData);
+                const lastSavedDataStr = JSON.stringify(this.lastSavedData);
+                
+                return currentDataStr !== lastSavedDataStr;
+            }
+
+            async saveData(forceSave = false) {
+                if (!forceSave && !this.hasActualChanges()) {
+                    console.log('No changes detected, skipping save');
+                    this.updateSaveStatus('No changes to save', 'info');
+                    this.showAlert('No changes to save', 'info');
+                    return true;
+                }
+
+                let saved = false;
+                
+                try {
+                    // Save to Firebase Realtime Database (04_Emergency)
+                    if (this.db) {
+                        await this.db.ref('04_Emergency').set(this.currentData);
+                        console.log('Emergency data saved to Firebase Realtime Database (04_Emergency)');
+                        this.isDataLoaded = true;
+                    }
+                    
+                    // Also save to localStorage as backup
+                    localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                    console.log('Emergency data saved to localStorage');
+                    saved = true;
+                    
+                    this.lastSavedData = JSON.parse(JSON.stringify(this.currentData));
+                    this.lastUpdated = new Date();
+                    
+                    this.updateDashboard();
+                    this.updateSaveStatus('Data Saved Successfully', 'success');
+                    this.logActivity('Emergency data saved successfully to Firebase Realtime Database (04_Emergency)', 'success');
+                    
+                    // Trigger storage event for user view to update
+                    window.dispatchEvent(new StorageEvent('storage', {
+                        key: this.dataKey,
+                        newValue: JSON.stringify(this.currentData)
+                    }));
+                    
+                } catch (error) {
+                    console.error('Save failed:', error);
+                    this.updateSaveStatus('Save failed', 'error');
+                    this.logActivity('Emergency data save failed', 'error');
+                    saved = false;
+                }
+                
+                return saved;
+            }
+            
+            updateSaveStatus(message = '• Manual Save', type = 'default') {
+                const statusElement = document.getElementById('save-status');
+                if (!statusElement) return;
+                
+                if (this.saveStatusTimeout) {
+                    clearTimeout(this.saveStatusTimeout);
+                }
+                
+                statusElement.textContent = message;
+                statusElement.className = 'save-status';
+                
+                if (type === 'success') {
+                    statusElement.classList.add('success');
+                } else if (type === 'warning') {
+                    statusElement.classList.add('warning');
+                } else if (type === 'error') {
+                    statusElement.classList.add('error');
+                } else if (type === 'info') {
+                    statusElement.classList.add('info');
+                }
+                
+                if (type === 'success' || type === 'info' || type === 'warning') {
+                    this.saveStatusTimeout = setTimeout(() => {
+                        statusElement.textContent = '• Connected to Database';
+                        statusElement.className = 'save-status';
+                    }, 3000);
+                }
+            }
+
+            populateForms() {
+                if (!this.currentData) return;
+
+                // Hero Form
+                document.getElementById('hero-title').value = this.currentData["01_hero"]?.title || '';
+                document.getElementById('hero-description').value = this.currentData["01_hero"]?.description || '';
+                
+                // Tips Form
+                if (this.currentData["06_preparation"]?.tips) {
+                    document.getElementById('tips-title').value = this.currentData["06_preparation"].tips.title || '';
+                }
+            }
+
+            setupEventListeners() {
+                // Sidebar navigation
+                document.querySelector('.sidebar-menu').addEventListener('click', (e) => {
+                    const link = e.target.closest('a');
+                    if (link && link.hasAttribute('data-tab')) {
+                        e.preventDefault();
+                        const tabId = link.getAttribute('data-tab');
+                        this.switchTab(tabId);
+                    }
+                });
+
+                // Tab switching within sections
+                document.querySelectorAll('[data-quickcall-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-quickcall-tab');
+                        document.querySelectorAll('[data-quickcall-tab]').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('#quickcall .sub-tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        tab.classList.add('active');
+                        document.getElementById(`${tabId}-quickcall`).classList.add('active');
+                    });
+                });
+
+                document.querySelectorAll('[data-contacts-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-contacts-tab');
+                        document.querySelectorAll('[data-contacts-tab]').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('#contacts .sub-tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        tab.classList.add('active');
+                        document.getElementById(`${tabId}-contacts`).classList.add('active');
+                    });
+                });
+
+                document.querySelectorAll('[data-procedures-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-procedures-tab');
+                        document.querySelectorAll('[data-procedures-tab]').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('#procedures .sub-tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        tab.classList.add('active');
+                        document.getElementById(`${tabId}-procedures`).classList.add('active');
+                    });
+                });
+
+                document.querySelectorAll('[data-facilities-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-facilities-tab');
+                        document.querySelectorAll('[data-facilities-tab]').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('#facilities .sub-tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        tab.classList.add('active');
+                        document.getElementById(`${tabId}-facilities`).classList.add('active');
+                    });
+                });
+
+                document.querySelectorAll('[data-preparation-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-preparation-tab');
+                        document.querySelectorAll('[data-preparation-tab]').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('#preparation .sub-tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        tab.classList.add('active');
+                        document.getElementById(`${tabId}-preparation`).classList.add('active');
+                    });
+                });
+
+                // Quick action buttons
+                document.getElementById('preview-site-btn').addEventListener('click', () => {
+                    window.open('Emergency.html', '_blank');
+                });
+
+                document.getElementById('export-data-btn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                document.getElementById('backup-data-btn').addEventListener('click', () => {
+                    this.exportData();
+                    this.showAlert('Backup created successfully!', 'success');
+                });
+
+                document.getElementById('refresh-data-btn').addEventListener('click', () => {
+                    this.loadData();
+                    this.showAlert('Data refreshed from Firebase Realtime Database!', 'success');
+                });
+
+                document.getElementById('clear-data-btn').addEventListener('click', () => {
+                    if (confirm('Clear ALL Emergency data from Firebase Realtime Database? This will remove everything from 04_Emergency node and cannot be undone.')) {
+                        this.clearAllData();
+                    }
+                });
+
+                // Form submissions
+                this.setupFormListeners();
+
+                // Search handlers
+                document.getElementById('quickcall-search').addEventListener('input', (e) => {
+                    this.searchQuickCall(e.target.value);
+                });
+
+                document.getElementById('contacts-search').addEventListener('input', (e) => {
+                    this.searchContacts(e.target.value);
+                });
+
+                document.getElementById('procedures-search').addEventListener('input', (e) => {
+                    this.searchProcedures(e.target.value);
+                });
+
+                document.getElementById('facilities-search').addEventListener('input', (e) => {
+                    this.searchFacilities(e.target.value);
+                });
+
+                document.getElementById('preparation-search').addEventListener('input', (e) => {
+                    this.searchPreparation(e.target.value);
+                });
+
+                // Prevent form submission from reloading page
+                document.querySelectorAll('form').forEach(form => {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                    });
+                });
+            }
+
+            setupFormListeners() {
+                // Hero Form
+                document.getElementById('hero-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const oldData = {...this.currentData["01_hero"]};
+                    const newData = {
+                        title: document.getElementById('hero-title').value,
+                        description: document.getElementById('hero-description').value
+                    };
+                    
+                    if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+                        this.currentData["01_hero"] = newData;
+                        this.currentData["01_hero"].order = 1;
+                        
+                        await this.saveData();
+                        this.showAlert('Hero section updated successfully!', 'success');
+                        this.logActivity('Hero section updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in Hero section', 'info');
+                    }
+                });
+
+                document.getElementById('hero-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Hero section to defaults?')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        this.currentData["01_hero"] = {...defaultData["01_hero"]};
+                        this.currentData["01_hero"].order = 1;
+                        
+                        document.getElementById('hero-title').value = defaultData["01_hero"].title;
+                        document.getElementById('hero-description').value = defaultData["01_hero"].description;
+                        
+                        await this.saveData(true);
+                        this.showAlert('Hero section reset to defaults!', 'success');
+                        this.logActivity('Hero section reset to defaults', 'warning');
+                    }
+                });
+
+                // Quick Call Form
+                document.getElementById('quickcall-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('quickcall-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const quickCallData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["02_quickCall"].cards.length > 0 ? 
+                            Math.max(...this.currentData["02_quickCall"].cards.map(c => c.id)) + 1 : 1),
+                        type: document.getElementById('quickcall-type').value,
+                        title: document.getElementById('quickcall-title').value,
+                        subtitle: document.getElementById('quickcall-subtitle').value,
+                        number: document.getElementById('quickcall-number').value
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["02_quickCall"].cards.findIndex(c => c.id == editId);
+                        if (index !== -1) {
+                            this.currentData["02_quickCall"].cards[index] = quickCallData;
+                        }
+                        this.showAlert('Quick call contact updated successfully!', 'success');
+                        this.logActivity(`Quick call contact "${quickCallData.title}" updated`, 'success');
+                    } else {
+                        this.currentData["02_quickCall"].cards.push(quickCallData);
+                        this.showAlert('Quick call contact added successfully!', 'success');
+                        this.logActivity(`Quick call contact "${quickCallData.title}" added`, 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderQuickCallTable();
+
+                    // Reset form and show table
+                    document.querySelector('[data-quickcall-tab="existing"]').click();
+                    document.getElementById('quickcall-form').reset();
+                    document.getElementById('quickcall-edit-id').value = '';
+                });
+
+                document.getElementById('quickcall-reset-btn').addEventListener('click', () => {
+                    document.getElementById('quickcall-form').reset();
+                    document.getElementById('quickcall-edit-id').value = '';
+                });
+
+                document.getElementById('quickcall-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('quickcall-form').reset();
+                    document.getElementById('quickcall-edit-id').value = '';
+                    document.getElementById('quickcall-cancel-edit').style.display = 'none';
+                    document.getElementById('quickcall-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Contact';
+                    document.querySelector('[data-quickcall-tab="existing"]').click();
+                });
+
+                // Contacts Form
+                document.getElementById('contacts-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('contacts-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    // Collect contact items
+                    const items = [];
+                    const itemElements = document.querySelectorAll('#contacts-items-container .contact-item');
+                    itemElements.forEach((item, index) => {
+                        const title = item.querySelector('.contact-item-title').value;
+                        const number = item.querySelector('.contact-item-number').value;
+                        const description = item.querySelector('.contact-item-description').value;
+                        const hours = item.querySelector('.contact-item-hours').value;
+                        
+                        if (title && number) {
+                            items.push({
+                                id: index + 1,
+                                title: title,
+                                number: number,
+                                description: description,
+                                hours: hours
+                            });
+                        }
+                    });
+
+                    const contactsData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["03_contacts"].accordions.length > 0 ? 
+                            Math.max(...this.currentData["03_contacts"].accordions.map(a => a.id)) + 1 : 1),
+                        title: document.getElementById('contacts-category-title').value,
+                        items: items
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["03_contacts"].accordions.findIndex(a => a.id == editId);
+                        if (index !== -1) {
+                            this.currentData["03_contacts"].accordions[index] = contactsData;
+                        }
+                        this.showAlert('Contacts category updated successfully!', 'success');
+                        this.logActivity(`Contacts category "${contactsData.title}" updated`, 'success');
+                    } else {
+                        this.currentData["03_contacts"].accordions.push(contactsData);
+                        this.showAlert('Contacts category added successfully!', 'success');
+                        this.logActivity(`Contacts category "${contactsData.title}" added`, 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderContacts();
+
+                    // Reset form and show categories
+                    document.querySelector('[data-contacts-tab="existing"]').click();
+                    document.getElementById('contacts-form').reset();
+                    document.getElementById('contacts-edit-id').value = '';
+                    document.getElementById('contacts-items-container').innerHTML = '';
+                });
+
+                // Add contact item button
+                document.getElementById('add-contact-item-btn').addEventListener('click', () => {
+                    this.addContactItem();
+                });
+
+                document.getElementById('contacts-reset-btn').addEventListener('click', () => {
+                    document.getElementById('contacts-form').reset();
+                    document.getElementById('contacts-edit-id').value = '';
+                    document.getElementById('contacts-items-container').innerHTML = '';
+                });
+
+                document.getElementById('contacts-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('contacts-form').reset();
+                    document.getElementById('contacts-edit-id').value = '';
+                    document.getElementById('contacts-items-container').innerHTML = '';
+                    document.getElementById('contacts-cancel-edit').style.display = 'none';
+                    document.getElementById('contacts-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Category';
+                    document.querySelector('[data-contacts-tab="existing"]').click();
+                });
+
+                // Procedures Form
+                document.getElementById('procedures-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('procedures-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const steps = [];
+                    document.querySelectorAll('#procedures-steps-container .step-input').forEach(input => {
+                        if (input.value.trim()) {
+                            steps.push(input.value.trim());
+                        }
+                    });
+
+                    const procedureData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["04_procedures"].cards.length > 0 ? 
+                            Math.max(...this.currentData["04_procedures"].cards.map(p => p.id)) + 1 : 1),
+                        icon: document.getElementById('procedures-icon').value,
+                        title: document.getElementById('procedures-title').value,
+                        steps: steps
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["04_procedures"].cards.findIndex(p => p.id == editId);
+                        if (index !== -1) {
+                            this.currentData["04_procedures"].cards[index] = procedureData;
+                        }
+                        this.showAlert('Procedure updated successfully!', 'success');
+                        this.logActivity(`Procedure "${procedureData.title}" updated`, 'success');
+                    } else {
+                        this.currentData["04_procedures"].cards.push(procedureData);
+                        this.showAlert('Procedure added successfully!', 'success');
+                        this.logActivity(`Procedure "${procedureData.title}" added`, 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderProcedures();
+
+                    // Reset form and show procedures
+                    document.querySelector('[data-procedures-tab="existing"]').click();
+                    document.getElementById('procedures-form').reset();
+                    document.getElementById('procedures-edit-id').value = '';
+                    document.getElementById('procedures-steps-container').innerHTML = '';
+                });
+
+                // Add step button
+                document.getElementById('add-step-btn').addEventListener('click', () => {
+                    this.addProcedureStep();
+                });
+
+                document.getElementById('procedures-reset-btn').addEventListener('click', () => {
+                    document.getElementById('procedures-form').reset();
+                    document.getElementById('procedures-edit-id').value = '';
+                    document.getElementById('procedures-steps-container').innerHTML = '';
+                });
+
+                document.getElementById('procedures-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('procedures-form').reset();
+                    document.getElementById('procedures-edit-id').value = '';
+                    document.getElementById('procedures-steps-container').innerHTML = '';
+                    document.getElementById('procedures-cancel-edit').style.display = 'none';
+                    document.getElementById('procedures-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Procedure';
+                    document.querySelector('[data-procedures-tab="existing"]').click();
+                });
+
+                // Facilities Form
+                document.getElementById('facilities-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('facilities-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const facilityData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["05_facilities"].cards.length > 0 ? 
+                            Math.max(...this.currentData["05_facilities"].cards.map(f => f.id)) + 1 : 1),
+                        type: document.getElementById('facilities-type').value,
+                        title: document.getElementById('facilities-name').value,
+                        address: document.getElementById('facilities-address').value,
+                        distance: document.getElementById('facilities-distance').value,
+                        hours: document.getElementById('facilities-hours').value,
+                        mapLink: document.getElementById('facilities-map-link').value
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["05_facilities"].cards.findIndex(f => f.id == editId);
+                        if (index !== -1) {
+                            this.currentData["05_facilities"].cards[index] = facilityData;
+                        }
+                        this.showAlert('Facility updated successfully!', 'success');
+                        this.logActivity(`Facility "${facilityData.title}" updated`, 'success');
+                    } else {
+                        this.currentData["05_facilities"].cards.push(facilityData);
+                        this.showAlert('Facility added successfully!', 'success');
+                        this.logActivity(`Facility "${facilityData.title}" added`, 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderFacilitiesTable();
+
+                    // Reset form and show table
+                    document.querySelector('[data-facilities-tab="existing"]').click();
+                    document.getElementById('facilities-form').reset();
+                    document.getElementById('facilities-edit-id').value = '';
+                });
+
+                document.getElementById('facilities-reset-btn').addEventListener('click', () => {
+                    document.getElementById('facilities-form').reset();
+                    document.getElementById('facilities-edit-id').value = '';
+                });
+
+                document.getElementById('facilities-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('facilities-form').reset();
+                    document.getElementById('facilities-edit-id').value = '';
+                    document.getElementById('facilities-cancel-edit').style.display = 'none';
+                    document.getElementById('facilities-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Facility';
+                    document.querySelector('[data-facilities-tab="existing"]').click();
+                });
+
+                // Preparation Form
+                document.getElementById('preparation-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('preparation-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const items = [];
+                    document.querySelectorAll('#preparation-items-container .category-input').forEach(input => {
+                        if (input.value.trim()) {
+                            items.push(input.value.trim());
+                        }
+                    });
+
+                    const preparationData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["06_preparation"].checklist.length > 0 ? 
+                            Math.max(...this.currentData["06_preparation"].checklist.map(c => c.id)) + 1 : 1),
+                        category: document.getElementById('preparation-category').value,
+                        items: items
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["06_preparation"].checklist.findIndex(c => c.id == editId);
+                        if (index !== -1) {
+                            this.currentData["06_preparation"].checklist[index] = preparationData;
+                        }
+                        this.showAlert('Preparation category updated successfully!', 'success');
+                        this.logActivity(`Preparation category "${preparationData.category}" updated`, 'success');
+                    } else {
+                        this.currentData["06_preparation"].checklist.push(preparationData);
+                        this.showAlert('Preparation category added successfully!', 'success');
+                        this.logActivity(`Preparation category "${preparationData.category}" added`, 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderPreparation();
+                    
+                    // Reset form and show categories
+                    document.querySelector('[data-preparation-tab="existing"]').click();
+                    document.getElementById('preparation-form').reset();
+                    document.getElementById('preparation-edit-id').value = '';
+                    document.getElementById('preparation-items-container').innerHTML = '';
+                });
+
+                // Add checklist item button
+                document.getElementById('add-checklist-item-btn').addEventListener('click', () => {
+                    this.addChecklistItem();
+                });
+
+                document.getElementById('preparation-reset-btn').addEventListener('click', () => {
+                    document.getElementById('preparation-form').reset();
+                    document.getElementById('preparation-edit-id').value = '';
+                    document.getElementById('preparation-items-container').innerHTML = '';
+                });
+
+                document.getElementById('preparation-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('preparation-form').reset();
+                    document.getElementById('preparation-edit-id').value = '';
+                    document.getElementById('preparation-items-container').innerHTML = '';
+                    document.getElementById('preparation-cancel-edit').style.display = 'none';
+                    document.getElementById('preparation-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Category';
+                    document.querySelector('[data-preparation-tab="existing"]').click();
+                });
+
+                // Tips Form
+                document.getElementById('tips-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const items = [];
+                    document.querySelectorAll('#tips-list-container .tip-input').forEach(input => {
+                        if (input.value.trim()) {
+                            items.push(input.value.trim());
+                        }
+                    });
+
+                    const tipsData = {
+                        title: document.getElementById('tips-title').value,
+                        items: items
+                    };
+
+                    this.currentData["06_preparation"].tips = tipsData;
+                    await this.saveData();
+                    this.showAlert('Preparation tips updated successfully!', 'success');
+                    this.logActivity('Preparation tips updated', 'success');
+                    this.renderPreparation();
+                    
+                    // Hide form and show tips
+                    document.querySelector('[data-preparation-tab="existing"]').click();
+                });
+
+                document.getElementById('tips-cancel-btn').addEventListener('click', () => {
+                    document.querySelector('[data-preparation-tab="existing"]').click();
+                });
+
+                document.getElementById('add-tip-btn').addEventListener('click', () => {
+                    this.addTipItem();
+                });
+            }
+
+            switchTab(tabId) {
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const targetLink = document.querySelector(`[data-tab="${tabId}"]`);
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                }
+                
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                const selectedTab = document.getElementById(tabId);
+                if (selectedTab) {
+                    selectedTab.classList.add('active');
+                }
+                
+                document.querySelector('.admin-content').scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+                // Load specific content for certain tabs
+                if (tabId === 'quickcall') {
+                    this.renderQuickCallTable();
+                } else if (tabId === 'contacts') {
+                    this.renderContacts();
+                } else if (tabId === 'procedures') {
+                    this.renderProcedures();
+                } else if (tabId === 'facilities') {
+                    this.renderFacilitiesTable();
+                } else if (tabId === 'preparation') {
+                    this.renderPreparation();
+                }
+            }
+
+            updateDashboard() {
+                if (!this.currentData) return;
+                const lastUpdatedText = this.lastUpdated ? 
+                    `${this.lastUpdated.getMonth()+1}/${this.lastUpdated.getDate()}/${this.lastUpdated.getFullYear()}` : 'Never';
+                document.getElementById('last-updated').textContent = lastUpdatedText;
+                document.getElementById('total-contacts').textContent = this.currentData["03_contacts"]?.accordions?.reduce((total, acc) => total + (acc.items?.length || 0), 0) || 0;
+                document.getElementById('total-facilities').textContent = this.currentData["05_facilities"]?.cards?.length || 0;
+                const dataSize = JSON.stringify(this.currentData).length;
+                document.getElementById('data-size').textContent = `${Math.round(dataSize / 1024)} KB`;
+            }
+
+            updateActivityLog() {
+                const container = document.getElementById('recent-activity');
+                if (!container) return;
+
+                if (this.activityLog.length === 0) {
+                    container.innerHTML = `<p style="color: var(--gray); text-align: center; padding: 20px;"><i class="fas fa-clock"></i> No recent activity</p>`;
+                    return;
+                }
+
+                container.innerHTML = this.activityLog.map(activity => `
+                    <div style="padding: 10px 15px; border-left: 3px solid ${
+                        activity.type === 'success' ? 'var(--success)' : 
+                        activity.type === 'error' ? 'var(--error)' : 'var(--warning)'
+                    }; margin-bottom: 10px; background: var(--gray-light); border-radius: 0 var(--radius) var(--radius) 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                            <span style="font-weight: 600;">${activity.message}</span>
+                            <small style="color: var(--gray);">${activity.timestamp}</small>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderQuickCallTable() {
+                const tbody = document.getElementById('quickcall-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["02_quickCall"]?.cards || this.currentData["02_quickCall"].cards.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--gray); padding: 30px;">No quick call contacts yet. Click "Add New Contact" to add your first contact!</td></tr>`;
+                    return;
+                }
+
+                this.currentData["02_quickCall"].cards.forEach((contact, index) => {
+                    const typeText = contact.type.charAt(0).toUpperCase() + contact.type.slice(1);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${typeText}</td>
+                        <td><strong>${contact.title}</strong><br><small>${contact.subtitle || ''}</small></td>
+                        <td>${contact.number}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm edit-quickcall" data-id="${contact.id}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm delete-quickcall" data-id="${contact.id}">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-quickcall').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteQuickCall(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-quickcall').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editQuickCall(id);
+                    });
+                });
+            }
+
+            renderContacts() {
+                const container = document.getElementById('contacts-container');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                if (!this.currentData["03_contacts"]?.accordions || this.currentData["03_contacts"].accordions.length === 0) {
+                    container.innerHTML = `<div style="text-align: center; color: var(--gray); padding: 40px; grid-column: 1/-1;">
+                        <h3>No contact categories yet</h3>
+                        <p>Click "Add New Category" to get started!</p>
+                    </div>`;
+                    return;
+                }
+
+                this.currentData["03_contacts"].accordions.forEach((accordion, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'simple-card';
+                    card.setAttribute('data-id', accordion.id);
+                    
+                    let itemsHTML = '';
+                    if (accordion.items && accordion.items.length > 0) {
+                        accordion.items.forEach((item, itemIndex) => {
+                            itemsHTML += `
+                                <div class="simple-list-item">
+                                    <div class="simple-list-content">
+                                        <strong>${item.title}</strong><br>
+                                        <small>${item.number}</small><br>
+                                        <small style="color: var(--gray);">${item.description}</small>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        itemsHTML = `<div style="text-align: center; color: var(--gray); padding: 10px;">
+                            No contact items
+                        </div>`;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="simple-card-header">
+                            <div class="simple-card-title">${accordion.title}</div>
+                        </div>
+                        <div class="simple-card-body">
+                            <div class="simple-list">
+                                ${itemsHTML}
+                            </div>
+                        </div>
+                        <div class="simple-card-footer">
+                            <button class="btn btn-primary btn-sm edit-contacts" data-id="${accordion.id}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm delete-contacts" data-id="${accordion.id}">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.edit-contacts').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editContacts(id);
+                    });
+                });
+
+                document.querySelectorAll('.delete-contacts').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteContacts(id);
+                    });
+                });
+            }
+
+            renderProcedures() {
+                const container = document.getElementById('procedures-container');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                if (!this.currentData["04_procedures"]?.cards || this.currentData["04_procedures"].cards.length === 0) {
+                    container.innerHTML = `<div style="text-align: center; color: var(--gray); padding: 40px; grid-column: 1/-1;">
+                        <h3>No procedures yet</h3>
+                        <p>Click "Add New Procedure" to get started!</p>
+                    </div>`;
+                    return;
+                }
+
+                this.currentData["04_procedures"].cards.forEach((procedure, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'simple-card';
+                    card.setAttribute('data-id', procedure.id);
+                    
+                    let stepsHTML = '';
+                    if (procedure.steps && procedure.steps.length > 0) {
+                        procedure.steps.forEach((step, stepIndex) => {
+                            stepsHTML += `
+                                <div class="simple-list-item">
+                                    <div class="simple-list-content">
+                                        <strong>${stepIndex + 1}.</strong> ${step}
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        stepsHTML = `<div style="text-align: center; color: var(--gray); padding: 10px;">
+                            No steps defined
+                        </div>`;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="simple-card-header">
+                            <div class="simple-card-title">${procedure.title}</div>
+                        </div>
+                        <div class="simple-card-body">
+                            <div class="simple-list">
+                                ${stepsHTML}
+                            </div>
+                        </div>
+                        <div class="simple-card-footer">
+                            <button class="btn btn-primary btn-sm edit-procedures" data-id="${procedure.id}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm delete-procedures" data-id="${procedure.id}">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.edit-procedures').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editProcedures(id);
+                    });
+                });
+
+                document.querySelectorAll('.delete-procedures').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteProcedures(id);
+                    });
+                });
+            }
+
+            renderFacilitiesTable() {
+                const tbody = document.getElementById('facilities-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["05_facilities"]?.cards || this.currentData["05_facilities"].cards.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--gray); padding: 30px;">No facilities yet. Click "Add New Facility" to add your first facility!</td></tr>`;
+                    return;
+                }
+
+                this.currentData["05_facilities"].cards.forEach((facility, index) => {
+                    const typeText = facility.type.charAt(0).toUpperCase() + facility.type.slice(1);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${typeText}</td>
+                        <td><strong>${facility.title}</strong></td>
+                        <td>${facility.address.substring(0, 40)}${facility.address.length > 40 ? '...' : ''}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm edit-facilities" data-id="${facility.id}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm delete-facilities" data-id="${facility.id}">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-facilities').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteFacilities(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-facilities').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editFacilities(id);
+                    });
+                });
+            }
+
+            renderPreparation() {
+                const container = document.getElementById('preparation-container');
+                const tipsContainer = document.getElementById('tips-container');
+                if (!container || !tipsContainer) return;
+                
+                container.innerHTML = '';
+                tipsContainer.innerHTML = '';
+
+                // Render checklist categories
+                if (!this.currentData["06_preparation"]?.checklist || this.currentData["06_preparation"].checklist.length === 0) {
+                    container.innerHTML = `<div style="text-align: center; color: var(--gray); padding: 40px; grid-column: 1/-1;">
+                        <h3>No preparation categories yet</h3>
+                        <p>Click "Add New Category" to get started!</p>
+                    </div>`;
+                } else {
+                    this.currentData["06_preparation"].checklist.forEach((category, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'simple-card';
+                        card.setAttribute('data-id', category.id);
+                        
+                        let itemsHTML = '';
+                        if (category.items && category.items.length > 0) {
+                            category.items.forEach((item, itemIndex) => {
+                                itemsHTML += `
+                                    <div class="simple-list-item">
+                                        <div class="simple-list-content">${item}</div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            itemsHTML = `<div style="text-align: center; color: var(--gray); padding: 10px;">
+                                No items in this category
+                            </div>`;
+                        }
+                        
+                        card.innerHTML = `
+                            <div class="simple-card-header">
+                                <div class="simple-card-title">${category.category}</div>
+                            </div>
+                            <div class="simple-card-body">
+                                <div class="simple-list">
+                                    ${itemsHTML}
+                                </div>
+                            </div>
+                            <div class="simple-card-footer">
+                                <button class="btn btn-primary btn-sm edit-preparation" data-id="${category.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-preparation" data-id="${category.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        `;
+                        
+                        container.appendChild(card);
+                    });
+
+                    // Attach event listeners
+                    document.querySelectorAll('.edit-preparation').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                            this.editPreparation(id);
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-preparation').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                            this.deletePreparation(id);
+                        });
+                    });
+                }
+
+                // Render tips
+                if (this.currentData["06_preparation"]?.tips) {
+                    const tipsCard = document.createElement('div');
+                    tipsCard.className = 'simple-card';
+                    
+                    let tipsHTML = '';
+                    if (this.currentData["06_preparation"].tips.items && this.currentData["06_preparation"].tips.items.length > 0) {
+                        this.currentData["06_preparation"].tips.items.forEach((tip, index) => {
+                            tipsHTML += `
+                                <div class="simple-list-item">
+                                    <div class="simple-list-content">${tip}</div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        tipsHTML = `<div style="text-align: center; color: var(--gray); padding: 10px;">
+                            No tips added yet
+                        </div>`;
+                    }
+                    
+                    tipsCard.innerHTML = `
+                        <div class="simple-card-header">
+                            <div class="simple-card-title">${this.currentData["06_preparation"].tips.title || 'Important Tips'}</div>
+                        </div>
+                        <div class="simple-card-body">
+                            <div class="simple-list">
+                                ${tipsHTML}
+                            </div>
+                        </div>
+                        <div class="simple-card-footer">
+                            <button class="btn btn-warning btn-sm" id="manage-tips-btn">
+                                <i class="fas fa-edit"></i> Edit Tips
+                            </button>
+                        </div>
+                    `;
+                    
+                    tipsContainer.appendChild(tipsCard);
+                    document.getElementById('manage-tips-btn').addEventListener('click', () => {
+                        this.manageTips();
+                    });
+                }
+            }
+
+            manageTips() {
+                document.querySelector('[data-preparation-tab="tips"]').click();
+                document.getElementById('tips-title').value = this.currentData["06_preparation"]?.tips?.title || 'Important Tips:';
+                
+                const tipsContainer = document.getElementById('tips-list-container');
+                tipsContainer.innerHTML = '';
+                
+                if (this.currentData["06_preparation"]?.tips?.items) {
+                    this.currentData["06_preparation"].tips.items.forEach((tip) => {
+                        this.addTipItem(tip);
+                    });
+                } else {
+                    this.addTipItem();
+                }
+            }
+
+            // Edit methods
+            editQuickCall(id) {
+                const contact = this.currentData["02_quickCall"].cards.find(c => c.id === id);
+                if (!contact) return;
+                
+                document.getElementById('quickcall-edit-id').value = contact.id;
+                document.getElementById('quickcall-title').value = contact.title;
+                document.getElementById('quickcall-subtitle').value = contact.subtitle || '';
+                document.getElementById('quickcall-number').value = contact.number;
+                document.getElementById('quickcall-type').value = contact.type;
+                
+                document.getElementById('quickcall-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Contact';
+                document.getElementById('quickcall-cancel-edit').style.display = 'inline-flex';
+                document.querySelector('[data-quickcall-tab="add"]').click();
+            }
+
+            editContacts(id) {
+                const accordion = this.currentData["03_contacts"].accordions.find(a => a.id === id);
+                if (!accordion) return;
+                
+                document.getElementById('contacts-edit-id').value = accordion.id;
+                document.getElementById('contacts-category-title').value = accordion.title;
+                const itemsContainer = document.getElementById('contacts-items-container');
+                itemsContainer.innerHTML = '';
+                
+                accordion.items.forEach((item, index) => {
+                    this.addContactItem(item);
+                });
+                
+                document.getElementById('contacts-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Category';
+                document.getElementById('contacts-cancel-edit').style.display = 'inline-flex';
+                document.querySelector('[data-contacts-tab="add"]').click();
+            }
+
+            editProcedures(id) {
+                const procedure = this.currentData["04_procedures"].cards.find(p => p.id === id);
+                if (!procedure) return;
+                
+                document.getElementById('procedures-edit-id').value = procedure.id;
+                document.getElementById('procedures-title').value = procedure.title;
+                document.getElementById('procedures-icon').value = procedure.icon;
+                
+                const stepsContainer = document.getElementById('procedures-steps-container');
+                stepsContainer.innerHTML = '';
+                
+                procedure.steps.forEach((step, index) => {
+                    this.addProcedureStep(step);
+                });
+                
+                document.getElementById('procedures-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Procedure';
+                document.getElementById('procedures-cancel-edit').style.display = 'inline-flex';
+                document.querySelector('[data-procedures-tab="add"]').click();
+            }
+
+            editFacilities(id) {
+                const facility = this.currentData["05_facilities"].cards.find(f => f.id === id);
+                if (!facility) return;
+                
+                document.getElementById('facilities-edit-id').value = facility.id;
+                document.getElementById('facilities-name').value = facility.title;
+                document.getElementById('facilities-type').value = facility.type;
+                document.getElementById('facilities-address').value = facility.address;
+                document.getElementById('facilities-distance').value = facility.distance || '';
+                document.getElementById('facilities-hours').value = facility.hours || '';
+                document.getElementById('facilities-map-link').value = facility.mapLink;
+                
+                document.getElementById('facilities-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Facility';
+                document.getElementById('facilities-cancel-edit').style.display = 'inline-flex';
+                document.querySelector('[data-facilities-tab="add"]').click();
+            }
+
+            editPreparation(id) {
+                const category = this.currentData["06_preparation"].checklist.find(c => c.id === id);
+                if (!category) return;
+                
+                document.getElementById('preparation-edit-id').value = category.id;
+                document.getElementById('preparation-category').value = category.category;
+                
+                // Clear and populate items
+                const itemsContainer = document.getElementById('preparation-items-container');
+                itemsContainer.innerHTML = '';
+                
+                category.items.forEach((item, index) => {
+                    this.addChecklistItem(item);
+                });
+                
+                document.getElementById('preparation-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Category';
+                document.getElementById('preparation-cancel-edit').style.display = 'inline-flex';
+                document.querySelector('[data-preparation-tab="add"]').click();
+            }
+
+            // Delete methods
+            async deleteQuickCall(id) {
+                if (confirm('Are you sure you want to delete this quick call contact?')) {
+                    this.currentData["02_quickCall"].cards = this.currentData["02_quickCall"].cards.filter(c => c.id !== id);
+                    await this.saveData();
+                    this.renderQuickCallTable();
+                    this.showAlert('Quick call contact deleted successfully', 'success');
+                    this.logActivity('Quick call contact deleted', 'warning');
+                }
+            }
+
+            async deleteContacts(id) {
+                if (confirm('Are you sure you want to delete this contact category and all its items?')) {
+                    this.currentData["03_contacts"].accordions = this.currentData["03_contacts"].accordions.filter(a => a.id !== id);
+                    await this.saveData();
+                    this.renderContacts();
+                    this.showAlert('Contact category deleted successfully', 'success');
+                    this.logActivity('Contact category deleted', 'warning');
+                }
+            }
+
+            async deleteProcedures(id) {
+                if (confirm('Are you sure you want to delete this procedure?')) {
+                    this.currentData["04_procedures"].cards = this.currentData["04_procedures"].cards.filter(p => p.id !== id);
+                    await this.saveData();
+                    this.renderProcedures();
+                    this.showAlert('Procedure deleted successfully', 'success');
+                    this.logActivity('Procedure deleted', 'warning');
+                }
+            }
+
+            async deleteFacilities(id) {
+                if (confirm('Are you sure you want to delete this facility?')) {
+                    this.currentData["05_facilities"].cards = this.currentData["05_facilities"].cards.filter(f => f.id !== id);
+                    await this.saveData();
+                    this.renderFacilitiesTable();
+                    this.showAlert('Facility deleted successfully', 'success');
+                    this.logActivity('Facility deleted', 'warning');
+                }
+            }
+
+            async deletePreparation(id) {
+                if (confirm('Are you sure you want to delete this preparation category?')) {
+                    this.currentData["06_preparation"].checklist = this.currentData["06_preparation"].checklist.filter(c => c.id !== id);
+                    await this.saveData();
+                    this.renderPreparation();
+                    this.showAlert('Preparation category deleted successfully', 'success');
+                    this.logActivity('Preparation category deleted', 'warning');
+                }
+            }
+
+
+       // Helper methods for dynamic forms
+addContactItem(item = null) {
+    const container = document.getElementById('contacts-items-container');
+    const itemCount = container.children.length + 1;
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'contact-item';
+    itemDiv.innerHTML = `
+        <div style="border: 1px solid var(--border); padding: 15px; border-radius: var(--radius); margin-bottom: 10px;">
+            <h5 style="margin-bottom: 15px; color: var(--dark);">Contact Item ${itemCount}</h5>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Title *</label>
+                    <input type="text" class="form-control contact-item-title" value="${item ? item.title : ''}" placeholder="Contact title" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number *</label>
+                    <input type="text" class="form-control contact-item-number" value="${item ? item.number : ''}" placeholder="Phone number" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-control contact-item-description" value="${item ? item.description : ''}" placeholder="Description">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Hours/Availability</label>
+                    <input type="text" class="form-control contact-item-hours" value="${item ? item.hours : ''}" placeholder="e.g., Available: 24/7">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button type="button" class="btn btn-danger btn-sm remove-contact-item">
+                    <i class="fas fa-trash"></i> Remove
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm cancel-contact-item">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    `;
+    container.appendChild(itemDiv);
+
+    // Remove button
+    itemDiv.querySelector('.remove-contact-item').addEventListener('click', () => {
+        itemDiv.remove();
+    });
+
+    // Cancel button
+    itemDiv.querySelector('.cancel-contact-item').addEventListener('click', () => {
+        itemDiv.remove();
+    });
+}
+
+addProcedureStep(value = '') {
+    const container = document.getElementById('procedures-steps-container');
+    const stepCount = container.children.length + 1;
+
+    const stepDiv = document.createElement('div');
+    stepDiv.className = 'step-item';
+    stepDiv.innerHTML = `
+        <div class="step-item-inner" style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+            <!-- Step Number -->
+            <div class="step-number" style="width: 25px; text-align: right;">${stepCount}.</div>
+            
+            <!-- Step Input -->
+            <input type="text" class="form-control step-input" value="${value}" placeholder="Enter step ${stepCount}" style="flex: 1;">
+
+            <!-- Remove Button -->
+            <button type="button" class="remove-step" 
+                style="
+                flex-shrink: 0;
+                    border: 6px solid white;
+                    border-radius: 14px;
+                    background-color: #dc2626;
+                    color: white;
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                ">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    container.appendChild(stepDiv);
+
+    // Remove step on click
+    stepDiv.querySelector('.remove-step').addEventListener('click', () => {
+        stepDiv.remove();
+        renumberProcedureSteps();
+    });
+}
+
+// Function to renumber steps after deletion
+renumberProcedureSteps() {
+    const steps = document.querySelectorAll('#procedures-steps-container .step-item');
+    steps.forEach((step, index) => {
+        // Update step number display
+        step.querySelector('.step-number').textContent = `${index + 1}.`;
+
+        // Update input placeholder
+        step.querySelector('.step-input').placeholder = `Enter step ${index + 1}`;
+    });
+}
+
+
+
+
+
+// Function to add a checklist item
+addChecklistItem(value = '') {
+    const container = document.getElementById('preparation-items-container');
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'category-item';
+    itemDiv.innerHTML = `
+        <div class="category-item-inner" style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+            <input type="text" class="form-control category-input" value="${value}" placeholder="Enter checklist item" style="flex: 1;">
+            <button type="button" class="remove-checklist-item" 
+                style="
+                    flex-shrink: 0;
+                    border: 6px solid white;
+                    border-radius: 14px;
+                    background-color: #dc2626;
+                    color: white;
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                ">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    container.appendChild(itemDiv);
+
+    // Remove item on click
+    itemDiv.querySelector('.remove-checklist-item').addEventListener('click', () => {
+        itemDiv.remove();
+    });
+}
+
+// Function to add a tip item
+addTipItem(value = '') {
+    const container = document.getElementById('tips-list-container');
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'tip-item';
+    itemDiv.innerHTML = `
+        <div class="tip-item-inner" style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+            <input type="text" class="form-control tip-input" value="${value}" placeholder="Enter tip" style="flex: 1;">
+            <button type="button" class="remove-tip-item" 
+                style="
+                    flex-shrink: 0;
+                    border: 6px solid white;
+                    border-radius: 14px;
+                    background-color: #dc2626;
+                    color: white;
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                ">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    container.appendChild(itemDiv);
+
+    // Remove tip on click
+    itemDiv.querySelector('.remove-tip-item').addEventListener('click', () => {
+        itemDiv.remove();
+    });
+}
+
+
+
+
+
+
+            // Search methods
+            searchQuickCall(query) {
+                const tbody = document.getElementById('quickcall-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const title = row.cells[2].textContent.toLowerCase();
+                    const number = row.cells[3].textContent.toLowerCase();
+                    
+                    if (title.includes(searchText) || number.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchContacts(query) {
+                const container = document.getElementById('contacts-container');
+                if (!container) return;
+                
+                const cards = container.querySelectorAll('.simple-card');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    cards.forEach(card => card.style.display = '');
+                    return;
+                }
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.simple-card-title').textContent.toLowerCase();
+                    const items = card.querySelectorAll('.simple-list-content');
+                    let found = title.includes(searchText);
+                    
+                    if (!found) {
+                        items.forEach(item => {
+                            if (item.textContent.toLowerCase().includes(searchText)) {
+                                found = true;
+                            }
+                        });
+                    }
+                    
+                    card.style.display = found ? '' : 'none';
+                });
+            }
+
+            searchProcedures(query) {
+                const container = document.getElementById('procedures-container');
+                if (!container) return;
+                
+                const cards = container.querySelectorAll('.simple-card');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    cards.forEach(card => card.style.display = '');
+                    return;
+                }
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.simple-card-title').textContent.toLowerCase();
+                    const steps = card.querySelectorAll('.simple-list-content');
+                    let found = title.includes(searchText);
+                    
+                    if (!found) {
+                        steps.forEach(step => {
+                            if (step.textContent.toLowerCase().includes(searchText)) {
+                                found = true;
+                            }
+                        });
+                    }
+                    
+                    card.style.display = found ? '' : 'none';
+                });
+            }
+
+            searchFacilities(query) {
+                const tbody = document.getElementById('facilities-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const name = row.cells[2].textContent.toLowerCase();
+                    const address = row.cells[3].textContent.toLowerCase();
+                    const type = row.cells[1].textContent.toLowerCase();
+                    
+                    if (name.includes(searchText) || address.includes(searchText) || type.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchPreparation(query) {
+                const container = document.getElementById('preparation-container');
+                if (!container) return;
+                
+                const cards = container.querySelectorAll('.simple-card');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    cards.forEach(card => card.style.display = '');
+                    return;
+                }
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.simple-card-title').textContent.toLowerCase();
+                    const items = card.querySelectorAll('.simple-list-content');
+                    let found = title.includes(searchText);
+                    
+                    if (!found) {
+                        items.forEach(item => {
+                            if (item.textContent.toLowerCase().includes(searchText)) {
+                                found = true;
+                            }
+                        });
+                    }
+                    
+                    card.style.display = found ? '' : 'none';
+                });
+            }
+
+            exportData() {
+                const dataStr = JSON.stringify(this.currentData, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `emergency-backup-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                this.showAlert('Emergency data exported successfully!', 'success');
+                this.logActivity('Emergency data exported', 'success');
+            }
+
+            async clearAllData() {
+                if (confirm('Clear ALL Emergency data from Firebase Realtime Database? This will remove everything from 04_Emergency node and cannot be undone.')) {
+                    try {
+                        if (this.db) {
+                            await this.db.ref('04_Emergency').remove();
+                        }
+                        localStorage.removeItem(this.dataKey);
+                        this.currentData = this.getDefaultData();
+                        this.populateForms();
+                        await this.saveData(true);
+                        this.showAlert('All Emergency data has been cleared Database!', 'success');
+                        this.logActivity('All Emergency data cleared', 'warning');
+                    } catch (error) {
+                        console.error('Error clearing data:', error);
+                        this.showAlert('Error clearing Emergency data Database', 'error');
+                    }
+                }
+            }
+
+            showAlert(message, type) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `<strong><i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i> ${message}</strong>`;
+                
+                const currentTab = document.querySelector('.tab-content.active');
+                if (currentTab) {
+                    const firstSection = currentTab.querySelector('.admin-section');
+                    if (firstSection) {
+                        firstSection.insertBefore(alert, firstSection.firstChild);
+                    } else {
+                        currentTab.insertBefore(alert, currentTab.firstChild);
+                    }
+                }
+                
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.remove();
+                    }
+                }, 3000);
+            }
+
+            logActivity(message, type) {
+                const activity = {
+                    timestamp: new Date().toLocaleTimeString(),
+                    message: message,
+                    type: type
+                };
+                this.activityLog.unshift(activity);
+                
+                if (this.activityLog.length > 10) {
+                    this.activityLog.pop();
+                }
+                
+                this.updateActivityLog();
+            }
+
+            cleanup() {
+                if (this.unsubscribe) {
+                    this.unsubscribe();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.emergencyAdminPanel = new EmergencyAdminPanel();
+            window.addEventListener('beforeunload', () => {
+                if (window.emergencyAdminPanel) {
+                    window.emergencyAdminPanel.cleanup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

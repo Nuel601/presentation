@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Barangay 118 Online System</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="LogIn.css">
+</head>
+<body>
+    <header id="main-header"></header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 id="hero-title">Login to Your Account</h1>
+            <p id="hero-description">Sign in to access your dashboard and Barangay 118 services.</p> 
+        </div>
+    </section>
+
+    <section id="login-section">
+        <div class="login-container">
+            <div class="login-left">
+                <div class="welcome-text">
+                    <h1 id="welcome-title">Welcome</h1>
+                    <p id="welcome-description">Access your barangay services and stay connected securely through our portal.</p>
+                </div>
+                <div class="features" id="features-container"></div>
+            </div>
+
+            <div class="login-right">
+                <div class="login-header">
+                    <h2>Sign In</h2>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                        <div class="error-message" id="email-error">Please enter a valid email</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="required">Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle" id="togglePassword">Show</button>
+                        </div>
+                        <div class="error-message" id="password-error">Please enter your password</div>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
+                </form>
+
+                <div class="divider"><span>Don't have an account?</span></div>
+                <a href="CreateAnAccount.html" class="btn-register">Create New Account</a>
+
+                <div class="login-help">
+                    <p>Need help signing in?</p>
+                    <div class="contact-info">
+                        <span>Call us: <a href="tel:+021238567">(02) 8123-4567</a></span>
+                        <span>Email: <a href="mailto:info@barangay118.gov.ph">info@barangay118.gov.ph</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <footer id="main-footer"></footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        let db = null;
+        let createAccountRef = null;
+        let systemLogsRef = null;
+        let heroContentRef = null;
+        let firebaseInitialized = false;
+        
+        function initializeFirebase() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                db = firebase.database();
+                createAccountRef = db.ref('06_CreateAccount');
+                systemLogsRef = db.ref('07_SystemLogs');
+                heroContentRef = db.ref('01_hero');
+                firebaseInitialized = true;
+                console.log("Firebase initialized successfully - Connected to Admin System");
+                return true;
+            } catch (error) {
+                console.error("Firebase initialization error:", error);
+                return false;
+            }
+        }
+
+        function loadHeaderFooter() {
+            if (!db || !firebaseInitialized) {
+                loadDefaultHeaderFooter();
+                return;
+            }
+
+            const mainRef = db.ref('01_main');
+            mainRef.once('value').then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    updateHeader(data);
+                    updateFooter(data);
+                    console.log("Header and footer loaded from Firebase");
+                } else {
+                    loadDefaultHeaderFooter();
+                }
+            }).catch((error) => {
+                console.error("Error loading header/footer:", error);
+                loadDefaultHeaderFooter();
+            });
+        }
+
+        function updateHeader(data) {
+            const header = document.getElementById('main-header');
+            if (!header) return;
+
+            const systemName = data["01_systemName"] || "BARANGAY 118 ONLINE SYSTEM";
+            const headerLogo = data["02_hero"]?.headerLogo || "Logo-Favicon-removebg-preview.png";
+            
+            header.innerHTML = `
+                <div class="container">
+                    <div class="navbar">
+                        <a href="index.html" id="home-logo" class="logo" aria-label="Barangay 118 Online System Home">
+                            <img src="${headerLogo}" alt="Barangay 118 Official Logo" class="logo-image" width="70" height="70">
+                            <h1 id="system-name">${systemName}</h1>
+                        </a>
+
+                        <nav class="nav-links" aria-label="Main navigation">
+                            <a href="index.html" aria-label="Home page">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>Home</span>
+                            </a>
+                            <a href="AboutUs.html" aria-current="page" aria-label="About Barangay 118 page">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>About Us</span>
+                            </a>
+                            <a href="News.html" aria-label="Barangay News page">
+                                <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                <span>News</span>
+                            </a>
+                            <a href="Emergency.html" aria-label="Barangay Emergency page">
+                                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                <span>Emergency</span>
+                            </a>
+                            <a href="CreateAnAccount.html" aria-label="Create an account page">
+                                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                                <span>Create Account</span>
+                            </a>
+                            <a href="LogIn.html" class="active" aria-label="Login page">
+                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                <span>Login</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateFooter(data) {
+            const footer = document.getElementById('main-footer');
+            if (!footer) return;
+
+            const footerData = data["04_footer"] || {};
+            const contactInfo = footerData.contactInfo || {};
+            const socialMedia = footerData.socialMedia || {};
+            
+            footer.innerHTML = `
+                <div class="container" id="footer-container">
+                    <div class="footer-content" id="footer-content">
+                        <div class="footer-column" id="footer-system-column">
+                            <h3 id="footer-title" class="footer-title">
+                                ${footerData.title || "Barangay 118 Online System"}
+                            </h3>
+                            <p id="footer-description" class="footer-description">
+                                ${footerData.description || "Secure and efficient online services for Barangay 118. Connecting our community through technology."}
+                            </p>
+                        </div>
+
+                        <div class="footer-center" id="footer-center">
+                            <div class="footer-row" id="footer-row">
+                                <div class="footer-column" id="footer-contact-column">
+                                    <h3 id="footer-contact-title">Contact Info</h3>
+                                    <ul id="footer-contact-info" class="footer-contact-info">
+                                        <li>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span id="footer-address-line1">
+                                                ${contactInfo.addressLine1 || "402 2nd St, Grace Park East, Caloocan"}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-map-pin"></i>
+                                            <span id="footer-address-line2">
+                                                ${contactInfo.addressLine2 || "Metro Manila, Philippines"}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-phone"></i>
+                                            <span id="footer-phone">
+                                                ${contactInfo.phone || "(02) 8123-4567"}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-envelope"></i>
+                                            <span id="footer-email">
+                                                ${contactInfo.email || "info@barangay118.gov.ph"}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-clock"></i>
+                                            <span id="footer-office-hours">
+                                                ${contactInfo.officeHours || "Mon–Fri: 8:00 AM – 5:00 PM"}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="footer-column" id="footer-links-column">
+                                    <h3 id="footer-social-title">Follow Us</h3>
+                                    <ul class="footer-links" id="footer-social-links">
+                                        <li id="footer-facebook-item">
+                                            <i class="fab fa-facebook"></i>
+                                            <a id="footer-facebook-link" href="${socialMedia.facebook || 'https://facebook.com/barangay118'}" target="_blank">
+                                                <span id="footer-facebook-text">Barangay 118 Facebook</span>
+                                            </a>
+                                        </li>
+                                        <li id="footer-messenger-item">
+                                            <i class="fab fa-facebook-messenger"></i>
+                                            <a id="footer-messenger-link" href="${socialMedia.messenger || 'https://m.me/barangay118'}" target="_blank">
+                                                <span id="footer-messenger-text">Messenger Chat</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="copyright" id="footer-copyright">
+                        <p id="copyright-text">
+                            ${footerData.copyright || "&copy; 2025 Barangay 118 Online System. All Rights Reserved."}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadDefaultHeaderFooter() {
+            const header = document.getElementById('main-header');
+            if (header) {
+                header.innerHTML = `
+                    <div class="container">
+                        <div class="navbar">
+                            <a href="index.html" id="home-logo" class="logo" aria-label="Barangay 118 Online System Home">
+                                <img src="Logo-Favicon-removebg-preview.png" alt="Barangay 118 Official Logo" class="logo-image" width="70" height="70">
+                                <h1 id="system-name">BARANGAY 118 ONLINE SYSTEM</h1>
+                            </a>
+
+                            <nav class="nav-links" aria-label="Main navigation">
+                                <a href="index.html" aria-label="Home page">
+                                    <i class="fas fa-home" aria-hidden="true"></i>
+                                    <span>Home</span>
+                                </a>
+                                <a href="AboutUs.html" aria-current="page" aria-label="About Barangay 118 page">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    <span>About Us</span>
+                                </a>
+                                <a href="News.html" aria-label="Barangay News page">
+                                    <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                    <span>News</span>
+                                </a>
+                                <a href="Emergency.html" aria-label="Barangay Emergency page">
+                                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                    <span>Emergency</span>
+                                </a>
+                                <a href="CreateAnAccount.html" aria-label="Create an account page">
+                                    <i class="fas fa-user-plus" aria-hidden="true"></i>
+                                    <span>Create Account</span>
+                                </a>
+                                <a href="LogIn.html" class="active" aria-label="Login page">
+                                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                    <span>Login</span>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const footer = document.getElementById('main-footer');
+            if (footer) {
+                footer.innerHTML = `
+                    <div class="container" id="footer-container">
+                        <div class="footer-content" id="footer-content">
+                            <div class="footer-column" id="footer-system-column">
+                                <h3 id="footer-title" class="footer-title">Barangay 118 Online System</h3>
+                                <p id="footer-description" class="footer-description">
+                                    Secure and efficient online services for Barangay 118. Connecting our community through technology.
+                                </p>
+                            </div>
+
+                            <div class="footer-center" id="footer-center">
+                                <div class="footer-row" id="footer-row">
+                                    <div class="footer-column" id="footer-contact-column">
+                                        <h3 id="footer-contact-title">Contact Info</h3>
+                                        <ul id="footer-contact-info" class="footer-contact-info">
+                                            <li>
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span id="footer-address-line1">402 2nd St, Grace Park East, Caloocan</span>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-map-pin"></i>
+                                                <span id="footer-address-line2">Metro Manila, Philippines</span>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-phone"></i>
+                                                <span id="footer-phone">(02) 8123-4567</span>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-envelope"></i>
+                                                <span id="footer-email">info@barangay118.gov.ph</span>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-clock"></i>
+                                                <span id="footer-office-hours">Mon–Fri: 8:00 AM – 5:00 PM</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="footer-column" id="footer-links-column">
+                                        <h3 id="footer-social-title">Follow Us</h3>
+                                        <ul class="footer-links" id="footer-social-links">
+                                            <li id="footer-facebook-item">
+                                                <i class="fab fa-facebook"></i>
+                                                <a id="footer-facebook-link" href="https://facebook.com/barangay118" target="_blank">
+                                                    <span id="footer-facebook-text">Barangay 118 Facebook</span>
+                                                </a>
+                                            </li>
+                                            <li id="footer-messenger-item">
+                                                <i class="fab fa-facebook-messenger"></i>
+                                                <a id="footer-messenger-link" href="https://m.me/barangay118" target="_blank">
+                                                    <span id="footer-messenger-text">Messenger Chat</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="copyright" id="footer-copyright">
+                            <p id="copyright-text">&copy; 2025 Barangay 118 Online System. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function loadLoginPageContent() {
+            console.log('Loading login page content from Firebase...');
+            
+            const defaultContent = {
+                heroTitle: "Login to Your Account",
+                heroDescription: "Sign in to access your dashboard and Barangay 118 services.",
+                welcomeTitle: "Welcome",
+                welcomeDescription: "Access your barangay services and stay connected securely through our portal.",
+                features: [
+                    { id: 1, text: "Quick document requests", active: true},
+                    { id: 2, text: "Request Processing Overview", active: true},
+                    { id: 3, text: "Community announcements", active: true},
+                    { id: 4, text: "Secure and private", active: true}
+                ],
+                lastUpdated: new Date().toISOString()
+            };
+
+            if (!firebaseInitialized || !heroContentRef) {
+                console.log('Firebase not initialized, loading from localStorage...');
+                loadContentFromLocalStorage(defaultContent);
+                return;
+            }
+
+            try {
+                const snapshot = await heroContentRef.once('value');
+                
+                if (snapshot.exists()) {
+                    const content = snapshot.val();
+                    console.log('Login page content loaded from Firebase:', content);
+
+                    const heroTitle = document.getElementById('hero-title');
+                    const heroDescription = document.getElementById('hero-description');
+                    
+                    if (heroTitle && content.title) heroTitle.textContent = content.title;
+                    if (heroDescription && content.subtitle) heroDescription.textContent = content.subtitle;
+
+                    const welcomeTitle = document.getElementById('welcome-title');
+                    const welcomeDescription = document.getElementById('welcome-description');
+                    
+                    if (welcomeTitle && content.welcomeTitle) welcomeTitle.textContent = content.welcomeTitle;
+                    if (welcomeDescription && content.welcomeDescription) welcomeDescription.textContent = content.welcomeDescription;
+                    
+                    renderFeatures(defaultContent.features);
+                    
+                } else {
+                    console.log('No login page content found in Firebase, using defaults');
+                    loadContentFromLocalStorage(defaultContent);
+                }
+            } catch (error) {
+                console.error('Error loading login page content from Firebase:', error);
+                loadContentFromLocalStorage(defaultContent);
+            }
+        }
+
+        function loadContentFromLocalStorage(defaultContent) {
+            console.log('Loading content from localStorage...');
+            
+            const savedContent = localStorage.getItem('loginPageContent');
+            const content = savedContent ? JSON.parse(savedContent) : defaultContent;
+            
+            const heroTitle = document.getElementById('hero-title');
+            const heroDescription = document.getElementById('hero-description');
+            
+            if (heroTitle) heroTitle.textContent = content.heroTitle || defaultContent.heroTitle;
+            if (heroDescription) heroDescription.textContent = content.heroDescription || defaultContent.heroDescription;
+
+            const welcomeTitle = document.getElementById('welcome-title');
+            const welcomeDescription = document.getElementById('welcome-description');
+            
+            if (welcomeTitle) welcomeTitle.textContent = content.welcomeTitle || defaultContent.welcomeTitle;
+            if (welcomeDescription) welcomeDescription.textContent = content.welcomeDescription || defaultContent.welcomeDescription;
+            
+            renderFeatures(defaultContent.features);
+        }
+
+        function renderFeatures(features) {
+            const container = document.getElementById('features-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            features.forEach(feature => {
+                if (feature.active) {
+                    const featureItem = document.createElement('div');
+                    featureItem.className = 'feature-item';
+                    featureItem.innerHTML = `
+                        <span class="feature-icon"><i class="${feature.icon || 'fas fa-check'}"></i></span>
+                        <span>${feature.text}</span>
+                    `;
+                    container.appendChild(featureItem);
+                }
+            });
+        }
+
+        async function initializeDefaultAccounts() {
+            console.log('Checking default accounts in Firebase...');
+            
+            if (!firebaseInitialized || !createAccountRef) {
+                initializeLocalStorageAccounts();
+                return;
+            }
+
+            try {
+                const snapshot = await createAccountRef.once('value');
+                
+                if (!snapshot.exists()) {
+                    console.log('Initializing default accounts structure in Firebase...');
+                    
+                    const defaultData = {
+                        "01_pending": {
+                            title: "Pending Registrations",
+                            description: "Applications awaiting review",
+                            registrations: []
+                        },
+                        "02_approved": {
+                            title: "Approved Accounts",
+                            description: "Successfully approved user accounts",
+                            registrations: []
+                        },
+                        "03_rejected": {
+                            title: "Rejected Applications",
+                            description: "Declined registration applications",
+                            registrations: []
+                        },
+                        "04_manual": {
+                            title: "Manual Accounts",
+                            description: "Accounts created by administrators",
+                            registrations: []
+                        },
+                        "05_users": {
+                            title: "User Management",
+                            description: "All active user accounts",
+                            users: []
+                        },
+                        "06_admins": {
+                            title: "Admin Accounts",
+                            description: "Administrator accounts",
+                            admins: []
+                        },
+                        lastUpdated: new Date().toISOString()
+                    };
+
+                    await createAccountRef.set(defaultData);
+                    console.log('Default structure saved to Firebase');
+                    
+                    await addDefaultUsersToFirebase();
+                } else {
+                    console.log('Firebase structure already exists');
+                    await checkAndAddDefaultUsers(snapshot.val());
+                }
+
+                const systemLogsSnapshot = await systemLogsRef.once('value');
+                if (!systemLogsSnapshot.exists()) {
+                    const initialLog = {
+                        timestamp: new Date().toISOString(),
+                        user: "System",
+                        action: "SYSTEM_STARTED",
+                        details: "Login system initialized with Firebase",
+                        type: "system",
+                        ip: "local"
+                    };
+                    await systemLogsRef.push(initialLog);
+                    console.log('System log initialized in Firebase');
+                }
+
+            } catch (error) {
+                console.error('Error initializing default accounts in Firebase:', error);
+                initializeLocalStorageAccounts();
+            }
+        }
+
+        async function addDefaultUsersToFirebase() {
+            try {
+                console.log('Adding default users to Firebase...');
+                
+                const defaultAccounts = [
+                    { id: 1, email: "superadmin@barangay118.gov.ph", password: "superadmin123", role: "super_admin", name: "Primary Administrator", status: "active", registered: new Date().toLocaleDateString(), createdAt: new Date().toISOString() },
+                    { id: 2, email: "superadmin2@barangay118.gov.ph", password: "superadmin123", role: "super_admin", name: "Chief Administrator", status: "active", registered: new Date().toLocaleDateString(), createdAt: new Date().toISOString() },
+                    { id: 3, email: "admin1@barangay118.gov.ph", password: "admin123", role: "admin", name: "Records Administrator", status: "active", registered: new Date().toLocaleDateString(), createdAt: new Date().toISOString() },
+                    { id: 4, email: "admin2@barangay118.gov.ph", password: "admin123", role: "admin", name: "Operations Administrator", status: "active", registered: new Date().toLocaleDateString(), createdAt: new Date().toISOString() },
+                    { id: 5, email: "admin3@barangay118.gov.ph", password: "admin123", role: "admin", name: "Logistics Administrator", status: "active", registered: new Date().toLocaleDateString(), createdAt: new Date().toISOString() }
+                ];
+
+                const userAccounts = [
+{ id: 6, email: "almanzor_jhlox@barangay118.gov.ph", password: "user123", role: "user", name: "Jhlox De Guzman ALMANZOR", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 7, email: "andaya_zantrix@barangay118.gov.ph", password: "user123", role: "user", name: "Zantrix Geoff Dandoy ANDAYA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 8, email: "aranas_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Aezer Fajardo ARANAS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 9, email: "argallon_ezekiel@barangay118.gov.ph", password: "user123", role: "user", name: "Ezekiel Lazaro ARGALLON", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 10, email: "badilla_carl@barangay118.gov.ph", password: "user123", role: "user", name: "Carl John Henry Smith BADILLA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 11, email: "bag-id_alvin@barangay118.gov.ph", password: "user123", role: "user", name: "Alvin Evangelista BAG-ID", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 12, email: "blanco_zidane@barangay118.gov.ph", password: "user123", role: "user", name: "Zidane Punzalan BLANCO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 13, email: "burgos_alfred@barangay118.gov.ph", password: "user123", role: "user", name: "Alfred BURGOS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 14, email: "canlas_chester@barangay118.gov.ph", password: "user123", role: "user", name: "Chester Jon Guttierez CANLAS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 15, email: "castro_jomar@barangay118.gov.ph", password: "user123", role: "user", name: "Jomar Santino Novilla CASTRO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 16, email: "catimbang_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Mark Toledo CATIMBANG", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 17, email: "cruz_jezrel@barangay118.gov.ph", password: "user123", role: "user", name: "Jezrel Villa CRUZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 18, email: "espino_rance@barangay118.gov.ph", password: "user123", role: "user", name: "Rance Ego Soliman ESPINO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 19, email: "fernandez_mico@barangay118.gov.ph", password: "user123", role: "user", name: "Mico Palencia FERNANDEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 20, email: "flores_calvin@barangay118.gov.ph", password: "user123", role: "user", name: "Calvin Brent Ardonza FLORES", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 21, email: "galibo_gemanuel@barangay118.gov.ph", password: "user123", role: "user", name: "Gemanuel Pedoche GALIBO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 22, email: "garcia_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Cedric Rias GARCIA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 23, email: "gatmaitan_renz@barangay118.gov.ph", password: "user123", role: "user", name: "Renz Albert Acab GATMAITAN", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 24, email: "honradez_zacchary@barangay118.gov.ph", password: "user123", role: "user", name: "Zacchary Angeles HONRADEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 25, email: "judaya_aedrick@barangay118.gov.ph", password: "user123", role: "user", name: "Aedrick John Cabales JUDAYA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 26, email: "lingan_andres@barangay118.gov.ph", password: "user123", role: "user", name: "Andres Lei Aguilar LINGAN", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 27, email: "mahilum_shchem@barangay118.gov.ph", password: "user123", role: "user", name: "Shchem Yae Pagador MAHILUM", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 28, email: "manalo_carlos@barangay118.gov.ph", password: "user123", role: "user", name: "Carlos Sebastian Lagatuz MANALO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 29, email: "mendina_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Paul Magnaye MENDINA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 30, email: "moldez_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Paul Agotipac MOLDEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 31, email: "ortega_danny@barangay118.gov.ph", password: "user123", role: "user", name: "Danny King Mendoza ORTEGA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 32, email: "pangco_miguel@barangay118.gov.ph", password: "user123", role: "user", name: "Miguel Adriel Gallo PANGCO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 33, email: "pontilan_neo@barangay118.gov.ph", password: "user123", role: "user", name: "Neo Angelo Degamon PONTILAN", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 34, email: "pozon_david@barangay118.gov.ph", password: "user123", role: "user", name: "David Bryant Peralta POZON", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 35, email: "pozon_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Patrick Peralta POZON", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 36, email: "quindoza_mark@barangay118.gov.ph", password: "user123", role: "user", name: "Mark Raymond Sia QUINDOZA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 37, email: "saflor_jillian@barangay118.gov.ph", password: "user123", role: "user", name: "Jillian Gidayawan SAFLOR", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 38, email: "sandiego_mark@barangay118.gov.ph", password: "user123", role: "user", name: "Mark Ehnzo Tesorio SAN DIEGO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 39, email: "solis_jacob@barangay118.gov.ph", password: "user123", role: "user", name: "Jacob Emmanuel Hetigan SOLIS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 40, email: "sy_aarondave@barangay118.gov.ph", password: "user123", role: "user", name: "Aaron Dave Ariegado SY", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 41, email: "vasquez_terrence@barangay118.gov.ph", password: "user123", role: "user", name: "Terrence Keil Guese VASQUEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 42, email: "villarosa_kris@barangay118.gov.ph", password: "user123", role: "user", name: "Kris Jarred Maravilla VILLAROSA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 43, email: "carlos_aaliyah@barangay118.gov.ph", password: "user123", role: "user", name: "Aaliyah Alyssa Nicole Macasanas CARLOS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 44, email: "limbo_jewel@barangay118.gov.ph", password: "user123", role: "user", name: "Jewel Hyacinth LIMBO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 45, email: "magampo_celestine@barangay118.gov.ph", password: "user123", role: "user", name: "Celestine Isabelle Salud MAGAMPO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 46, email: "ong_clariza@barangay118.gov.ph", password: "user123", role: "user", name: "Clariza Claire Dela Cruz ONG", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 47, email: "orpilla_jemilhyn@barangay118.gov.ph", password: "user123", role: "user", name: "Jemilhyn Frances Ong ORPILLA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 48, email: "ruiz_angel@barangay118.gov.ph", password: "user123", role: "user", name: "Angel Rosales RUIZ", status: "active", registered: new Date().toLocaleDateString() }
+              ];
+
+                const allAccounts = [...defaultAccounts, ...userAccounts];
+                
+                const usersData = allAccounts.map(account => ({
+                    id: account.id,
+                    controlNumber: `BRGY118-ADMIN-${account.id}`,
+                    email: account.email,
+                    personalInfo: {
+                        firstName: account.name.split(' ')[0],
+                        lastName: account.name.split(' ')[1] || '',
+                        middleName: ''
+                    },
+                    role: account.role,
+                    status: 'active',
+                    approvedBy: 'System',
+                    approvedAt: new Date().toLocaleString(),
+                    createdAt: new Date().toISOString(),
+                    accountInfo: {
+                        email: account.email,
+                        password: account.password,
+                        emailVerified: true
+                    }
+                }));
+
+                const approvedRegistrations = usersData;
+                const usersList = usersData.map(user => ({
+                    id: user.id,
+                    controlNumber: user.controlNumber,
+                    email: user.email,
+                    personalInfo: user.personalInfo,
+                    role: user.role,
+                    status: 'active',
+                    approvedBy: 'System',
+                    approvedAt: new Date().toLocaleString(),
+                    createdAt: new Date().toISOString()
+                }));
+
+                const adminList = defaultAccounts.map(admin => ({
+                    id: admin.id,
+                    fullName: admin.name,
+                    email: admin.email,
+                    role: admin.role,
+                    permissions: ['full_access'],
+                    createdBy: 'System',
+                    createdAt: new Date().toISOString(),
+                    lastActive: new Date().toLocaleString()
+                }));
+
+                await createAccountRef.update({
+                    "02_approved": {
+                        title: "Approved Accounts",
+                        description: "Successfully approved user accounts",
+                        registrations: approvedRegistrations
+                    },
+                    "05_users": {
+                        title: "User Management",
+                        description: "All active user accounts",
+                        users: usersList
+                    },
+                    "06_admins": {
+                        title: "Admin Accounts",
+                        description: "Administrator accounts",
+                        admins: adminList
+                    },
+                    lastUpdated: new Date().toISOString()
+                });
+
+                console.log('Default accounts added to Firebase successfully');
+                
+            } catch (error) {
+                console.error('Error adding default users to Firebase:', error);
+            }
+        }
+
+        async function checkAndAddDefaultUsers(existingData) {
+            try {
+                const approvedUsers = existingData["02_approved"]?.registrations || [];
+                const userManagement = existingData["05_users"]?.users || [];
+                const adminManagement = existingData["06_admins"]?.admins || [];
+                
+                if (approvedUsers.length === 0 && userManagement.length === 0) {
+                    console.log('No users found, adding default accounts...');
+                    await addDefaultUsersToFirebase();
+                }
+            } catch (error) {
+                console.error('Error checking default users:', error);
+            }
+        }
+
+        function initializeLocalStorageAccounts() {
+            console.log('Using localStorage for default accounts...');
+            
+            const storedUsers = JSON.parse(localStorage.getItem('barangayUsers')) || [];
+            const storedAdmins = JSON.parse(localStorage.getItem('barangayAdmins')) || [];
+            
+            if (storedUsers.length === 0) {
+                const defaultUsers = [
+                    { id: 1, email: "superadmin@barangay118.gov.ph", password: "superadmin123", role: "super_admin", name: "Primary Administrator", status: "active", registered: new Date().toLocaleDateString() },
+                    { id: 2, email: "superadmin2@barangay118.gov.ph", password: "superadmin123", role: "super_admin", name: "Chief Administrator", status: "active", registered: new Date().toLocaleDateString() },
+                    { id: 3, email: "admin1@barangay118.gov.ph", password: "admin123", role: "admin", name: "Records Administrator", status: "active", registered: new Date().toLocaleDateString() },
+                    { id: 4, email: "admin2@barangay118.gov.ph", password: "admin123", role: "admin", name: "Operations Administrator", status: "active", registered: new Date().toLocaleDateString() },
+                    { id: 5, email: "admin3@barangay118.gov.ph", password: "admin123", role: "admin", name: "Logistics Administrator", status: "active", registered: new Date().toLocaleDateString() }
+                ];
+                
+                localStorage.setItem('barangayAdmins', JSON.stringify(defaultUsers));
+            }
+            
+            if (storedAdmins.length === 0) {
+                const userAccounts = [
+{ id: 6, email: "almanzor_jhlox@barangay118.gov.ph", password: "user123", role: "user", name: "Jhlox De Guzman ALMANZOR", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 7, email: "andaya_zantrix@barangay118.gov.ph", password: "user123", role: "user", name: "Zantrix Geoff Dandoy ANDAYA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 8, email: "aranas_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Aezer Fajardo ARANAS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 9, email: "argallon_ezekiel@barangay118.gov.ph", password: "user123", role: "user", name: "Ezekiel Lazaro ARGALLON", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 10, email: "badilla_carl@barangay118.gov.ph", password: "user123", role: "user", name: "Carl John Henry Smith BADILLA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 11, email: "bag-id_alvin@barangay118.gov.ph", password: "user123", role: "user", name: "Alvin Evangelista BAG-ID", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 12, email: "blanco_zidane@barangay118.gov.ph", password: "user123", role: "user", name: "Zidane Punzalan BLANCO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 13, email: "burgos_alfred@barangay118.gov.ph", password: "user123", role: "user", name: "Alfred BURGOS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 14, email: "canlas_chester@barangay118.gov.ph", password: "user123", role: "user", name: "Chester Jon Guttierez CANLAS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 15, email: "castro_jomar@barangay118.gov.ph", password: "user123", role: "user", name: "Jomar Santino Novilla CASTRO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 16, email: "catimbang_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Mark Toledo CATIMBANG", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 17, email: "cruz_jezrel@barangay118.gov.ph", password: "user123", role: "user", name: "Jezrel Villa CRUZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 18, email: "espino_rance@barangay118.gov.ph", password: "user123", role: "user", name: "Rance Ego Soliman ESPINO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 19, email: "fernandez_mico@barangay118.gov.ph", password: "user123", role: "user", name: "Mico Palencia FERNANDEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 20, email: "flores_calvin@barangay118.gov.ph", password: "user123", role: "user", name: "Calvin Brent Ardonza FLORES", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 21, email: "galibo_gemanuel@barangay118.gov.ph", password: "user123", role: "user", name: "Gemanuel Pedoche GALIBO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 22, email: "garcia_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Cedric Rias GARCIA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 23, email: "gatmaitan_renz@barangay118.gov.ph", password: "user123", role: "user", name: "Renz Albert Acab GATMAITAN", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 24, email: "honradez_zacchary@barangay118.gov.ph", password: "user123", role: "user", name: "Zacchary Angeles HONRADEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 25, email: "judaya_aedrick@barangay118.gov.ph", password: "user123", role: "user", name: "Aedrick John Cabales JUDAYA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 26, email: "lingan_andres@barangay118.gov.ph", password: "user123", role: "user", name: "Andres Lei Aguilar LINGAN", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 27, email: "mahilum_shchem@barangay118.gov.ph", password: "user123", role: "user", name: "Shchem Yae Pagador MAHILUM", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 28, email: "manalo_carlos@barangay118.gov.ph", password: "user123", role: "user", name: "Carlos Sebastian Lagatuz MANALO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 29, email: "mendina_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Paul Magnaye MENDINA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 30, email: "moldez_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Paul Agotipac MOLDEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 31, email: "ortega_danny@barangay118.gov.ph", password: "user123", role: "user", name: "Danny King Mendoza ORTEGA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 32, email: "pangco_miguel@barangay118.gov.ph", password: "user123", role: "user", name: "Miguel Adriel Gallo PANGCO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 33, email: "pontilan_neo@barangay118.gov.ph", password: "user123", role: "user", name: "Neo Angelo Degamon PONTILAN", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 34, email: "pozon_david@barangay118.gov.ph", password: "user123", role: "user", name: "David Bryant Peralta POZON", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 35, email: "pozon_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Patrick Peralta POZON", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 36, email: "quindoza_mark@barangay118.gov.ph", password: "user123", role: "user", name: "Mark Raymond Sia QUINDOZA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 37, email: "saflor_jillian@barangay118.gov.ph", password: "user123", role: "user", name: "Jillian Gidayawan SAFLOR", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 38, email: "sandiego_mark@barangay118.gov.ph", password: "user123", role: "user", name: "Mark Ehnzo Tesorio SAN DIEGO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 39, email: "solis_jacob@barangay118.gov.ph", password: "user123", role: "user", name: "Jacob Emmanuel Hetigan SOLIS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 40, email: "sy_aarondave@barangay118.gov.ph", password: "user123", role: "user", name: "Aaron Dave Ariegado SY", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 41, email: "vasquez_terrence@barangay118.gov.ph", password: "user123", role: "user", name: "Terrence Keil Guese VASQUEZ", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 42, email: "villarosa_kris@barangay118.gov.ph", password: "user123", role: "user", name: "Kris Jarred Maravilla VILLAROSA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 43, email: "carlos_aaliyah@barangay118.gov.ph", password: "user123", role: "user", name: "Aaliyah Alyssa Nicole Macasanas CARLOS", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 44, email: "limbo_jewel@barangay118.gov.ph", password: "user123", role: "user", name: "Jewel Hyacinth LIMBO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 45, email: "magampo_celestine@barangay118.gov.ph", password: "user123", role: "user", name: "Celestine Isabelle Salud MAGAMPO", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 46, email: "ong_clariza@barangay118.gov.ph", password: "user123", role: "user", name: "Clariza Claire Dela Cruz ONG", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 47, email: "orpilla_jemilhyn@barangay118.gov.ph", password: "user123", role: "user", name: "Jemilhyn Frances Ong ORPILLA", status: "active", registered: new Date().toLocaleDateString() },
+{ id: 48, email: "ruiz_angel@barangay118.gov.ph", password: "user123", role: "user", name: "Angel Rosales RUIZ", status: "active", registered: new Date().toLocaleDateString() }
+       ];
+                
+                localStorage.setItem('barangayUsers', JSON.stringify(userAccounts));
+            }
+
+            const systemLogs = JSON.parse(localStorage.getItem('systemLogs')) || [];
+            if (systemLogs.length === 0) {
+                const initialLog = {
+                    timestamp: new Date().toLocaleString(),
+                    user: "System",
+                    action: "SYSTEM_STARTED",
+                    details: "Login system initialized with default accounts (localStorage)",
+                    type: "system",
+                    ip: "127.0.0.1"
+                };
+                systemLogs.push(initialLog);
+                localStorage.setItem('systemLogs', JSON.stringify(systemLogs));
+            }
+            
+            console.log('Default accounts initialized in localStorage');
+        }
+
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+            
+            const togglePassword = document.getElementById('togglePassword');
+            if (togglePassword) {
+                togglePassword.addEventListener('click', togglePasswordVisibility);
+            }
+            
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            
+            if (emailInput) {
+                emailInput.addEventListener('input', validateEmail);
+                emailInput.addEventListener('blur', validateEmail);
+            }
+            
+            if (passwordInput) {
+                passwordInput.addEventListener('input', validatePassword);
+                passwordInput.addEventListener('blur', validatePassword);
+            }
+            
+            const rememberMe = document.getElementById('rememberMe');
+            if (rememberMe) {
+                rememberMe.addEventListener('change', function() {
+                    console.log('Remember me checkbox:', this.checked);
+                });
+            }
+            
+            const forgotPassword = document.querySelector('.forgot-password');
+            if (forgotPassword) {
+                forgotPassword.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Password reset feature coming soon!');
+                });
+            }
+            
+            const registerBtn = document.querySelector('.btn-register');
+            if (registerBtn) {
+                registerBtn.addEventListener('click', function() {
+                    console.log('Navigating to registration page...');
+                });
+            }
+            
+            console.log('All event listeners set up successfully');
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            console.log('Login form submitted');
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            if (!validateForm()) {
+                console.log('Form validation failed');
+                return;
+            }
+            
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.disabled = true;
+                loginBtn.classList.add('loading');
+                loginBtn.textContent = 'Signing In...';
+            }
+            
+            try {
+                const user = await authenticateUser(email, password);
+                
+                if (user) {
+                    console.log('Login successful for:', user.email);
+                    
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedEmail', email);
+                        console.log('Email remembered for future logins');
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                    }
+                    
+                    sessionStorage.setItem('userLoggedIn', 'true');
+                    sessionStorage.setItem('userEmail', email);
+                    sessionStorage.setItem('userRole', user.role);
+                    sessionStorage.setItem('userName', user.name);
+                    
+                    await updateUserStatusInFirebase(user, email);
+                    
+                    await logLoginToFirebase(user);
+                    
+                    alert('Login successful! Redirecting to dashboard...');
+                    
+                    setTimeout(() => {
+                        redirectBasedOnRole(user.role, email);
+                    }, 1500);
+                    
+                } else {
+                    console.log('Login failed: Invalid credentials');
+                    if (loginBtn) {
+                        loginBtn.disabled = false;
+                        loginBtn.classList.remove('loading');
+                        loginBtn.textContent = 'Sign In';
+                    }
+                    
+                    alert('Invalid email or password. Please try again.');
+                    const passwordError = document.getElementById('password-error');
+                    if (passwordError) {
+                        passwordError.textContent = 'Invalid email or password';
+                        passwordError.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('loading');
+                    loginBtn.textContent = 'Sign In';
+                }
+                alert('Login error. Please try again.');
+            }
+        }
+
+        async function authenticateUser(email, password) {
+            console.log('Authenticating user:', email);
+            
+            if (firebaseInitialized && createAccountRef) {
+                try {
+                    const snapshot = await createAccountRef.once('value');
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        
+                        const approvedUsers = data["02_approved"]?.registrations || [];
+                        const userManagement = data["05_users"]?.users || [];
+                        const adminManagement = data["06_admins"]?.admins || [];
+                        
+                        const allUsers = [...approvedUsers, ...userManagement];
+                        
+                        const user = allUsers.find(account => 
+                            account.email === email && 
+                            account.accountInfo?.password === password
+                        );
+                        
+                        if (user) {
+                            console.log('User found in Firebase');
+                            return {
+                                email: user.email,
+                                role: user.role || 'user',
+                                name: user.personalInfo?.firstName + ' ' + user.personalInfo?.lastName || user.name || 'User'
+                            };
+                        }
+                        
+                        const admin = adminManagement.find(admin => 
+                            admin.email === email
+                        );
+                        
+                        if (admin) {
+                            const defaultAdmins = [
+                                { email: "superadmin@barangay118.gov.ph", password: "superadmin123" },
+                                { email: "superadmin2@barangay118.gov.ph", password: "superadmin123" },
+                                { email: "admin1@barangay118.gov.ph", password: "admin123" },
+                                { email: "admin2@barangay118.gov.ph", password: "admin123" },
+                                { email: "admin3@barangay118.gov.ph", password: "admin123" }
+                            ];
+                            
+                            const adminCred = defaultAdmins.find(cred => 
+                                cred.email === email && cred.password === password
+                            );
+                            
+                            if (adminCred) {
+                                console.log('Admin found in default accounts');
+                                return {
+                                    email: admin.email,
+                                    role: admin.role || 'admin',
+                                    name: admin.fullName || 'Administrator'
+                                };
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Firebase authentication failed:', error);
+                }
+            }
+            
+            const storedUsers = JSON.parse(localStorage.getItem('barangayUsers')) || [];
+            const storedAdmins = JSON.parse(localStorage.getItem('barangayAdmins')) || [];
+            const allStoredAccounts = [...storedUsers, ...storedAdmins];
+            
+            const storedUser = allStoredAccounts.find(account => 
+                account.email === email && account.password === password
+            );
+            
+            if (storedUser) {
+                console.log('User found in localStorage');
+                return storedUser;
+            }
+            
+            const hardcodedAccounts = [
+                { email: "superadmin@barangay118.gov.ph", password: "superadmin123", role: "super_admin", name: "Primary Administrator" },
+                { email: "superadmin2@barangay118.gov.ph", password: "superadmin123", role: "super_admin", name: "Chief Administrator" },
+                { email: "admin1@barangay118.gov.ph", password: "admin123", role: "admin", name: "Records Administrator" },
+                { email: "admin2@barangay118.gov.ph", password: "admin123", role: "admin", name: "Operations Administrator" },
+                { email: "admin3@barangay118.gov.ph", password: "admin123", role: "admin", name: "Logistics Administrator" },
+
+                { email: "almanzor_jhlox@barangay118.gov.ph", password: "user123", role: "user", name: "Jhlox De Guzman ALMANZOR" },
+                { email: "andaya_zantrix@barangay118.gov.ph", password: "user123", role: "user", name: "Zantrix Geoff Dandoy ANDAYA" },
+                { email: "aranas_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Aezer Fajardo ARANAS" },
+                { email: "argallon_ezekiel@barangay118.gov.ph", password: "user123", role: "user", name: "Ezekiel Lazaro ARGALLON" },
+                { email: "badilla_carl@barangay118.gov.ph", password: "user123", role: "user", name: "Carl John Henry Smith BADILLA" },
+                { email: "bag-id_alvin@barangay118.gov.ph", password: "user123", role: "user", name: "Alvin Evangelista BAG-ID" },
+                { email: "blanco_zidane@barangay118.gov.ph", password: "user123", role: "user", name: "Zidane Punzalan BLANCO" },
+                { email: "burgos_alfred@barangay118.gov.ph", password: "user123", role: "user", name: "Alfred BURGOS" },
+                { email: "canlas_chester@barangay118.gov.ph", password: "user123", role: "user", name: "Chester Jon Guttierez CANLAS" },
+                { email: "castro_jomar@barangay118.gov.ph", password: "user123", role: "user", name: "Jomar Santino Novilla CASTRO" },
+                { email: "catimbang_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Mark Toledo CATIMBANG" },
+                { email: "cruz_jezrel@barangay118.gov.ph", password: "user123", role: "user", name: "Jezrel Villa CRUZ" },
+                { email: "espino_rance@barangay118.gov.ph", password: "user123", role: "user", name: "Rance Ego Soliman ESPINO" },
+                { email: "fernandez_mico@barangay118.gov.ph", password: "user123", role: "user", name: "Mico Palencia FERNANDEZ" },
+                { email: "flores_calvin@barangay118.gov.ph", password: "user123", role: "user", name: "Calvin Brent Ardonza FLORES" },
+                { email: "galibo_gemanuel@barangay118.gov.ph", password: "user123", role: "user", name: "Gemanuel Pedoche GALIBO" },
+                { email: "garcia_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Cedric Rias GARCIA" },
+                { email: "gatmaitan_renz@barangay118.gov.ph", password: "user123", role: "user", name: "Renz Albert Acab GATMAITAN" },
+                { email: "honradez_zacchary@barangay118.gov.ph", password: "user123", role: "user", name: "Zacchary Angeles HONRADEZ" },
+                { email: "judaya_aedrick@barangay118.gov.ph", password: "user123", role: "user", name: "Aedrick John Cabales JUDAYA" },
+                { email: "lingan_andres@barangay118.gov.ph", password: "user123", role: "user", name: "Andres Lei Aguilar LINGAN" },
+                { email: "mahilum_shchem@barangay118.gov.ph", password: "user123", role: "user", name: "Shchem Yae Pagador MAHILUM" },
+                { email: "manalo_carlos@barangay118.gov.ph", password: "user123", role: "user", name: "Carlos Sebastian Lagatuz MANALO" },
+                { email: "mendina_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Paul Magnaye MENDINA" },
+                { email: "moldez_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Paul Agotipac MOLDEZ" },
+                { email: "ortega_danny@barangay118.gov.ph", password: "user123", role: "user", name: "Danny King Mendoza ORTEGA" },
+                { email: "pangco_miguel@barangay118.gov.ph", password: "user123", role: "user", name: "Miguel Adriel Gallo PANGCO" },
+                { email: "pontilan_neo@barangay118.gov.ph", password: "user123", role: "user", name: "Neo Angelo Degamon PONTILAN" },
+                { email: "pozon_david@barangay118.gov.ph", password: "user123", role: "user", name: "David Bryant Peralta POZON" },
+                { email: "pozon_john@barangay118.gov.ph", password: "user123", role: "user", name: "John Patrick Peralta POZON" },
+                { email: "quindoza_mark@barangay118.gov.ph", password: "user123", role: "user", name: "Mark Raymond Sia QUINDOZA" },
+                { email: "saflor_jillian@barangay118.gov.ph", password: "user123", role: "user", name: "Jillian Gidayawan SAFLOR" },
+                { email: "sandiego_mark@barangay118.gov.ph", password: "user123", role: "user", name: "Mark Ehnzo Tesorio SAN DIEGO" },
+                { email: "solis_jacob@barangay118.gov.ph", password: "user123", role: "user", name: "Jacob Emmanuel Hetigan SOLIS" },
+                { email: "sy_aarondave@barangay118.gov.ph", password: "user123", role: "user", name: "Aaron Dave Ariegado SY" },
+                { email: "vasquez_terrence@barangay118.gov.ph", password: "user123", role: "user", name: "Terrence Keil Guese VASQUEZ" },
+                { email: "villarosa_kris@barangay118.gov.ph", password: "user123", role: "user", name: "Kris Jarred Maravilla VILLAROSA" },
+
+                { email: "carlos_aaliyah@barangay118.gov.ph", password: "user123", role: "user", name: "Aaliyah Alyssa Nicole Macasanas CARLOS" },
+                { email: "limbo_jewel@barangay118.gov.ph", password: "user123", role: "user", name: "Jewel Hyacinth LIMBO" },
+                { email: "magampo_celestine@barangay118.gov.ph", password: "user123", role: "user", name: "Celestine Isabelle Salud MAGAMPO" },
+                { email: "ong_clariza@barangay118.gov.ph", password: "user123", role: "user", name: "Clariza Claire Dela Cruz ONG" },
+                { email: "orpilla_jemilhyn@barangay118.gov.ph", password: "user123", role: "user", name: "Jemilhyn Frances Ong ORPILLA" },
+                { email: "ruiz_angel@barangay118.gov.ph", password: "user123", role: "user", name: "Angel Rosales RUIZ" }
+            ];
+            
+            
+            const hardcodedUser = hardcodedAccounts.find(account => 
+                account.email === email && account.password === password
+            );
+            
+            if (hardcodedUser) {
+                console.log('User found in hardcoded accounts');
+                return hardcodedUser;
+            }
+            
+            console.log('No matching user found');
+            return null;
+        }
+
+        async function updateUserStatusInFirebase(user, email) {
+            if (!firebaseInitialized || !createAccountRef) {
+                const userStatus = JSON.parse(localStorage.getItem('userStatus')) || {};
+                userStatus[email] = {
+                    online: true,
+                    lastLogin: new Date().toISOString(),
+                    name: user.name
+                };
+                localStorage.setItem('userStatus', JSON.stringify(userStatus));
+                return;
+            }
+
+            try {
+                const snapshot = await createAccountRef.once('value');
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const users = data["05_users"]?.users || [];
+                    
+                    const updatedUsers = users.map(u => {
+                        if (u.email === email) {
+                            return {
+                                ...u,
+                                online: true,
+                                lastLogin: new Date().toISOString(),
+                                updatedAt: new Date().toISOString()
+                            };
+                        }
+                        return u;
+                    });
+                    
+                    await createAccountRef.child("05_users").update({
+                        users: updatedUsers,
+                        lastUpdated: new Date().toISOString()
+                    });
+                    
+                    console.log('User status updated in Firebase');
+                }
+            } catch (error) {
+                console.error('Error updating user status:', error);
+            }
+        }
+
+        async function logLoginToFirebase(user) {
+            const logEntry = {
+                timestamp: new Date().toISOString(),
+                user: user.name,
+                userEmail: user.email,
+                action: "USER_LOGIN",
+                details: `User ${user.name} logged in successfully`,
+                type: "login",
+                device: navigator.userAgent,
+                ip: "LOCAL"
+            };
+
+            if (firebaseInitialized && systemLogsRef) {
+                try {
+                    await systemLogsRef.push(logEntry);
+                    console.log('Login logged to Firebase');
+                    return;
+                } catch (error) {
+                    console.warn('Failed to log to Firebase:', error);
+                }
+            }
+
+            const systemLogs = JSON.parse(localStorage.getItem('systemLogs')) || [];
+            systemLogs.push(logEntry);
+            localStorage.setItem('systemLogs', JSON.stringify(systemLogs));
+            console.log('Login logged to localStorage');
+        }
+
+        function redirectBasedOnRole(role, email) {
+            console.log('Redirecting based on role:', role);
+            switch(role) {
+                case "super_admin":
+                case "admin":
+                    console.log('Redirecting to CreateAccountAdmin.html for admin user');
+                    window.location.href = "CreateAccountAdmin.html";
+                    break;
+                case "user":
+                default:
+                    console.log('Redirecting to MainPage.html for regular user');
+                    window.location.href = "MainPage.html";
+                    break;
+            }
+        }
+
+        function validateForm() {
+            const emailValid = validateEmail();
+            const passwordValid = validatePassword();
+            
+            return emailValid && passwordValid;
+        }
+
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            
+            if (!emailInput || !emailError) return false;
+            
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!email) {
+                emailError.textContent = 'Please enter your email address';
+                emailError.style.display = 'block';
+                return false;
+            } else if (!emailRegex.test(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.style.display = 'block';
+                return false;
+            } else {
+                emailError.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validatePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordError = document.getElementById('password-error');
+            
+            if (!passwordInput || !passwordError) return false;
+            
+            const password = passwordInput.value;
+            
+            if (!password) {
+                passwordError.textContent = 'Please enter your password';
+                passwordError.style.display = 'block';
+                return false;
+            } else if (password.length < 6) {
+                passwordError.textContent = 'Password must be at least 6 characters';
+                passwordError.style.display = 'block';
+                return false;
+            } else {
+                passwordError.style.display = 'none';
+                return true;
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.getElementById('togglePassword');
+            
+            if (!passwordInput || !toggleButton) return;
+            
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleButton.textContent = type === 'password' ? 'Show' : 'Hide';
+            
+            console.log('Password visibility toggled:', type);
+        }
+
+        function checkRememberedUser() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            const emailInput = document.getElementById('email');
+            const rememberMe = document.getElementById('rememberMe');
+            
+            if (rememberedEmail && emailInput && rememberMe) {
+                emailInput.value = rememberedEmail;
+                rememberMe.checked = true;
+                console.log('Remembered email loaded:', rememberedEmail);
+            }
+        }
+
+        function testAllSystems() {
+            console.log('=== SYSTEM TEST ===');
+            console.log('1. Checking Firebase connection...');
+            console.log('Firebase Initialized:', firebaseInitialized);
+            console.log('Database:', db ? 'Connected' : 'Not connected');
+            console.log('2. Checking DOM elements...');
+            console.log('Login Form:', document.getElementById('loginForm') ? 'Found' : 'Missing');
+            console.log('Email Input:', document.getElementById('email') ? 'Found' : 'Missing');
+            console.log('Password Input:', document.getElementById('password') ? 'Found' : 'Missing');
+            console.log('Remember Checkbox:', document.getElementById('rememberMe') ? 'Found' : 'Missing');
+            console.log('Login Button:', document.getElementById('loginBtn') ? 'Found' : 'Missing');
+            console.log('Password Toggle:', document.getElementById('togglePassword') ? 'Found' : 'Missing');
+            
+            console.log('=== SYSTEM READY ===');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Login system initializing...');
+            initializeFirebase();
+            loadHeaderFooter();
+            initializeDefaultAccounts();
+            setupEventListeners();
+            checkRememberedUser();
+            loadLoginPageContent();
+            console.log('Login system ready. All buttons and checkboxes functional.');
+            setTimeout(testAllSystems, 1000);
+        });
+    </script>
+</body>
+</html>

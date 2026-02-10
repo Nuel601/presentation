@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Barangay 118 Online System</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <meta name="description" content="Barangay 118 Online System - Community Services and Management">
+    <meta name="keywords" content="barangay, government, services, community, online system">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<!-- Update Notification -->
+<div id="update-notification"></div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+</div>
+
+<header>
+    <div class="container">
+        <div class="navbar">
+            <a href="index.html" id="home-logo" class="logo" aria-label="Barangay 118 Online System Home">
+                <img src="Logo-Favicon-removebg-preview.png" alt="Barangay 118 Official Logo" class="logo-image" id="header-logo" width="70" height="70">
+                <h1 id="system-name">BARANGAY 118 ONLINE SYSTEM</h1>
+            </a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="index.html" class="active" aria-label="Home page"><i class="fas fa-home" aria-hidden="true"></i><span>Home</span></a>
+                <a href="AboutUs.html" aria-label="About Barangay 118 page"><i class="fas fa-info-circle" aria-hidden="true"></i><span>About Us</span></a>
+                <a href="News.html" aria-label="Barangay News page"><i class="fas fa-newspaper" aria-hidden="true"></i><span>News</span></a>
+                <a href="Emergency.html" aria-label="Barangay Emergency page"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span>Emergency</span></a>
+                <a href="CreateAnAccount.html" aria-label="Create an account page"><i class="fas fa-user-plus" aria-hidden="true"></i><span>Create Account</span></a>
+                <a href="LogIn.html" aria-label="Login page"><i class="fas fa-sign-in-alt" aria-hidden="true"></i><span>Login</span></a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h2 id="hero-title">Barangay 118 Online System</h2>
+        <p id="hero-description">Digital service for a faster, smoother, and more connected community.</p>
+    </div>
+</section>
+
+<section class="barangay-welcome">
+    <div class="welcome-background" id="welcome-background"></div>
+    <div class="welcome-overlay"></div>
+    <div class="container">
+        <div class="welcome-content">
+            <h1 class="welcome-title" id="welcome-title">Welcome to Barangay 118</h1>
+            <p class="welcome-subtitle" id="welcome-subtitle">A Community of Unity and Progress</p>
+            <div class="barangay-logo">
+                <img src="received_32392388620408695_edit_2410797689912.png" alt="Barangay 118 Logo" id="barangay-logo-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="footer">
+    <div class="container" id="footer-container">
+        <div class="footer-content" id="footer-content">
+            <div class="footer-column" id="footer-system-column">
+                <h3 id="footer-title" class="footer-title">Barangay 118 Online System</h3>
+                <p id="footer-description" class="footer-description">Secure and efficient online services for Barangay 118. Connecting our community through technology.</p>
+            </div>
+            <div class="footer-center" id="footer-center">
+                <div class="footer-row" id="footer-row">
+                    <div class="footer-column" id="footer-contact-column">
+                        <h3 id="footer-contact-title">Contact Info</h3>
+                        <ul id="footer-contact-info" class="footer-contact-info">
+                            <li><i class="fas fa-map-marker-alt"></i><span id="footer-address-line1">402 2nd St, Grace Park East, Caloocan</span></li>
+                            <li><i class="fas fa-map-pin"></i><span id="footer-address-line2">Metro Manila, Philippines</span></li>
+                            <li><i class="fas fa-phone"></i><span id="footer-phone">(02) 8123-4567</span></li>
+                            <li><i class="fas fa-envelope"></i><span id="footer-email">info@barangay118.gov.ph</span></li>
+                            <li><i class="fas fa-clock"></i><span id="footer-office-hours">Mon–Fri: 8:00 AM – 5:00 PM</span></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column" id="footer-links-column">
+                        <h3 id="footer-social-title">Follow Us</h3>
+                        <ul class="footer-links" id="footer-social-links">
+                            <li id="footer-facebook-item"><a id="footer-facebook-link" href="https://facebook.com/barangay118" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                            <li id="footer-messenger-item"><a id="footer-messenger-link" href="https://m.me/barangay118" target="_blank"><i class="fab fa-facebook-messenger"></i> Messenger Chat</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright" id="footer-copyright">
+            <p id="copyright-text">&copy; 2025 Barangay 118 Online System. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+        authDomain: "barangay118-website.firebaseapp.com",
+        databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "barangay118-website",
+        storageBucket: "barangay118-website.firebasestorage.app",
+        messagingSenderId: "255746664706",
+        appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+        measurementId: "G-CQFZYJED7Z"
+    };
+
+    let db = null;
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        db = firebase.database();
+        console.log("Firebase User initialized successfully!");
+    } catch (e) {
+        console.error('Firebase initialization error:', e);
+    }
+
+    const defaultBarangayData = {
+        "01_systemName": "BARANGAY 118 ONLINE SYSTEM",
+        "02_hero": {
+            title: "Barangay 118 Online System",
+            description: "Digital service for a faster, smoother, and more connected community.",
+            headerLogo: "Logo-Favicon-removebg-preview.png"
+        },
+        "03_welcomeSection": {
+            backgroundImage: "8055825756095.png",
+            title: "Welcome to Barangay 118",
+            subtitle: "A Community of Unity and Progress",
+            logo: "Logo-Favicon-removebg-preview.png"
+        },
+        "04_footer": {
+            title: "Barangay 118 Online System",
+            description: "Secure and efficient online services for Barangay 118. Connecting our community through technology.",
+            contactInfo: {
+                addressLine1: "402 2nd St, Grace Park East, Caloocan",
+                addressLine2: "Metro Manila, Philippines",
+                phone: "(02) 8123-4567",
+                email: "info@barangay118.gov.ph",
+                officeHours: "Mon–Fri: 8:00 AM – 5:00 PM"
+            },
+            socialMedia: {
+                facebook: "https://facebook.com/barangay118",
+                messenger: "https://m.me/barangay118"
+            },
+            copyright: "© 2025 Barangay 118 Online System. All Rights Reserved."
+        }
+    };
+
+    class BarangayWebsite {
+        constructor() {
+            this.dataKey = 'barangayData';
+            this.currentData = null;
+            this.lastData = null;
+            this.dataRef = db ? db.ref('barangayData') : null;
+            this.dbRef = db ? db.ref() : null;
+            this.isFirstLoad = true;
+            this.init();
+        }
+
+        async init() {
+            console.log("Barangay Website Initializing...");
+            this.showLoading(true);
+            this.setupRealtimeListener();
+            this.setupStorageListener();
+            await this.loadData();
+            this.showLoading(false);
+            console.log("Barangay Website Ready!");
+            setInterval(() => this.checkForUpdates(), 30000);
+        }
+
+        setupRealtimeListener() {
+            if (!this.dataRef) {
+                console.warn('Firebase not available. Using localStorage only.');
+                this.showNotification('Offline Mode - Using cached data', 'warning');
+                return;
+            }
+
+            this.dataRef.on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    const firebaseData = snapshot.val();
+                    console.log('Firebase update received:', firebaseData);
+                    this.currentData = this.mergeWithDefaults(firebaseData);
+                    this.updatePageContent();
+                    this.saveToLocalStorage();
+                    if (!this.isFirstLoad) {
+                        this.showNotification('Content updated from Admin!', 'success');
+                    } else {
+                        this.isFirstLoad = false;
+                    }
+                } else {
+                    console.log('No Firebase data found. Using defaults.');
+                    this.currentData = this.mergeWithDefaults(defaultBarangayData);
+                    this.updatePageContent();
+                }
+            }, (error) => {
+                console.error('Firebase listener error:', error);
+                this.showNotification('Connection issue - Using cached data', 'warning');
+            });
+        }
+
+        setupStorageListener() {
+            window.addEventListener('storage', (event) => {
+                if (event.key === this.dataKey && event.newValue) {
+                    try {
+                        const newData = JSON.parse(event.newValue);
+                        console.log('LocalStorage update received:', newData);
+                        this.currentData = this.mergeWithDefaults(newData);
+                        this.updatePageContent();
+                        this.showNotification('Content updated from Admin Panel!', 'info');
+                    } catch (error) {
+                        console.error('Error parsing localStorage data:', error);
+                    }
+                }
+            });
+        }
+
+        async loadData() {
+            console.log("Loading data...");
+            if (this.dataRef) {
+                try {
+                    const snapshot = await this.dataRef.once('value');
+                    if (snapshot.exists()) {
+                        const firebaseData = snapshot.val();
+                        console.log('Data loaded from Firebase');
+                        this.currentData = this.mergeWithDefaults(firebaseData);
+                        this.updatePageContent();
+                        this.saveToLocalStorage();
+                        return;
+                    }
+                } catch (err) {
+                    console.warn('Firebase load failed:', err);
+                }
+            }
+
+            const savedData = localStorage.getItem(this.dataKey);
+            if (savedData) {
+                try {
+                    const localStorageData = JSON.parse(savedData);
+                    console.log('Data loaded from localStorage');
+                    this.currentData = this.mergeWithDefaults(localStorageData);
+                    this.updatePageContent();
+                } catch (error) {
+                    console.error('Error parsing localStorage data:', error);
+                    this.loadDefaultData();
+                }
+            } else {
+                this.loadDefaultData();
+            }
+        }
+
+        loadDefaultData() {
+            this.currentData = this.mergeWithDefaults(defaultBarangayData);
+            this.updatePageContent();
+            console.log('Loaded default data');
+        }
+
+        mergeWithDefaults(data) {
+            const merged = JSON.parse(JSON.stringify(defaultBarangayData));
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    if (typeof data[key] === 'object' && data[key] !== null && 
+                        typeof merged[key] === 'object' && merged[key] !== null) {
+                        merged[key] = { ...merged[key], ...data[key] };
+                    } else {
+                        merged[key] = data[key];
+                    }
+                }
+            }
+            return merged;
+        }
+
+        updatePageContent() {
+            if (!this.currentData) return;
+            console.log("Updating page content...");
+            const systemName = document.getElementById('system-name');
+            if (systemName) {
+                systemName.textContent = this.currentData["01_systemName"] || "BARANGAY 118 ONLINE SYSTEM";
+            }
+            const heroData = this.currentData["02_hero"] || {};
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle && heroData.title) {
+                heroTitle.textContent = heroData.title;
+            }
+            const heroDesc = document.getElementById('hero-description');
+            if (heroDesc && heroData.description) {
+                heroDesc.textContent = heroData.description;
+            }
+            const headerLogo = document.getElementById('header-logo');
+            if (headerLogo && heroData.headerLogo) {
+                headerLogo.src = heroData.headerLogo;
+                headerLogo.onerror = function() {
+                    this.src = 'Logo-Favicon-removebg-preview.png';
+                };
+            }
+            const welcomeData = this.currentData["03_welcomeSection"] || {};
+            const welcomeTitle = document.getElementById('welcome-title');
+            if (welcomeTitle && welcomeData.title) {
+                welcomeTitle.textContent = welcomeData.title;
+            }
+            const welcomeSubtitle = document.getElementById('welcome-subtitle');
+            if (welcomeSubtitle && welcomeData.subtitle) {
+                welcomeSubtitle.textContent = welcomeData.subtitle;
+            }
+            const welcomeBackground = document.getElementById('welcome-background');
+            if (welcomeBackground && welcomeData.backgroundImage) {
+                welcomeBackground.style.backgroundImage = `url('${welcomeData.backgroundImage}')`;
+            }
+            const barangayLogo = document.getElementById('barangay-logo-img');
+            if (barangayLogo && welcomeData.logo) {
+                barangayLogo.src = welcomeData.logo;
+                barangayLogo.onerror = function() {
+                    this.src = 'received_32392388620408695_edit_2410797689912.png';
+                };
+            }
+            const footerData = this.currentData["04_footer"] || {};
+            const footerTitle = document.getElementById('footer-title');
+            if (footerTitle && footerData.title) {
+                footerTitle.textContent = footerData.title;
+            }
+            const footerDesc = document.getElementById('footer-description');
+            if (footerDesc && footerData.description) {
+                footerDesc.textContent = footerData.description;
+            }
+            if (footerData.contactInfo) {
+                const contact = footerData.contactInfo;
+                const addr1 = document.getElementById('footer-address-line1');
+                if (addr1 && contact.addressLine1) {
+                    addr1.textContent = contact.addressLine1;
+                }
+                
+                const addr2 = document.getElementById('footer-address-line2');
+                if (addr2 && contact.addressLine2) {
+                    addr2.textContent = contact.addressLine2;
+                }
+                
+                const phone = document.getElementById('footer-phone');
+                if (phone && contact.phone) {
+                    phone.textContent = contact.phone;
+                }
+                
+                const email = document.getElementById('footer-email');
+                if (email && contact.email) {
+                    email.textContent = contact.email;
+                }
+                
+                const hours = document.getElementById('footer-office-hours');
+                if (hours && contact.officeHours) {
+                    hours.textContent = contact.officeHours;
+                }
+            }
+            
+            if (footerData.socialMedia) {
+                const social = footerData.socialMedia;
+                const facebookLink = document.getElementById('footer-facebook-link');
+                if (facebookLink && social.facebook) {
+                    facebookLink.href = social.facebook;
+                }
+                
+                const messengerLink = document.getElementById('footer-messenger-link');
+                if (messengerLink && social.messenger) {
+                    messengerLink.href = social.messenger;
+                }
+            }
+            
+            const copyright = document.getElementById('copyright-text');
+            if (copyright && footerData.copyright) {
+                copyright.textContent = footerData.copyright;
+            }
+            console.log("Page content updated successfully!");
+        }
+
+        saveToLocalStorage() {
+            try {
+                localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                console.log('Data saved to localStorage');
+            } catch (e) {
+                console.warn('Could not save to localStorage:', e);
+            }
+        }
+
+        async checkForUpdates() {
+            if (!this.dataRef) return;
+            try {
+                const snapshot = await this.dataRef.once('value');
+                if (snapshot.exists()) {
+                    const newData = snapshot.val();
+                    const currentDataStr = JSON.stringify(this.currentData);
+                    const newDataStr = JSON.stringify(newData);
+                    if (currentDataStr !== newDataStr) {
+                        console.log('Update detected via periodic check');
+                        this.currentData = this.mergeWithDefaults(newData);
+                        this.updatePageContent();
+                        this.saveToLocalStorage();
+                        this.showNotification('Content updated!', 'info');
+                    }
+                }
+            } catch (error) {
+                console.warn('Periodic update check failed:', error);
+            }
+        }
+
+        showNotification(message, type = 'info') {
+            const notification = document.getElementById('update-notification');
+            if (!notification) return;
+            notification.textContent = message;
+            notification.style.background = 
+                type === 'success' ? '#10b981' :
+                type === 'warning' ? '#f59e0b' :
+                type === 'error' ? '#ef4444' : '#3b82f6';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        showLoading(show) {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.style.display = show ? 'flex' : 'none';
+            }
+        }
+
+        showSaveIndicator(message, type = 'success') {
+            const indicator = document.getElementById('save-indicator');
+            if (!indicator) return;
+            indicator.textContent = message;
+            indicator.style.background = 
+                type === 'success' ? '#10b981' :
+                type === 'error' ? '#ef4444' :
+                type === 'warning' ? '#f59e0b' : '#3b82f6';
+            indicator.style.display = 'block';
+            setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        window.barangayWebsite = new BarangayWebsite();
+        console.log("Barangay 118 Website Fully Loaded");
+        window.refreshData = () => {
+            window.barangayWebsite.loadData();
+            window.barangayWebsite.showNotification('Data refreshed!', 'info');
+        };
+        window.forceUpdate = () => {
+            window.barangayWebsite.updatePageContent();
+            window.barangayWebsite.showNotification('Page content forced update!', 'info');
+        };
+        console.log("Commands available: refreshData(), forceUpdate()");
+    });
+
+    if (db) {
+        const connectedRef = db.ref(".info/connected");
+        connectedRef.on("value", (snap) => {
+            const indicator = document.getElementById('save-indicator');
+            if (snap.val() === true) {
+                console.log("Connected to Firebase");
+                if (indicator && !window.barangayWebsite.isFirstLoad) {
+                    indicator.textContent = "Connected to Firebase";
+                    indicator.style.background = '#10b981';
+                    indicator.style.display = 'block';
+                    setTimeout(() => {
+                        indicator.style.display = 'none';
+                    }, 2000);
+                }
+            } else {
+                console.log("Disconnected from Firebase");
+                if (indicator) {
+                    indicator.textContent = "Offline - Using cached data";
+                    indicator.style.background = '#f59e0b';
+                    indicator.style.display = 'block';
+                    setTimeout(() => {
+                        indicator.style.display = 'none';
+                    }, 3000);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

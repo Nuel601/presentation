@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Events - Admin | Barangay 118</title>
+    <link rel="shortcut icon" type="image/png" href="Logo-Favicon-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="NewsAdmin.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo" onclick="myFunction()">
+                    <div class="logo-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>BARANGAY 118 ADMIN PANEL</h1>
+                        <p>News & Events Control Center</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="PanelAdmin.html">Dashboard</a>
+                    <a href="AboutUsAdmin.html">AboutUs</a>
+                    <a href="NewsAdmin.html" class="active">News</a>
+                    <a href="EmergencyAdmin.html">Emergency</a>
+                    <a href="CreateAccountAdmin.html">Create</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-panel">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title"><i class="fas fa-cogs"></i> Control Center</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-tab="dashboard"><span class="sidebar-icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard</a></li>
+                <li><a href="#" data-tab="hero"><span class="sidebar-icon"><i class="fas fa-heading"></i></span> Community Events Calendar</a></li>
+                <li><a href="#" data-tab="news"><span class="sidebar-icon"><i class="fas fa-newspaper"></i></span> News Management</a></li>
+                <li><a href="#" data-tab="events"><span class="sidebar-icon"><i class="fas fa-calendar-alt"></i></span> Events Management</a></li>
+                <li><a href="#" data-tab="calendar"><span class="sidebar-icon"><i class="fas fa-calendar"></i></span> Calendar Display</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="LogIn.html" class="sidebar-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> News Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="system-status">Connecting...</div>
+                            <div class="stat-label">System Status</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-news">0</div>
+                            <div class="stat-label">Total News</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-events">0</div>
+                            <div class="stat-label">Total Events</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-calendar-events">0</div>
+                            <div class="stat-label">Calendar Events</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="last-updated">Never</div>
+                            <div class="stat-label">Last Updated</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-value" id="data-size">0 KB</div>
+                            <div class="stat-label">Data Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-check-circle"></i> System Ready!</strong> Manage all news and events for Barangay 118.
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" id="preview-site-btn">
+                            <i class="fas fa-external-link-alt"></i> View News Page
+                        </button>
+                        <button class="btn btn-secondary" id="export-news-btn">
+                            <i class="fas fa-download"></i> Export News Data
+                        </button>
+                        <button class="btn btn-success" id="backup-news-btn">
+                            <i class="fas fa-database"></i> Backup Data
+                        </button>
+                        <button class="btn btn-warning" id="refresh-news-btn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                        <button class="btn btn-danger" id="clear-news-data-btn">
+                            <i class="fas fa-trash"></i> Clear All Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2 class="section-title"><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div id="recent-activity">
+                        <p style="color: var(--gray); text-align: center; padding: 20px;">
+                            <i class="fas fa-clock"></i> Activity log will appear here...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="dashboard-guide" class="guide-section">
+                        <h4>News Management System</h4>
+                        <p>Manage all news articles, events, and calendar for Barangay 118 using Firebase Realtime Database.</p>
+                        <ul>
+                            <li><strong>News Management:</strong> Add, edit, delete news articles with images</li>
+                            <li><strong>Events Calendar:</strong> Manage upcoming and past events</li>
+                            <li><strong>Calendar Display:</strong> Configure calendar settings</li>
+                            <li><strong>Firebase Integration:</strong> All data stored in Firebase Realtime Database (03_news)</li>
+                            <li><strong>Real-time Updates:</strong> Changes appear instantly on the News page</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Events Calendar Tab (formerly Page Hero) -->
+            <div id="hero" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-heading"></i> Community Events Calendar Settings</h2>
+                        <div class="action-buttons">
+                            <a href="News.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <form id="hero-form">
+                        <p style="color: var(--gray); margin-bottom: 25px;">Update the Community Events Calendar section that appears on your News page.</p>
+                        <h3 class="section-title">Page Hero Section</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="hero-title">Page Hero Title *</label>
+                            <input type="text" class="form-control" id="hero-title" placeholder="Enter hero title" value="News & Announcements">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="hero-subtitle">Page Hero Subtitle</label>
+                            <textarea class="form-control" id="hero-subtitle" placeholder="Enter hero subtitle">Latest updates, advisories, and community news for Barangay 118.</textarea>
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">Brief description that appears below the title</small>
+                        </div>
+
+                        <h3 class="section-title">News Section Header</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="news-section-title">News Section Title</label>
+                            <input type="text" class="form-control" id="news-section-title" placeholder="Enter news section title" value="Latest Stories">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="news-section-subtitle">News Section Subtitle</label>
+                            <textarea class="form-control" id="news-section-subtitle" placeholder="Enter news section subtitle">Stay updated with the latest news and announcements from Barangay 118</textarea>
+                        </div>
+
+                        <h3 class="section-title">Community Events Calendar Header</h3>
+                      
+                        <div class="form-group">
+                            <label class="form-label" for="events-title">Community Events Calendar Title *</label>
+                            <input type="text" class="form-control" id="events-title" placeholder="Enter community events calendar title" value="Community Events Calendar">
+                        </div>
+
+                        <div class="action-buttons-container">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update All Settings
+                            </button>
+                            <button type="button" class="btn btn-warning" id="hero-reset-btn">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="hero-guide" class="guide-section">
+                        <h4>Community Events Calendar Settings</h4>
+                        <p>Customize the Community Events Calendar section and page headers of your News page.</p>
+                        <ul>
+                            <li><strong>Community Events Calendar Title:</strong> Update the main title of the events section</li>
+                            <li><strong>Page Hero:</strong> Update the main page title and subtitle</li>
+                            <li><strong>News Section:</strong> Set the news section title and subtitle</li>
+                            <li><strong>Changes appear immediately</strong> on the main site</li>
+                            <li><strong>Data is saved to Firebase</strong> Realtime Database (03_news)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Management Tab -->
+            <div id="news" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-newspaper"></i> News Management</h2>
+                        <div class="action-buttons">
+                            <a href="News.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Add, edit, or delete news articles.</p>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-news-tab="existing">
+                            <i class="fa-solid fa-newspaper"></i> Existing News
+                        </div>
+                        <div class="tab" data-news-tab="add">
+                            <i class="fa-solid fa-plus-circle"></i> Add New News
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="news-search" placeholder="Search news by title or category...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="existing-news" class="sub-tab-content active">
+                        <div class="alert alert-success">
+                            <strong><i class="fas fa-info-circle"></i> Pro Tip:</strong> Click on any news article to edit it. Use the "Set as Featured" button to feature a news article in the large left panel.
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="news-table-body">
+                                <!-- News will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-news" class="sub-tab-content">
+                        <form id="news-form">
+                            <input type="hidden" id="news-edit-id" value="">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="news-title">News Title *</label>
+                                    <input type="text" class="form-control" id="news-title" placeholder="Enter news title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="news-category">Category *</label>
+                                    <select class="form-control" id="news-category" required>
+                                        <option value="">Select category</option>
+                                        <option value="Community">Community</option>
+                                        <option value="Health">Health</option>
+                                        <option value="Events">Events</option>
+                                        <option value="Emergency">Emergency</option>
+                                        <option value="Announcement">Announcement</option>
+                                        <option value="Infrastructure">Infrastructure</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Fire">Fire</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="news-excerpt">Excerpt *</label>
+                                <textarea class="form-control" id="news-excerpt" placeholder="Brief summary of the news (max 150 characters)" maxlength="150" required></textarea>
+                                <small style="color: var(--gray); margin-top: 5px; display: block;"><span id="excerpt-counter">0</span>/150 characters</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="news-content">Full Content *</label>
+                                <textarea class="form-control" id="news-content" placeholder="Enter full news content" rows="6" required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="news-date">Date *</label>
+                                    <input type="date" class="form-control" id="news-date" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="news-read-time">Read Time</label>
+                                    <input type="text" class="form-control" id="news-read-time" placeholder="e.g., 2 min read">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="news-image">Image URL *</label>
+                                <input type="text" class="form-control" id="news-image" placeholder="https://example.com/news-image.jpg" required>
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Enter direct URL to news image (recommended: 800x400 pixels)</small>
+                                <div class="image-preview-container">
+                                    <img id="news-image-preview" class="image-preview" alt="News image preview">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="news-featured" class="checkbox-input">
+                                    <label for="news-featured" class="checkbox-label">
+                                        <i class="fas fa-star"></i> Set as Featured News (Optional)
+                                    </label>
+                                    <small style="color: var(--gray); margin-left: 25px; display: block;">You can also set featured news from the "Existing News" tab</small>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="news-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add News
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="news-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="news-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="news-guide" class="guide-section">
+                        <h4>News Management</h4>
+                        <p>Manage all news articles for Barangay 118.</p>
+                        <ul>
+                            <li><strong>Add News:</strong> Fill in title, category, content, and upload image</li>
+                            <li><strong>Edit News:</strong> Click on any news article to edit</li>
+                            <li><strong>Delete News:</strong> Remove outdated articles</li>
+                            <li><strong>Featured News:</strong> Set one article as featured (appears in large panel)</li>
+                            <li><strong>Featured Button:</strong> Click "Set as Featured" button in table - old featured news auto-removes</li>
+                            <li><strong>Categories:</strong> Organize news by type (Community, Health, Events, etc.)</li>
+                            <li><strong>Images:</strong> Use high-quality images (800x400 recommended)</li>
+                            <li><strong>Firebase:</strong> All data stored in Firebase Realtime Database (03_news)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Management Tab -->
+            <div id="events" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Events Management</h2>
+                        <div class="action-buttons">
+                            <a href="News.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage barangay events. Events are automatically categorized based on date: Upcoming → Current → Past.</p>
+                                        
+                    <div class="tabs">
+                        <div class="tab active" data-events-tab="past">
+                            <i class="fa-solid fa-clock-rotate-left"></i> Past Events
+                        </div>
+                        <div class="tab" data-events-tab="current">
+                            <i class="fa-solid fa-calendar-day"></i> Current Event
+                        </div>
+                        <div class="tab" data-events-tab="upcoming">
+                            <i class="fa-solid fa-calendar-plus"></i> Upcoming Events
+                        </div>
+                        <div class="tab" data-events-tab="add">
+                            <i class="fa-solid fa-plus"></i> Add Event
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="events-search" placeholder="Search events by title...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="past-events" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Time & Location</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="past-events-table">
+                                <!-- Past events will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="current-event" class="sub-tab-content">
+                        <div class="alert alert-success">
+                            <strong><i class="fas fa-info-circle"></i> Note:</strong> Events are automatically categorized. Today's event becomes Current Event automatically.
+                        </div>
+                        <div id="current-event-display">
+                            <!-- Current event will be shown here -->
+                        </div>
+                    </div>
+                    
+                    <div id="upcoming-events" class="sub-tab-content">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Time & Location</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="upcoming-events-table">
+                                <!-- Upcoming events will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-event" class="sub-tab-content">
+                        <form id="event-form">
+                            <input type="hidden" id="event-edit-id" value="">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="event-title">Event Title *</label>
+                                    <input type="text" class="form-control" id="event-title" placeholder="Enter event title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="event-date">Date *</label>
+                                    <input type="date" class="form-control" id="event-date" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="event-description">Description *</label>
+                                <textarea class="form-control" id="event-description" placeholder="Describe the event" required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="event-time">Time</label>
+                                    <input type="text" class="form-control" id="event-time" placeholder="e.g., 9:00 AM - 3:00 PM">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="event-location">Location</label>
+                                    <input type="text" class="form-control" id="event-location" placeholder="Enter event location">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="event-image">Event Image URL</label>
+                                <input type="text" class="form-control" id="event-image" placeholder="https://example.com/event-image.jpg">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">Optional image for Current Event (recommended: 350x200 pixels)</small>
+                                <div class="image-preview-container">
+                                    <img id="event-image-preview" class="image-preview" alt="Event image preview">
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="event-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Event
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="event-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="event-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="events-guide" class="guide-section">
+                        <h4>Events Management</h4>
+                        <p>Manage barangay events with automatic categorization based on date.</p>
+                        <ul>
+                            <li><strong>Automatic Categorization:</strong> Events automatically move between categories based on date</li>
+                            <li><strong>Upcoming Events:</strong> Future events (date > today)</li>
+                            <li><strong>Current Event:</strong> Today's event (date = today)</li>
+                            <li><strong>Past Events:</strong> Completed events (date < today)</li>
+                            <li><strong>Auto-Transition:</strong> Upcoming → Current → Past (automatic, based on date)</li>
+                            <li><strong>Firebase:</strong> All events stored in Firebase Realtime Database (03_news)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Display Tab -->
+            <div id="calendar" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-calendar"></i> Calendar Display</h2>
+                        <div class="action-buttons">
+                            <a href="News.html" target="_blank" class="btn btn-success btn-sm">
+                                <i class="fas fa-eye"></i> View Site
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="color: var(--gray); margin-bottom: 25px;">Manage calendar events and configure calendar display settings.</p>
+                            
+                    <div class="tabs">
+                        <div class="tab active" data-calendar-tab="events">
+                            <i class="fa-solid fa-calendar-check"></i> Calendar Events
+                        </div>
+                        <div class="tab" data-calendar-tab="add">
+                            <i class="fa-solid fa-calendar-plus"></i> Add Calendar Event
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="search-bar" id="calendar-events-search" placeholder="Search calendar events...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="calendar-events" class="sub-tab-content active">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Time</th>
+                                    <th>Location</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calendar-events-table">
+                                <!-- Calendar events will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="add-calendar-event" class="sub-tab-content">
+                        <form id="calendar-event-form">
+                            <input type="hidden" id="calendar-event-edit-id" value="">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="calendar-event-title">Event Title *</label>
+                                    <input type="text" class="form-control" id="calendar-event-title" placeholder="Enter event title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="calendar-event-date">Date *</label>
+                                    <input type="date" class="form-control" id="calendar-event-date" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="calendar-event-description">Description *</label>
+                                <textarea class="form-control" id="calendar-event-description" placeholder="Describe the event" required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="calendar-event-time">Time *</label>
+                                    <input type="text" class="form-control" id="calendar-event-time" placeholder="e.g., 2:00 PM - 4:00 PM" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="calendar-event-location">Location *</label>
+                                    <input type="text" class="form-control" id="calendar-event-location" placeholder="Enter event location" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="calendar-event-month">Display Month (e.g., Nov)</label>
+                                <input type="text" class="form-control" id="calendar-event-month" placeholder="Nov" maxlength="3">
+                                <small style="color: var(--gray); margin-top: 5px; display: block;">3-letter month abbreviation for display</small>
+                            </div>
+                            
+                            <div class="action-buttons-container">
+                                <button type="submit" class="btn btn-success" id="calendar-event-submit-btn">
+                                    <i class="fas fa-plus-circle"></i> Add to Calendar
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="calendar-event-cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> Cancel Edit
+                                </button>
+                                <button type="button" class="btn btn-warning" id="calendar-event-reset-btn">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="quick-guide-center">
+                    <div class="quick-guide-header">
+                        <h2 class="quick-guide-title"><i class="fas fa-book"></i> Quick Guide</h2>
+                    </div>
+                    
+                    <div id="calendar-guide" class="guide-section">
+                        <h4>Calendar Management</h4>
+                        <p>Manage the interactive calendar and its events.</p>
+                        <ul>
+                            <li><strong>Calendar Events:</strong> Add events that appear on specific dates</li>
+                            <li><strong>Event Details:</strong> Include title, description, time, and location</li>
+                            <li><strong>Date Selection:</strong> Click on dates to view/add events</li>
+                            <li><strong>Today Highlight:</strong> Automatically highlight current date</li>
+                            <li><strong>Event Indicators:</strong> Show dots on dates with events</li>
+                            <li><strong>Firebase:</strong> All calendar data stored in Firebase Realtime Database (03_news)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Save Status Indicator -->
+    <div id="save-status" class="save-status">• Connecting to Database</div>
+
+    <script>
+        function myFunction() {
+    location.reload();
+}
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEbKLcaRnMeujiQ2XWx8f5TqTlTC71c0w",
+            authDomain: "barangay118-website.firebaseapp.com",
+            databaseURL: "https://barangay118-website-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "barangay118-website",
+            storageBucket: "barangay118-website.firebasestorage.app",
+            messagingSenderId: "255746664706",
+            appId: "1:255746664706:web:61d9cd618960147ef6ba1b",
+            measurementId: "G-CQFZYJED7Z"
+        };
+
+        // Initialize Firebase
+        let db = null;
+        let unsubscribe = null;
+        
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.database();
+            console.log("Firebase Realtime Database initialized successfully in News Admin Panel");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        // Default News Data Structure for Firebase Realtime Database (03_news) - UPDATED
+        const defaultNewsData = {
+            "01_hero": {
+                title: "News & Announcements",
+                subtitle: "Latest updates, advisories, and community news for Barangay 118."
+            },
+            "02_newsSection": {
+                title: "Latest Stories",
+                subtitle: "Stay updated with the latest news and announcements from Barangay 118"
+            },
+            "03_news": {
+                list: [
+                    {
+                        id: 1,
+                        title: "Japan builds new facility for Grace Park Health Center in Caloocan (2025)",
+                        excerpt: "The Embassy of Japan provided around PHP 6 million to construct the new Grace Park Health Center in Caloocan City.",
+                        content: "On March 10, 2025, Embassy of Japan Second Secretary MATSUSHIGE Tomoaki attended the turnover ceremony for the 'Project for the Construction of the Grace Park Health Center in Caloocan City.' Japan allocated USD 120,477 (≈ PHP 6 million) under the Official Development Assistance – Grant Assistance for Grass-roots Human Security Projects (GGP). This new facility replaces the old, flood-prone building to ensure safer, cleaner, and modern healthcare services for approximately 9,600 patients annually.",
+                        date: "2025-03-10",
+                        image: "https://www.ph.emb-japan.go.jp/files/100808323.jpg",
+                        category: "Community",
+                        readTime: "2 months ago",
+                        isFeatured: true
+                    },
+                    {
+                        id: 2,
+                        title: "Caloocan Fire: 1 PWD dead, 50 families displaced",
+                        excerpt: "A person with disability died after a large fire broke out in Barangay 118, Grace Park, Caloocan in December 2024.",
+                        content: "According to Caloocan BFP, the fire started around 2:56 AM at 4th Avenue and quickly spread due to houses being built closely together. 'A PWD died in a fire which razed about 20 houses in Caloocan City…' GMA News reported.",
+                        date: "2024-12-29",
+                        image: "https://images.gmanews.tv/webpics/2024/12/caloocan_fire_12-29-24_2024_12_29_18_34_08.jpg",
+                        category: "Fire",
+                        readTime: "2 months ago",
+                        isFeatured: false
+                    },
+                    {
+                        id: 3,
+                        title: "New Barangay Health Center in Brgy. 118-120, Caloocan",
+                        excerpt: "SM Foundation turned over the newly improved Barangay Health Center of Grace Park (Brgy. 118-120) in Caloocan City days before 2024 arrived.",
+                        content: "SM Foundation and its partners led this renovation project to turn the facility into a more comfortable and efficient clinic.",
+                        date: "2024-01-16",
+                        image: "https://i0.wp.com/marketmonitor.com.ph/wp-content/uploads/2024/01/SMFI-image2.jpg?resize=618%2C927&ssl=1",
+                        category: "Health",
+                        readTime: "2 months ago",
+                        isFeatured: false
+                    },
+                    {
+                        id: 4,
+                        title: "Barangay 118 Annual Sports Festival",
+                        excerpt: "Annual sports competition for youth and adults with various games and activities.",
+                        content: "The Barangay 118 Annual Sports Festival is scheduled for November 2025, featuring basketball, volleyball, badminton, and traditional Filipino games.",
+                        date: "2025-11-15",
+                        image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+                        category: "Events",
+                        readTime: "2 months ago",
+                        isFeatured: false
+                    }
+                ]
+            },
+            "04_events": {
+                title: "Community Events Calendar",
+                allEvents: [
+                    {
+                        id: 1,
+                        title: "New Year's Resolution Forum",
+                        description: "Community forum to discuss goals and plans for the new year.",
+                        date: "2025-01-10",
+                        time: "6:00 PM - 8:00 PM",
+                        location: "Barangay 118 Multi-purpose Hall",
+                        image: ""
+                    },
+                    {
+                        id: 2,
+                        title: "Barangay Christmas Party",
+                        description: "Annual Christmas celebration for all residents of Barangay 118.",
+                        date: "2024-12-15",
+                        time: "5:00 PM - 10:00 PM",
+                        location: "Barangay 118 Covered Court",
+                        image: ""
+                    },
+                    {
+                        id: 3,
+                        title: "Ongoing Community Programs",
+                        description: "Ongoing barangay activities and official announcements.",
+                        date: "2025-01-20",
+                        time: "Updated regularly",
+                        location: "Various Locations",
+                        image: ""
+                    },
+                    {
+                        id: 4,
+                        title: "Youth Sports Orientation",
+                        description: "Orientation for upcoming inter-barangay youth sports activities.",
+                        date: "2025-01-25",
+                        time: "3:00 PM - 5:00 PM",
+                        location: "Barangay 118 Covered Court",
+                        image: ""
+                    },
+                    {
+                        id: 5,
+                        title: "Anti-Dengue Awareness Campaign",
+                        description: "Information drive on dengue prevention and barangay clean zones.",
+                        date: "2025-02-02",
+                        time: "8:00 AM - 11:00 AM",
+                        location: "Barangay 118 Plaza",
+                        image: ""
+                    }
+                ]
+            },
+            "05_calendar": {
+                events: [
+                    {
+                        id: 1,
+                        title: "New Year's Resolution Forum",
+                        description: "Community forum to discuss goals and plans for the new year.",
+                        date: "2025-01-10",
+                        time: "6:00 PM - 8:00 PM",
+                        location: "Barangay 118 Multi-purpose Hall",
+                        month: "Jan",
+                        day: "10"
+                    },
+                    {
+                        id: 2,
+                        title: "Barangay Christmas Party",
+                        description: "Annual Christmas celebration for all residents of Barangay 118.",
+                        date: "2024-12-15",
+                        time: "5:00 PM - 10:00 PM",
+                        location: "Barangay 118 Covered Court",
+                        month: "Dec",
+                        day: "15"
+                    },
+                    {
+                        id: 3,
+                        title: "Youth Sports Orientation",
+                        description: "Orientation for upcoming inter-barangay youth sports activities.",
+                        date: "2025-01-25",
+                        time: "3:00 PM - 5:00 PM",
+                        location: "Barangay 118 Covered Court",
+                        month: "Jan",
+                        day: "25"
+                    }
+                ]
+            }
+        };
+
+        // Enhanced News Admin Panel with Firebase Realtime Database Integration
+        class NewsAdminPanel {
+            constructor() {
+                this.dataKey = 'newsData';
+                this.currentData = null;
+                this.activityLog = [];
+                this.lastSavedData = null;
+                this.saveStatusTimeout = null;
+                this.renderedTabs = new Set();
+                this.db = db;
+                this.unsubscribe = null;
+                this.lastUpdated = null;
+                this.newsRef = null;
+                this.init();
+            }
+
+            init() {
+                if (this.db) {
+                    this.newsRef = this.db.ref('03_news');
+                }
+                this.loadData();
+                this.lastSavedData = JSON.parse(JSON.stringify(this.currentData));
+                this.setupEventListeners();
+                this.updateDashboard();
+                this.logActivity('System initialized with Firebase Realtime Database integration', 'success');
+                this.updateSaveStatus('• Ready to Save');
+                this.setupFirebaseListener();
+                this.checkFirebaseConnection();
+                
+                this.hideAllTabs();
+                this.switchTab('dashboard');
+            }
+
+            hideAllTabs() {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+            }
+
+            getDefaultData() {
+                return JSON.parse(JSON.stringify(defaultNewsData));
+            }
+
+            deepMergeData(target, source) {
+                for (const key in source) {
+                    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                        if (!target[key]) target[key] = {};
+                        this.deepMergeData(target[key], source[key]);
+                    } else if (Array.isArray(source[key])) {
+                        target[key] = [...source[key]];
+                    } else {
+                        target[key] = source[key];
+                    }
+                }
+            }
+
+            checkFirebaseConnection() {
+                const statusElement = document.getElementById('system-status');
+                if (!statusElement) return;
+                
+                if (this.db) {
+                    statusElement.textContent = 'Online';
+                    statusElement.style.color = '#28a745'; // Green color for online
+                    console.log('Firebase connected successfully for News Admin');
+                } else {
+                    statusElement.textContent = 'Local Mode';
+                    statusElement.style.color = '#ffc107'; // Warning color for local mode
+                    console.warn('Firebase not connected. Using localStorage only for News Admin.');
+                }
+            }
+
+            async loadData() {
+                let loaded = false;
+                if (this.newsRef) {
+                    try {
+                        const snapshot = await this.newsRef.once('value');
+                        
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            this.currentData = this.getDefaultData();
+                            this.deepMergeData(this.currentData, firebaseData);
+                            console.log('News data loaded from Firebase Realtime Database (03_news)');
+                            loaded = true;
+                        }
+                    } catch (error) {
+                        console.error('Error loading from Firebase Realtime Database:', error);
+                    }
+                }
+
+                // If Firebase didn't load, try localStorage
+                if (!loaded) {
+                    const savedData = localStorage.getItem(this.dataKey);
+                    if (savedData) {
+                        try {
+                            this.currentData = JSON.parse(savedData);
+                            console.log('News data loaded from localStorage');
+                            loaded = true;
+                        } catch (error) {
+                            console.error('Error parsing localStorage data:', error);
+                        }
+                    }
+                }
+                
+                // If neither, use default
+                if (!loaded) {
+                    this.currentData = this.getDefaultData();
+                    console.log('Using pre-loaded default News data');
+                }
+                
+                this.populateForms();
+                this.lastUpdated = new Date();
+                this.updateDashboard();
+            }
+
+            setupFirebaseListener() {
+                if (!this.newsRef) return;
+                
+                try {
+                    this.unsubscribe = this.newsRef.on('value', (snapshot) => {
+                        if (snapshot.exists()) {
+                            const firebaseData = snapshot.val();
+                            
+                            // Update local data
+                            this.deepMergeData(this.currentData, firebaseData);
+                            
+                            // Update the form fields
+                            this.populateForms();
+                            this.renderNewsTable();
+                            this.renderEventsTables();
+                            this.renderCalendarEventsTable();
+                            this.lastUpdated = new Date();
+                            this.updateDashboard();
+                            
+                            // Update localStorage as backup
+                            localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                            
+                            this.logActivity('News data updated from Database', 'info');
+                            this.showAlert('News data synchronized Database', 'info');
+                        }
+                    }, (error) => {
+                        console.error("Database listener error:", error);
+                    });
+                } catch (error) {
+                    console.error("Failed to setup Database listener:", error);
+                }
+            }
+
+            hasActualChanges() {
+                if (!this.lastSavedData) return true;
+                
+                const currentDataStr = JSON.stringify(this.currentData);
+                const lastSavedDataStr = JSON.stringify(this.lastSavedData);
+                
+                return currentDataStr !== lastSavedDataStr;
+            }
+
+            async saveData(forceSave = false) {
+                if (!forceSave && !this.hasActualChanges()) {
+                    console.log('No changes detected, skipping save');
+                    this.updateSaveStatus('No changes to save', 'info');
+                    this.showAlert('No changes to save', 'info');
+                    return true;
+                }
+
+                let saved = false;
+                
+                try {
+                    // Save to Firebase Realtime Database (03_news)
+                    if (this.newsRef) {
+                        await this.newsRef.set(this.currentData);
+                        console.log('News data saved to Firebase Realtime Database (03_news)');
+                    }
+                    
+                    // Also save to localStorage as backup
+                    localStorage.setItem(this.dataKey, JSON.stringify(this.currentData));
+                    console.log('News data saved to localStorage');
+                    saved = true;
+                    
+                    this.lastSavedData = JSON.parse(JSON.stringify(this.currentData));
+                    this.lastUpdated = new Date();
+                    
+                    this.updateDashboard();
+                    this.updateSaveStatus('Saved to Database', 'success');
+                    this.logActivity('News data saved successfully to Firebase Realtime Database (03_news)', 'success');
+                    
+                } catch (error) {
+                    console.error('Save failed:', error);
+                    this.updateSaveStatus('Save failed', 'error');
+                    this.logActivity('News data save failed', 'error');
+                    saved = false;
+                }
+                
+                return saved;
+            }
+            
+            updateSaveStatus(message = '• Manual Save', type = 'default') {
+                const statusElement = document.getElementById('save-status');
+                if (!statusElement) return;
+                
+                if (this.saveStatusTimeout) {
+                    clearTimeout(this.saveStatusTimeout);
+                }
+                
+                statusElement.textContent = message;
+                statusElement.className = 'save-status';
+                
+                if (type === 'success') {
+                    statusElement.classList.add('success');
+                } else if (type === 'warning') {
+                    statusElement.classList.add('warning');
+                } else if (type === 'error') {
+                    statusElement.classList.add('error');
+                } else if (type === 'info') {
+                    statusElement.classList.add('info');
+                }
+                
+                if (type === 'success' || type === 'info' || type === 'warning') {
+                    this.saveStatusTimeout = setTimeout(() => {
+                        statusElement.textContent = '• Connected to Database';
+                        statusElement.className = 'save-status';
+                    }, 3000);
+                }
+            }
+
+            populateForms() {
+                if (!this.currentData) return;
+
+                // Events Title Form (Community Events Calendar)
+                document.getElementById('events-title').value = this.currentData["04_events"]?.title || 'Community Events Calendar';
+                
+                // Hero Form
+                document.getElementById('hero-title').value = this.currentData["01_hero"]?.title || '';
+                document.getElementById('hero-subtitle').value = this.currentData["01_hero"]?.subtitle || '';
+                
+                // News Section Form
+                document.getElementById('news-section-title').value = this.currentData["02_newsSection"]?.title || '';
+                document.getElementById('news-section-subtitle').value = this.currentData["02_newsSection"]?.subtitle || '';
+            }
+
+            setupEventListeners() {
+                // Sidebar navigation
+                document.querySelector('.sidebar-menu').addEventListener('click', (e) => {
+                    const link = e.target.closest('a');
+                    if (link && link.hasAttribute('data-tab')) {
+                        e.preventDefault();
+                        const tabId = link.getAttribute('data-tab');
+                        this.switchTab(tabId);
+                    }
+                });
+
+                // Sub-tabs
+                document.querySelectorAll('[data-news-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchNewsTab(tab.getAttribute('data-news-tab'));
+                    });
+                });
+
+                document.querySelectorAll('[data-events-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchEventsTab(tab.getAttribute('data-events-tab'));
+                    });
+                });
+
+                document.querySelectorAll('[data-calendar-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchCalendarTab(tab.getAttribute('data-calendar-tab'));
+                    });
+                });
+
+                // Quick action buttons
+                document.getElementById('preview-site-btn').addEventListener('click', () => {
+                    window.open('News.html', '_blank');
+                });
+
+                document.getElementById('export-news-btn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                document.getElementById('backup-news-btn').addEventListener('click', () => {
+                    this.exportData();
+                    this.showAlert('Backup created successfully!', 'success');
+                });
+
+                document.getElementById('refresh-news-btn').addEventListener('click', () => {
+                    this.loadData();
+                    this.showAlert('Data refreshed from Firebase Realtime Database!', 'success');
+                });
+
+                document.getElementById('clear-news-data-btn').addEventListener('click', () => {
+                    if (confirm('Clear ALL News data from Firebase Realtime Database? This will remove everything from 03_news node and cannot be undone.')) {
+                        this.clearAllData();
+                    }
+                });
+
+                // Form submissions
+                this.setupFormListeners();
+
+                // Character counter for excerpt
+                document.getElementById('news-excerpt').addEventListener('input', (e) => {
+                    document.getElementById('excerpt-counter').textContent = e.target.value.length;
+                });
+
+                // Image preview handlers
+                document.getElementById('news-image').addEventListener('input', (e) => {
+                    this.updateImagePreview('news-image-preview', e.target.value);
+                });
+
+                document.getElementById('event-image').addEventListener('input', (e) => {
+                    this.updateImagePreview('event-image-preview', e.target.value);
+                });
+
+                // Search handlers
+                document.getElementById('news-search').addEventListener('input', (e) => {
+                    this.searchNews(e.target.value);
+                });
+
+                document.getElementById('events-search').addEventListener('input', (e) => {
+                    this.searchEvents(e.target.value);
+                });
+
+                document.getElementById('calendar-events-search').addEventListener('input', (e) => {
+                    this.searchCalendarEvents(e.target.value);
+                });
+
+                // Prevent form submission from reloading page
+                document.querySelectorAll('form').forEach(form => {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                    });
+                });
+            }
+
+            setupFormListeners() {
+                // Community Events Calendar Form
+                document.getElementById('hero-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // Save Events Title
+                    const oldEventsTitle = this.currentData["04_events"]?.title;
+                    const newEventsTitle = document.getElementById('events-title').value;
+                    
+                    // Save Hero Data
+                    const oldHeroData = {...this.currentData["01_hero"]};
+                    const oldNewsSectionData = {...this.currentData["02_newsSection"]};
+                    
+                    const newHeroData = {
+                        title: document.getElementById('hero-title').value,
+                        subtitle: document.getElementById('hero-subtitle').value
+                    };
+                    
+                    const newNewsSectionData = {
+                        title: document.getElementById('news-section-title').value,
+                        subtitle: document.getElementById('news-section-subtitle').value
+                    };
+                    
+                    // Check if any changes were made
+                    if (oldEventsTitle !== newEventsTitle ||
+                        JSON.stringify(oldHeroData) !== JSON.stringify(newHeroData) ||
+                        JSON.stringify(oldNewsSectionData) !== JSON.stringify(newNewsSectionData)) {
+                        
+                        // Update Events Title
+                        if (!this.currentData["04_events"]) {
+                            this.currentData["04_events"] = {};
+                        }
+                        this.currentData["04_events"].title = newEventsTitle;
+                        
+                        // Update Hero Data
+                        this.currentData["01_hero"] = newHeroData;
+                        this.currentData["02_newsSection"] = newNewsSectionData;
+                        
+                        await this.saveData();
+                        this.showAlert('Community Events Calendar settings updated successfully!', 'success');
+                        this.logActivity('Community Events Calendar settings updated', 'success');
+                    } else {
+                        this.showAlert('No changes detected in Community Events Calendar settings', 'info');
+                    }
+                });
+
+                document.getElementById('hero-reset-btn').addEventListener('click', async () => {
+                    if (confirm('Reset Community Events Calendar settings to defaults? This will reset and save immediately.')) {
+                        const defaultData = this.getDefaultData();
+                        
+                        // Reset Events Title
+                        this.currentData["04_events"].title = defaultData["04_events"].title;
+                        
+                        // Reset Hero Data
+                        this.currentData["01_hero"] = {...defaultData["01_hero"]};
+                        this.currentData["02_newsSection"] = {...defaultData["02_newsSection"]};
+                        
+                        // Update form fields
+                        document.getElementById('events-title').value = defaultData["04_events"].title;
+                        document.getElementById('hero-title').value = defaultData["01_hero"].title;
+                        document.getElementById('hero-subtitle').value = defaultData["01_hero"].subtitle;
+                        document.getElementById('news-section-title').value = defaultData["02_newsSection"].title;
+                        document.getElementById('news-section-subtitle').value = defaultData["02_newsSection"].subtitle;
+                        
+                        await this.saveData(true);
+                        this.showAlert('Community Events Calendar settings reset to defaults and saved to Database!', 'success');
+                        this.logActivity('Community Events Calendar settings reset to defaults and saved', 'warning');
+                    }
+                });
+
+                // News Form
+                document.getElementById('news-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('news-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const newsData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["03_news"].list.length > 0 ? 
+                            Math.max(...this.currentData["03_news"].list.map(n => n.id)) + 1 : 1),
+                        title: document.getElementById('news-title').value,
+                        excerpt: document.getElementById('news-excerpt').value,
+                        content: document.getElementById('news-content').value,
+                        date: document.getElementById('news-date').value,
+                        category: document.getElementById('news-category').value,
+                        image: document.getElementById('news-image').value,
+                        readTime: document.getElementById('news-read-time').value || '2 months ago',
+                        isFeatured: document.getElementById('news-featured').checked
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["03_news"].list.findIndex(n => n.id == editId);
+                        if (index !== -1) {
+                            this.currentData["03_news"].list[index] = newsData;
+                        }
+                        this.logActivity(`News updated: "${newsData.title}"`, 'success');
+                        this.showAlert('News updated successfully!', 'success');
+                    } else {
+                        this.currentData["03_news"].list.push(newsData);
+                        this.logActivity(`News added: "${newsData.title}"`, 'success');
+                        this.showAlert('News added successfully!', 'success');
+                    }
+
+                    // If marked as featured, unfeature others
+                    if (newsData.isFeatured) {
+                        this.currentData["03_news"].list.forEach(n => {
+                            if (n.id !== newsData.id) n.isFeatured = false;
+                        });
+                    }
+
+                    await this.saveData();
+                    this.renderNewsTable();
+
+                    document.getElementById('news-form').reset();
+                    document.getElementById('news-edit-id').value = '';
+                    document.getElementById('news-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add News';
+                    document.getElementById('news-cancel-edit').style.display = 'none';
+                    document.getElementById('excerpt-counter').textContent = '0';
+
+                    if (isEditing) {
+                        this.switchNewsTab('existing');
+                    }
+                });
+
+                document.getElementById('news-reset-btn').addEventListener('click', () => {
+                    document.getElementById('news-form').reset();
+                    document.getElementById('news-edit-id').value = '';
+                    document.getElementById('news-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add News';
+                    document.getElementById('news-cancel-edit').style.display = 'none';
+                    document.getElementById('excerpt-counter').textContent = '0';
+                });
+
+                // Event Form
+                document.getElementById('event-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('event-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const eventData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["04_events"].allEvents.length > 0 ? 
+                            Math.max(...this.currentData["04_events"].allEvents.map(e => e.id)) + 1 : 1),
+                        title: document.getElementById('event-title').value,
+                        description: document.getElementById('event-description').value,
+                        date: document.getElementById('event-date').value,
+                        time: document.getElementById('event-time').value,
+                        location: document.getElementById('event-location').value,
+                        image: document.getElementById('event-image').value
+                    };
+
+                    if (isEditing) {
+                        // Update in allEvents
+                        const index = this.currentData["04_events"].allEvents.findIndex(e => e.id == editId);
+                        if (index !== -1) {
+                            this.currentData["04_events"].allEvents[index] = eventData;
+                        }
+                        this.logActivity(`Event updated: "${eventData.title}"`, 'success');
+                        this.showAlert('Event updated successfully!', 'success');
+                    } else {
+                        // Add to allEvents
+                        this.currentData["04_events"].allEvents.push(eventData);
+                        this.logActivity(`Event added: "${eventData.title}"`, 'success');
+                        this.showAlert('Event added successfully!', 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderEventsTables();
+
+                    document.getElementById('event-form').reset();
+                    document.getElementById('event-edit-id').value = '';
+                    document.getElementById('event-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Event';
+                    document.getElementById('event-cancel-edit').style.display = 'none';
+
+                    if (isEditing) {
+                        this.switchEventsTab('existing');
+                    }
+                });
+
+                document.getElementById('calendar-event-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const editId = document.getElementById('calendar-event-edit-id').value;
+                    const isEditing = editId !== '';
+
+                    const eventData = {
+                        id: isEditing ? parseInt(editId) : (this.currentData["05_calendar"].events.length > 0 ? 
+                            Math.max(...this.currentData["05_calendar"].events.map(e => e.id)) + 1 : 1),
+                        title: document.getElementById('calendar-event-title').value,
+                        description: document.getElementById('calendar-event-description').value,
+                        date: document.getElementById('calendar-event-date').value,
+                        time: document.getElementById('calendar-event-time').value,
+                        location: document.getElementById('calendar-event-location').value,
+                        month: document.getElementById('calendar-event-month').value || '',
+                        day: new Date(document.getElementById('calendar-event-date').value).getDate().toString()
+                    };
+
+                    if (isEditing) {
+                        const index = this.currentData["05_calendar"].events.findIndex(e => e.id == editId);
+                        if (index !== -1) {
+                            this.currentData["05_calendar"].events[index] = eventData;
+                        }
+                        this.logActivity(`Calendar event updated: "${eventData.title}"`, 'success');
+                        this.showAlert('Calendar event updated successfully!', 'success');
+                    } else {
+                        this.currentData["05_calendar"].events.push(eventData);
+                        this.logActivity(`Calendar event added: "${eventData.title}"`, 'success');
+                        this.showAlert('Calendar event added successfully!', 'success');
+                    }
+
+                    await this.saveData();
+                    this.renderCalendarEventsTable();
+
+                    document.getElementById('calendar-event-form').reset();
+                    document.getElementById('calendar-event-edit-id').value = '';
+                    document.getElementById('calendar-event-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add to Calendar';
+                    document.getElementById('calendar-event-cancel-edit').style.display = 'none';
+
+                    if (isEditing) {
+                        this.switchCalendarTab('events');
+                    }
+                });
+
+                document.getElementById('news-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('news-form').reset();
+                    document.getElementById('news-edit-id').value = '';
+                    document.getElementById('news-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add News';
+                    document.getElementById('news-cancel-edit').style.display = 'none';
+                    document.getElementById('excerpt-counter').textContent = '0';
+                });
+
+                document.getElementById('event-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('event-form').reset();
+                    document.getElementById('event-edit-id').value = '';
+                    document.getElementById('event-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Event';
+                    document.getElementById('event-cancel-edit').style.display = 'none';
+                });
+
+                document.getElementById('calendar-event-cancel-edit').addEventListener('click', () => {
+                    document.getElementById('calendar-event-form').reset();
+                    document.getElementById('calendar-event-edit-id').value = '';
+                    document.getElementById('calendar-event-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add to Calendar';
+                    document.getElementById('calendar-event-cancel-edit').style.display = 'none';
+                });
+
+                // Reset buttons
+                document.getElementById('calendar-event-reset-btn').addEventListener('click', () => {
+                    document.getElementById('calendar-event-form').reset();
+                    document.getElementById('calendar-event-edit-id').value = '';
+                    document.getElementById('calendar-event-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add to Calendar';
+                    document.getElementById('calendar-event-cancel-edit').style.display = 'none';
+                });
+
+                // Event reset button
+                document.getElementById('event-reset-btn').addEventListener('click', () => {
+                    document.getElementById('event-form').reset();
+                    document.getElementById('event-edit-id').value = '';
+                    document.getElementById('event-submit-btn').innerHTML = '<i class="fas fa-plus-circle"></i> Add Event';
+                    document.getElementById('event-cancel-edit').style.display = 'none';
+                });
+            }
+
+            switchTab(tabId) {
+                // Update sidebar active state
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const targetLink = document.querySelector(`[data-tab="${tabId}"]`);
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                }
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Show the selected tab content
+                const selectedTab = document.getElementById(tabId);
+                if (selectedTab) {
+                    selectedTab.classList.add('active');
+                }
+                
+                // Scroll to top of admin-content area
+                document.querySelector('.admin-content').scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+                // Load specific content for certain tabs
+                if (tabId === 'news' && !this.renderedTabs.has('news')) {
+                    this.renderNewsTable();
+                    this.renderedTabs.add('news');
+                } else if (tabId === 'events' && !this.renderedTabs.has('events')) {
+                    this.renderEventsTables();
+                    this.renderedTabs.add('events');
+                } else if (tabId === 'calendar' && !this.renderedTabs.has('calendar')) {
+                    this.renderCalendarEventsTable();
+                    this.renderedTabs.add('calendar');
+                }
+            }
+
+            switchNewsTab(tab) {
+                document.querySelectorAll('[data-news-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-news-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#news .sub-tab-content').forEach(t => t.classList.remove('active'));
+                
+                let targetId = '';
+                if (tab === 'existing') targetId = 'existing-news';
+                else if (tab === 'add') targetId = 'add-news';
+                
+                document.getElementById(targetId).classList.add('active');
+            }
+
+            switchEventsTab(tab) {
+                document.querySelectorAll('[data-events-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-events-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#events .sub-tab-content').forEach(t => t.classList.remove('active'));
+                
+                let targetId = '';
+                if (tab === 'past') targetId = 'past-events';
+                else if (tab === 'current') targetId = 'current-event';
+                else if (tab === 'upcoming') targetId = 'upcoming-events';
+                else if (tab === 'add') targetId = 'add-event';
+                
+                document.getElementById(targetId).classList.add('active');
+                
+                if (tab === 'current') {
+                    this.renderCurrentEvent();
+                }
+            }
+
+            switchCalendarTab(tab) {
+                document.querySelectorAll('[data-calendar-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-calendar-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('#calendar .sub-tab-content').forEach(t => t.classList.remove('active'));
+                
+                let targetId = '';
+                if (tab === 'events') targetId = 'calendar-events';
+                else if (tab === 'add') targetId = 'add-calendar-event';
+                
+                document.getElementById(targetId).classList.add('active');
+            }
+
+            updateDashboard() {
+                if (!this.currentData) return;
+                
+                // System status is now updated in checkFirebaseConnection()
+                
+                // Last Updated - Date only (no time)
+                const lastUpdatedText = this.lastUpdated ? this.lastUpdated.toLocaleDateString() : 'Never';
+                document.getElementById('last-updated').textContent = lastUpdatedText;
+                
+                document.getElementById('total-news').textContent = this.currentData["03_news"]?.list?.length || 0;
+                document.getElementById('total-events').textContent = this.currentData["04_events"]?.allEvents?.length || 0;
+                document.getElementById('total-calendar-events').textContent = this.currentData["05_calendar"]?.events?.length || 0;
+                
+                const dataSize = JSON.stringify(this.currentData).length;
+                document.getElementById('data-size').textContent = `${Math.round(dataSize / 1024)} KB`;
+            }
+
+            updateImagePreview(previewId, url) {
+                const preview = document.getElementById(previewId);
+                if (preview) {
+                    if (url) {
+                        preview.src = url;
+                        preview.classList.add('visible');
+                    } else {
+                        preview.classList.remove('visible');
+                    }
+                }
+            }
+
+            // Render methods
+            renderNewsTable() {
+                const tbody = document.getElementById('news-table-body');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["03_news"]?.list || this.currentData["03_news"].list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--gray); padding: 30px;">No news yet. Add your first news article!</td></tr>`;
+                    return;
+                }
+
+                // Sort by date (newest first)
+                const sortedNews = [...this.currentData["03_news"].list].sort((a, b) => {
+                    return new Date(b.date) - new Date(a.date);
+                });
+
+                sortedNews.forEach((news, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>
+                            <div style="width: 60px; height: 40px; border-radius: 4px; overflow: hidden;">
+                                <img src="${news.image}" alt="${news.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/60x40?text=Image'">
+                            </div>
+                        </td>
+                        <td><strong>${news.title}</strong></td>
+                        <td><span class="category-badge">${news.category}</span></td>
+                        <td>${this.formatDate(news.date)}</td>
+                        <td>
+                            <button class="btn ${news.isFeatured ? 'btn-warning' : 'btn-secondary'} btn-sm toggle-featured-btn" data-id="${news.id}">
+                                <i class="fas ${news.isFeatured ? 'fa-star' : 'fa-star'}"></i> ${news.isFeatured ? 'Featured' : 'Set as Featured'}
+                            </button>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-news" data-id="${news.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-news" data-id="${news.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-news').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteNews(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-news').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editNews(id);
+                    });
+                });
+
+                // Attach event listeners for featured buttons
+                document.querySelectorAll('.toggle-featured-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        await this.toggleFeaturedNews(id);
+                    });
+                });
+            }
+
+            // Toggle featured news function
+            async toggleFeaturedNews(id) {
+                const newsItem = this.currentData["03_news"].list.find(n => n.id === id);
+                if (!newsItem) return;
+                
+                if (newsItem.isFeatured) {
+                    // Unfeature this news
+                    newsItem.isFeatured = false;
+                    this.logActivity(`News "${newsItem.title}" unfeatured`, 'info');
+                    this.showAlert('News unfeatured successfully!', 'success');
+                } else {
+                    // Unfeature all other news first
+                    this.currentData["03_news"].list.forEach(n => {
+                        n.isFeatured = false;
+                    });
+                    
+                    // Feature this news
+                    newsItem.isFeatured = true;
+                    this.logActivity(`News "${newsItem.title}" set as featured`, 'success');
+                    this.showAlert('News set as featured successfully!', 'success');
+                }
+                
+                await this.saveData();
+                this.renderNewsTable();
+            }
+
+            renderEventsTables() {
+                this.renderPastEvents();
+                this.renderCurrentEvent();
+                this.renderUpcomingEvents();
+            }
+
+            renderPastEvents() {
+                const tbody = document.getElementById('past-events-table');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["04_events"]?.allEvents) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--gray); padding: 30px;">No events.</td></tr>`;
+                    return;
+                }
+
+                // Get past events
+                const today = new Date().toISOString().split('T')[0];
+                const pastEvents = this.currentData["04_events"].allEvents.filter(event => event.date < today);
+
+                if (pastEvents.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--gray); padding: 30px;">No past events.</td></tr>`;
+                    return;
+                }
+
+                // Sort by date (newest first)
+                const sortedEvents = [...pastEvents].sort((a, b) => {
+                    return new Date(b.date) - new Date(a.date);
+                });
+
+                sortedEvents.forEach((event, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${event.title}</strong></td>
+                        <td>${this.formatDate(event.date)}</td>
+                        <td>${event.description.substring(0, 50)}${event.description.length > 50 ? '...' : ''}</td>
+                        <td>
+                            ${event.time ? `<div><i class="far fa-clock"></i> ${event.time}</div>` : ''}
+                            ${event.location ? `<div><i class="fas fa-map-marker-alt"></i> ${event.location}</div>` : ''}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-event" data-id="${event.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-event" data-id="${event.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                this.attachEventListeners();
+            }
+
+            renderCurrentEvent() {
+                const container = document.getElementById('current-event-display');
+                if (!container) return;
+                
+                if (!this.currentData["04_events"]?.allEvents) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--gray);">
+                            <i class="fas fa-calendar-day" style="font-size: 48px; opacity: 0.3; margin-bottom: 15px;"></i>
+                            <p>No current event today.</p>
+                            <p><small>Events for today will automatically appear here.</small></p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get today's event
+                const today = new Date().toISOString().split('T')[0];
+                const currentEvent = this.currentData["04_events"].allEvents.find(event => event.date === today);
+                
+                if (!currentEvent) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--gray);">
+                            <i class="fas fa-calendar-day" style="font-size: 48px; opacity: 0.3; margin-bottom: 15px;"></i>
+                            <p>No current event today.</p>
+                            <p><small>Events for today will automatically appear here.</small></p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = `
+                    <div class="current-event-card" style="background: white; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);">
+                        <div style="display: flex; gap: 20px; align-items: flex-start;">
+                            ${currentEvent.image ? `
+                                <div style="flex: 0 0 150px;">
+                                    <img src="${currentEvent.image}" alt="${currentEvent.title}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px;" onerror="this.src='https://via.placeholder.com/150x120?text=Event'">
+                                </div>
+                            ` : ''}
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                                    <h3 style="margin: 0; color: var(--dark);">${currentEvent.title}</h3>
+                                    <span class="badge" style="background: var(--primary); color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                        <i class="fas fa-calendar-day"></i> Current Event
+                                    </span>
+                                </div>
+                                <p style="color: var(--gray); margin-bottom: 15px;">${currentEvent.description}</p>
+                                <div style="display: flex; gap: 15px; color: var(--gray); font-size: 14px;">
+                                    <span><i class="far fa-calendar"></i> ${this.formatDate(currentEvent.date)}</span>
+                                    ${currentEvent.time ? `<span><i class="far fa-clock"></i> ${currentEvent.time}</span>` : ''}
+                                    ${currentEvent.location ? `<span><i class="fas fa-map-marker-alt"></i> ${currentEvent.location}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button class="btn btn-primary btn-sm edit-event" data-id="${currentEvent.id}">
+                                <i class="fas fa-edit"></i> Edit Event
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.querySelector('.edit-event').addEventListener('click', (e) => {
+                    const id = e.target.closest('button').getAttribute('data-id');
+                    this.editEvent(id);
+                });
+            }
+
+            renderUpcomingEvents() {
+                const tbody = document.getElementById('upcoming-events-table');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["04_events"]?.allEvents) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--gray); padding: 30px;">No events.</td></tr>`;
+                    return;
+                }
+
+                // Get upcoming events
+                const today = new Date().toISOString().split('T')[0];
+                const upcomingEvents = this.currentData["04_events"].allEvents.filter(event => event.date > today);
+
+                if (upcomingEvents.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--gray); padding: 30px;">No upcoming events.</td></tr>`;
+                    return;
+                }
+
+                // Sort by date (soonest first)
+                const sortedEvents = [...upcomingEvents].sort((a, b) => {
+                    return new Date(a.date) - new Date(b.date);
+                });
+
+                sortedEvents.forEach((event, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${event.title}</strong></td>
+                        <td>${this.formatDate(event.date)}</td>
+                        <td>${event.description.substring(0, 50)}${event.description.length > 50 ? '...' : ''}</td>
+                        <td>
+                            ${event.time ? `<div><i class="far fa-clock"></i> ${event.time}</div>` : ''}
+                            ${event.location ? `<div><i class="fas fa-map-marker-alt"></i> ${event.location}</div>` : ''}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-event" data-id="${event.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-event" data-id="${event.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                this.attachEventListeners();
+            }
+
+            renderCalendarEventsTable() {
+                const tbody = document.getElementById('calendar-events-table');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                if (!this.currentData["05_calendar"]?.events || this.currentData["05_calendar"].events.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--gray); padding: 30px;">No calendar events.</td></tr>`;
+                    return;
+                }
+
+                // Sort by date
+                const sortedEvents = [...this.currentData["05_calendar"].events].sort((a, b) => {
+                    return new Date(a.date) - new Date(b.date);
+                });
+
+                sortedEvents.forEach((event, index) => {
+                    const date = new Date(event.date);
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="text-align: center; background: var(--primary-light); color: white; padding: 5px 10px; border-radius: 6px; min-width: 50px;">
+                                    <div style="font-size: 12px; font-weight: 600;">${event.month || monthNames[date.getMonth()]}</div>
+                                    <div style="font-size: 18px; font-weight: 700;">${event.day || date.getDate()}</div>
+                                </div>
+                                <div>${date.getFullYear()}</div>
+                            </div>
+                        </td>
+                        <td><strong>${event.title}</strong></td>
+                        <td>${event.description.substring(0, 50)}${event.description.length > 50 ? '...' : ''}</td>
+                        <td>${event.time || '-'}</td>
+                        <td>${event.location || '-'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm edit-calendar-event" data-id="${event.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-calendar-event" data-id="${event.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Attach event listeners
+                document.querySelectorAll('.delete-calendar-event').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.deleteCalendarEvent(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-calendar-event').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        this.editCalendarEvent(id);
+                    });
+                });
+            }
+
+            attachEventListeners() {
+                document.querySelectorAll('.delete-event').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        this.deleteEvent(id);
+                    });
+                });
+
+                document.querySelectorAll('.edit-event').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        this.editEvent(id);
+                    });
+                });
+            }
+
+            // Edit methods
+            editNews(id) {
+                const news = this.currentData["03_news"].list.find(n => n.id === id);
+                if (!news) return;
+                
+                this.switchNewsTab('add');
+                
+                document.getElementById('news-edit-id').value = news.id;
+                document.getElementById('news-title').value = news.title;
+                document.getElementById('news-excerpt').value = news.excerpt;
+                document.getElementById('news-content').value = news.content;
+                document.getElementById('news-date').value = news.date;
+                document.getElementById('news-category').value = news.category;
+                document.getElementById('news-image').value = news.image;
+                document.getElementById('news-read-time').value = news.readTime;
+                document.getElementById('news-featured').checked = news.isFeatured;
+                
+                document.getElementById('news-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update News';
+                document.getElementById('news-cancel-edit').style.display = 'inline-block';
+                document.getElementById('excerpt-counter').textContent = news.excerpt.length;
+                
+                this.updateImagePreview('news-image-preview', news.image);
+                this.logActivity(`Editing news: "${news.title}"`, 'info');
+            }
+
+            editEvent(id) {
+                const event = this.currentData["04_events"].allEvents.find(e => e.id == id);
+                
+                if (!event) return;
+                
+                this.switchEventsTab('add');
+                
+                document.getElementById('event-edit-id').value = event.id;
+                document.getElementById('event-title').value = event.title;
+                document.getElementById('event-description').value = event.description;
+                document.getElementById('event-date').value = event.date;
+                document.getElementById('event-time').value = event.time || '';
+                document.getElementById('event-location').value = event.location || '';
+                document.getElementById('event-image').value = event.image || '';
+                
+                document.getElementById('event-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Event';
+                document.getElementById('event-cancel-edit').style.display = 'inline-block';
+                
+                this.updateImagePreview('event-image-preview', event.image);
+                this.logActivity(`Editing event: "${event.title}"`, 'info');
+            }
+
+            editCalendarEvent(id) {
+                const event = this.currentData["05_calendar"].events.find(e => e.id === id);
+                if (!event) return;
+                
+                this.switchCalendarTab('add');
+                
+                document.getElementById('calendar-event-edit-id').value = event.id;
+                document.getElementById('calendar-event-title').value = event.title;
+                document.getElementById('calendar-event-description').value = event.description;
+                document.getElementById('calendar-event-date').value = event.date;
+                document.getElementById('calendar-event-time').value = event.time || '';
+                document.getElementById('calendar-event-location').value = event.location || '';
+                document.getElementById('calendar-event-month').value = event.month || '';
+                
+                document.getElementById('calendar-event-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update Calendar Event';
+                document.getElementById('calendar-event-cancel-edit').style.display = 'inline-block';
+                
+                this.logActivity(`Editing calendar event: "${event.title}"`, 'info');
+            }
+
+            // Delete methods
+            async deleteNews(id) {
+                if (confirm('Are you sure you want to delete this news article?')) {
+                    this.currentData["03_news"].list = this.currentData["03_news"].list.filter(n => n.id !== id);
+                    await this.saveData();
+                    this.renderNewsTable();
+                    this.logActivity('News article deleted', 'error');
+                    this.showAlert('News deleted successfully', 'success');
+                }
+            }
+
+            async deleteEvent(id) {
+                if (confirm('Are you sure you want to delete this event?')) {
+                    this.currentData["04_events"].allEvents = this.currentData["04_events"].allEvents.filter(e => e.id != id);
+                    
+                    await this.saveData();
+                    this.renderEventsTables();
+                    this.logActivity('Event deleted', 'error');
+                    this.showAlert('Event deleted successfully', 'success');
+                }
+            }
+
+            async deleteCalendarEvent(id) {
+                if (confirm('Are you sure you want to delete this calendar event?')) {
+                    this.currentData["05_calendar"].events = this.currentData["05_calendar"].events.filter(e => e.id !== id);
+                    await this.saveData();
+                    this.renderCalendarEventsTable();
+                    this.logActivity('Calendar event deleted', 'error');
+                    this.showAlert('Calendar event deleted successfully', 'success');
+                }
+            }
+
+            // Search methods
+            searchNews(query) {
+                const tbody = document.getElementById('news-table-body');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const title = row.cells[2].textContent.toLowerCase();
+                    const category = row.cells[3].textContent.toLowerCase();
+                    
+                    if (title.includes(searchText) || category.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            searchEvents(query) {
+                const tables = ['past-events-table', 'upcoming-events-table'];
+                const searchText = query.trim().toLowerCase();
+                
+                tables.forEach(tableId => {
+                    const tbody = document.getElementById(tableId);
+                    if (!tbody) return;
+                    
+                    const rows = tbody.querySelectorAll('tr');
+                    
+                    if (searchText === '') {
+                        rows.forEach(row => row.style.display = '');
+                        return;
+                    }
+                    
+                    rows.forEach(row => {
+                        const title = row.cells[1].textContent.toLowerCase();
+                        const description = row.cells[3].textContent.toLowerCase();
+                        
+                        if (title.includes(searchText) || description.includes(searchText)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            searchCalendarEvents(query) {
+                const tbody = document.getElementById('calendar-events-table');
+                if (!tbody) return;
+                
+                const rows = tbody.querySelectorAll('tr');
+                const searchText = query.trim().toLowerCase();
+                
+                if (searchText === '') {
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                rows.forEach(row => {
+                    const title = row.cells[2].textContent.toLowerCase();
+                    const description = row.cells[3].textContent.toLowerCase();
+                    const location = row.cells[5].textContent.toLowerCase();
+                    
+                    if (title.includes(searchText) || description.includes(searchText) || location.includes(searchText)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            // Helper methods
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+
+            exportData() {
+                const dataStr = JSON.stringify(this.currentData, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `news-backup-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                this.logActivity('News data exported successfully', 'success');
+                this.showAlert('News data exported successfully!', 'success');
+            }
+
+            async clearAllData() {
+                if (confirm('Clear ALL News data from Firebase Realtime Database? This will remove everything from 03_news node and cannot be undone.')) {
+                    try {
+                        if (this.newsRef) {
+                            await this.newsRef.remove();
+                        }
+                        localStorage.removeItem(this.dataKey);
+                        this.currentData = this.getDefaultData();
+                        this.populateForms();
+                        await this.saveData(true);
+                        this.logActivity('All News data cleared from Database', 'error');
+                        this.showAlert('All News data has been cleared from Database!', 'success');
+                    } catch (error) {
+                        console.error('Error clearing data:', error);
+                        this.showAlert('Error clearing News data from Database', 'error');
+                    }
+                }
+            }
+
+            showAlert(message, type) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `<strong><i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i> ${message}</strong>`;
+                
+                const currentTab = document.querySelector('.tab-content.active');
+                if (currentTab) {
+                    currentTab.insertBefore(alert, currentTab.firstChild);
+                }
+                
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.remove();
+                    }
+                }, 5000);
+            }
+
+            logActivity(message, type) {
+                const activity = {
+                    timestamp: new Date().toLocaleTimeString(),
+                    message: message,
+                    type: type
+                };
+                this.activityLog.unshift(activity);
+                
+                if (this.activityLog.length > 10) {
+                    this.activityLog.pop();
+                }
+                
+                this.updateActivityLog();
+            }
+
+            updateActivityLog() {
+                const container = document.getElementById('recent-activity');
+                if (!container) return;
+
+                if (this.activityLog.length === 0) {
+                    container.innerHTML = `<p style="color: var(--gray); text-align: center; padding: 20px;"><i class="fas fa-clock"></i> No recent activity</p>`;
+                    return;
+                }
+
+                container.innerHTML = this.activityLog.map(activity => `
+                    <div style="padding: 10px 15px; border-left: 3px solid ${
+                        activity.type === 'success' ? 'var(--success)' : 
+                        activity.type === 'error' ? 'var(--error)' : 'var(--warning)'
+                    }; margin-bottom: 10px; background: var(--gray-light); border-radius: 0 var(--radius) var(--radius) 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                            <span style="font-weight: 600;">${activity.message}</span>
+                            <small style="color: var(--gray);">${activity.timestamp}</small>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            cleanup() {
+                if (this.unsubscribe) {
+                    this.unsubscribe();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.newsAdminPanel = new NewsAdminPanel();
+            window.addEventListener('beforeunload', () => {
+                if (window.newsAdminPanel) {
+                    window.newsAdminPanel.cleanup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
